@@ -254,7 +254,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/28/Some understanding about how fastText works/" itemprop="url">Some understanding about how fastText works</a></h1>
+                <a class="post-title-link" href="/2017/08/28/Some understanding about how fastText works/" itemprop="url">Untitled</a></h1>
         
 
         <div class="post-meta">
@@ -306,7 +306,8 @@
       
         
           
-            <h1 id="Table-of-contents"><a href="#Table-of-contents" class="headerlink" title="Table of contents"></a>Table of contents</h1><ul>
+            <hr>
+<h2 id="Some-understanding-about-how-fastText-works"><a href="#Some-understanding-about-how-fastText-works" class="headerlink" title="Some understanding about how fastText works"></a>Some understanding about how fastText works</h2><h1 id="Table-of-contents"><a href="#Table-of-contents" class="headerlink" title="Table of contents"></a>Table of contents</h1><ul>
 <li>Introduction</li>
 <li>Word Embedding<ul>
 <li>The Skip-gram model</li>
@@ -330,7 +331,7 @@
 <li>You can not build sentence representations easily. People take like average vector of a sentence and use it, but actually it not works well.</li>
 <li>The other thing is that it doesn’t exploit morphology. Which means words with same radicals do not share parameters. For example: <strong>disastrous</strong> is different from <strong>disaster</strong>.</li>
 </ol>
-<h2 id="The-Skip-gram-Model"><a href="#The-Skip-gram-Model" class="headerlink" title="The Skip-gram Model"></a>The Skip-gram Model</h2><p>Given a word in the middle, you can sucessively predict all the words in its context.<br><img src="images/skip_gram_model.png" alt=""> </p>
+<h2 id="The-Skip-gram-Model"><a href="#The-Skip-gram-Model" class="headerlink" title="The Skip-gram Model"></a>The Skip-gram Model</h2><p>Given a word in the middle, you can sucessively predict all the words in its context.<br><img src="https://i.stack.imgur.com/NEbGx.png" alt="">{:height=”12px” width=”12px”}</p>
 <h2 id="CBOW-model"><a href="#CBOW-model" class="headerlink" title="CBOW model"></a>CBOW model</h2><p>Given a context and sum the vectors to predict the word in the middle.</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
 <li><a href="https://www.analyticsvidhya.com/blog/2017/07/word-representations-text-classification-using-fasttext-nlp-facebook/" target="_blank" rel="external">Text Classification &amp; Word Representations using FastText (An NLP library by Facebook)</a></li>
