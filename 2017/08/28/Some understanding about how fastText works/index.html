@@ -95,19 +95,19 @@
 
 
 
-<meta name="description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   Introduction">
+<meta name="description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   1. Introducti">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Some understanding about how fastText works">
 <meta property="og:url" content="http://yoursite.com/2017/08/28/Some understanding about how fastText works/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   Introduction">
+<meta property="og:description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   1. Introducti">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/skipgram.png">
 <meta property="og:image" content="http://yoursite.com/images/CBOW.png">
-<meta property="og:updated_time" content="2017-08-28T11:15:39.000Z">
+<meta property="og:updated_time" content="2017-08-28T11:48:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Some understanding about how fastText works">
-<meta name="twitter:description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   Introduction">
+<meta name="twitter:description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   1. Introducti">
 <meta name="twitter:image" content="http://yoursite.com/images/skipgram.png">
 
 
@@ -323,19 +323,19 @@
 <li>Derivatives of hierarchical softmax</li>
 </ul></li>
 </ul>
-<h1 id="introduction">Introduction</h1>
+<h1 id="introduction">1. Introduction</h1>
 <p>FastText is a library created by the Facebook Research Team for efficient learning of <strong>word representations</strong> and <strong>sentence classification</strong>. There are two main refernece papers:</p>
 <ul>
 <li>P. Bojanowski<em>, E. Grave</em>, A. Joulin, T. Mikolov, <a href="https://arxiv.org/abs/1607.04606" target="_blank" rel="external">Enriching Word Vectors with Subword Information</a></li>
 <li>A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, <a href="https://arxiv.org/abs/1607.01759" target="_blank" rel="external">Bag of Tricks for Efficient Text Classification</a></li>
 </ul>
-<h1 id="word-embedding">Word Embedding</h1>
+<h1 id="word-embedding">2. Word Embedding</h1>
 <p>Representing words in vectors (espicially word2vec) is widely used in Natural Language Processing applications because it’s fast and easy to use. However, there are several drawbacks of word2vec.</p>
 <ol style="list-style-type: decimal">
 <li>You can not build sentence representations easily. People take like average vector of a sentence and use it, but actually it not works well.</li>
 <li>The other thing is that it doesn’t exploit morphology. Which means words with same radicals do not share parameters. For example: <strong>disastrous</strong> is different from <strong>disaster</strong>.</li>
 </ol>
-<h2 id="the-skip-gram-model">The Skip-gram Model</h2>
+<h2 id="the-skip-gram-model">2.1 The Skip-gram Model</h2>
 <p>Given a word in the middle, we can sucessively predict all the words in its context. <img src="/images/skipgram.png"></p>
 <p>For instance: <em>The mighty <strong>knight</strong> Lancelot fought bravely</em>, we use <strong>knight</strong> to predict <em>the</em>, <em>mighty</em>, <em>lancelot</em>, <em>fought</em> and <em>bravely</em>.</p>
 <p>Our goal is to model probability of a <strong>context word</strong> given a word:</p>
@@ -357,7 +357,7 @@
 <li><em><strong>Hierarchical softmax</strong></em>: represent every word as a set of codes <span class="math inline">\(y_{ck}\)</span>. These codes are obtained by computing the Huffman tree. In the end, very frequent words are going to have short codes and very unfrequent words are going to have longer codes, so it’s very fast to evaluate and just sum over the codes for every example. I’ll explained this method in detail in the next section.</li>
 </ul>
 <p><span class="math display">\[\Sigma_{k{\in}\mathcal{K}_c}log(1 + e^{y_{ck}x^T_{w_t}v_k})\]</span></p>
-<h2 id="cbow-model">CBOW model</h2>
+<h2 id="cbow-model">2.2 CBOW model</h2>
 <p>Given a context and sum the vectors to predict the word in the middle. <img src="/images/CBOW.png"></p>
 <p>For instance: <em>The mighty <strong>knight</strong> Lancelot fought bravely</em>, we use <em>the</em>, <em>mighty</em>, <em>lancelot</em>, <em>fought</em> and <em>bravely</em> to predict <em>knight</em>.</p>
 <p>Our goal is to model the probability of a word given a context:</p>
@@ -368,7 +368,7 @@
 <p><span class="math display">\[p(w|\mathcal{C}) = \frac{e^{h^T_{\mathcal{C}}v_w}}{\Sigma^K_{k=1}e^{h^T_{\mathcal{C}}v_k}}\]</span></p>
 <p>And <span class="math inline">\(h_{\mathcal{C}}\)</span> is just the sum of the words in the context and that’s why it is called the <em><em>continuous bag of words</em></em>:</p>
 <p><span class="math display">\[h_{\mathcal{C}} = \Sigma_{c{\in}\mathcal{C}}x_c\]</span></p>
-<h2 id="fasttext-model">fastText model</h2>
+<h2 id="fasttext-model">2.3 fastText model</h2>
 <p>The goal is to model the probability of a <em>label</em> given a <em>paragraph</em> so you have:</p>
 <ul>
 <li>feature for paragraph <span class="math inline">\(\mathcal{P}: h_{\mathcal{p}}\)</span></li>
@@ -379,6 +379,25 @@
 <li>Paragraph feather:</li>
 </ul>
 <p><span class="math display">\[h_{\mathcal{p}} = \Sigma_{w{\in}\mathcal{p}}x_w\]</span></p>
+<h4 id="exploiting-sub-word-information">Exploiting sub-word information</h4>
+<ul>
+<li>Represent words as the sum of its <em><em>character n-grams</em></em>.
+<ul>
+<li>Add special positional characters: ^knight$</li>
+<li>All ending n-grams have special meaning</li>
+</ul></li>
+<li>Grammatical variations have roughtly the same mixture of n-grams</li>
+<li>As in skip-gram: model probability of a <em><em>context word</em></em> given a word
+<ul>
+<li>classifer for word <span class="math inline">\(c: v_c\)</span></li>
+<li>feature for word <span class="math inline">\(w: h_w\)</span></li>
+</ul></li>
+</ul>
+<p><span class="math display">\[p(c|w) = \frac{e^{h^T_w}v_c}{\Sigma^K_{k=1}e^{h^T_wv_k}}\]</span></p>
+<ul>
+<li>Feature of a word computed using n-grams, it takes all the character n-grams and the word itself, using hashing to store them. This makes it possible to build vectors for unseen words.</li>
+</ul>
+<p><span class="math display">\[h_w = \Sigma_{g{\in}w}x_g\]</span></p>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://www.analyticsvidhya.com/blog/2017/07/word-representations-text-classification-using-fasttext-nlp-facebook/" target="_blank" rel="external">Text Classification &amp; Word Representations using FastText (An NLP library by Facebook)</a></li>
@@ -534,7 +553,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#table-of-contents"><span class="nav-number">1.</span> <span class="nav-text">Table of contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#word-embedding"><span class="nav-number">3.</span> <span class="nav-text">Word Embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-skip-gram-model"><span class="nav-number">3.1.</span> <span class="nav-text">The Skip-gram Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cbow-model"><span class="nav-number">3.2.</span> <span class="nav-text">CBOW model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fasttext-model"><span class="nav-number">3.3.</span> <span class="nav-text">fastText model</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#table-of-contents"><span class="nav-number">1.</span> <span class="nav-text">Table of contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#word-embedding"><span class="nav-number">3.</span> <span class="nav-text">2. Word Embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-skip-gram-model"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 The Skip-gram Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cbow-model"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 CBOW model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fasttext-model"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 fastText model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#exploiting-sub-word-information"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">Exploiting sub-word information</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
