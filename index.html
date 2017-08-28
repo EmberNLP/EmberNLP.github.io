@@ -322,7 +322,11 @@
 </ul></li>
 </ul>
 <h1 id="introduction">Introduction</h1>
-<p>FastText is a library created by the Facebook Research Team for efficient learning of <strong>word representations</strong> and <strong>sentence classification</strong>. There are two main refernece papers: - P. Bojanowski<em>, E. Grave</em>, A. Joulin, T. Mikolov, <a href="https://arxiv.org/abs/1607.04606" target="_blank" rel="external">Enriching Word Vectors with Subword Information</a> - A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, <a href="https://arxiv.org/abs/1607.01759" target="_blank" rel="external">Bag of Tricks for Efficient Text Classification</a></p>
+<p>FastText is a library created by the Facebook Research Team for efficient learning of <strong>word representations</strong> and <strong>sentence classification</strong>. There are two main refernece papers:</p>
+<ul>
+<li>P. Bojanowski<em>, E. Grave</em>, A. Joulin, T. Mikolov, <a href="https://arxiv.org/abs/1607.04606" target="_blank" rel="external">Enriching Word Vectors with Subword Information</a></li>
+<li>A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, <a href="https://arxiv.org/abs/1607.01759" target="_blank" rel="external">Bag of Tricks for Efficient Text Classification</a></li>
+</ul>
 <h1 id="word-embedding">Word Embedding</h1>
 <p>Representing words in vectors (espicially word2vec) is widely used in Natural Language Processing applications because it’s fast and easy to use. However, there are several drawbacks of word2vec. 1. You can not build sentence representations easily. People take like average vector of a sentence and use it, but actually it not works well. 2. The other thing is that it doesn’t exploit morphology. Which means words with same radicals do not share parameters. For example: <strong>disastrous</strong> is different from <strong>disaster</strong>.</p>
 <h2 id="the-skip-gram-model">The Skip-gram Model</h2>
@@ -333,11 +337,19 @@
 <li>feature for word w: <span class="math inline">\(\space x_{w}\)</span></li>
 <li>classifier for context word c: <span class="math inline">\(\space v_{c}\)</span></li>
 </ul>
-<!-- $$\frac{e^{x_w^Tv_c}}\{\Sigma^K_{k = 1}e^{x_w^Tv_k}}$  -->
 <p><span class="math display">\[p(x|c) = \frac{exp(x^T_wv_c)}{\Sigma_{k=1}^Kexp(x_w^Tv_k)}\]</span></p>
-<!-- $\Sigma^K_{k = 1}e^{x_w^Tv_k}$ -->
-<!-- $$e^{x_w^Tv_c}/\Sigma_{k = 1}^Kx_w^Tv_k$$ -->
-<!-- $\frac{a}{c}$ -->
+<p>And Word Vectors <span class="math inline">\(x_w\in\mathbb{R}^d\)</span>, are used for some downstream tasks.</p>
+<p>Minimize a <em><strong>negative log likelihood</strong></em>:</p>
+<p><span class="math display">\[min_{x,v} \space-\Sigma^T_{t=1}\Sigma_{c{\in}C_t}log\frac{e^{x^T_{w_t}v_c}}{\Sigma^K_{k=1}e^{x^T_{w_t}v_k}}\]</span></p>
+<p>However, the denominator of the softmax is very computationally intensive. There are two main approximations.</p>
+<ul>
+<li>Replace the multiclass loss by a set of binary logistic losses</li>
+<li><em><strong>Negative sampling</strong></em> (you have the positive word in the context and then just sample some random ones in the dictionary)</li>
+</ul>
+<p><span class="math display">\[log(1+e^{-x^T_{w_t}v_c} + \Sigma_{n{\in}\mathcal{N}_c}log(1+e^{-x^T_{w_t}v_n})\]</span></p>
+<ul>
+<li><em><strong>Hierarchical softmax</strong></em>: represent every word as a set of codes <span class="math inline">\(y_{ck}\)</span></li>
+</ul>
 <h2 id="cbow-model">CBOW model</h2>
 <p>Given a context and sum the vectors to predict the word in the middle. <img src="/images/CBOW.png"></p>
 <h1 id="reference">Reference</h1>
