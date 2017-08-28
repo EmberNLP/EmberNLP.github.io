@@ -104,7 +104,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/skipgram.png">
 <meta property="og:image" content="http://yoursite.com/images/CBOW.png">
-<meta property="og:updated_time" content="2017-08-28T11:48:12.000Z">
+<meta property="og:updated_time" content="2017-08-28T11:59:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Some understanding about how fastText works">
 <meta name="twitter:description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   1. Introducti">
@@ -352,7 +352,7 @@
 <li>Replace the multiclass loss by a set of binary logistic losses</li>
 <li><em><strong>Negative sampling</strong></em> (you have the positive word in the context and then just sample some random ones in the dictionary)</li>
 </ul>
-<p><span class="math display">\[log(1+e^{-x^T_{w_t}v_c}) + \Sigma_{n{\in}\mathcal{N}_c}log(1+e^{-x^T_{w_t}v_n})\]</span></p>
+<p><span class="math display">\[log(1+e^{-x^T_{w_t}v_c}) + \Sigma_{n{\in}\mathcal{N}_c}log(1+e^{x^T_{w_t}v_n})\]</span></p>
 <ul>
 <li><em><strong>Hierarchical softmax</strong></em>: represent every word as a set of codes <span class="math inline">\(y_{ck}\)</span>. These codes are obtained by computing the Huffman tree. In the end, very frequent words are going to have short codes and very unfrequent words are going to have longer codes, so it’s very fast to evaluate and just sum over the codes for every example. I’ll explained this method in detail in the next section.</li>
 </ul>
