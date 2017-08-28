@@ -95,19 +95,19 @@
 
 
 
-<meta name="description" content="Table of contents Introduction Word Embedding The Skip-gram model CBOW model fastText model   Hierarchical Softmax Huffman tree and Huffman Coding Derivatives of hierarchical softmax     IntroductionF">
+<meta name="description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   Introduction">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Some understanding about how fastText works">
 <meta property="og:url" content="http://yoursite.com/2017/08/28/Some understanding about how fastText works/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="Table of contents Introduction Word Embedding The Skip-gram model CBOW model fastText model   Hierarchical Softmax Huffman tree and Huffman Coding Derivatives of hierarchical softmax     IntroductionF">
+<meta property="og:description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   Introduction">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/skipgram.png">
 <meta property="og:image" content="http://yoursite.com/images/CBOW.png">
 <meta property="og:updated_time" content="2017-08-28T06:21:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Some understanding about how fastText works">
-<meta name="twitter:description" content="Table of contents Introduction Word Embedding The Skip-gram model CBOW model fastText model   Hierarchical Softmax Huffman tree and Huffman Coding Derivatives of hierarchical softmax     IntroductionF">
+<meta name="twitter:description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   Introduction">
 <meta name="twitter:image" content="http://yoursite.com/images/skipgram.png">
 
 
@@ -308,39 +308,37 @@
       
 
       
-        <h1 id="Table-of-contents"><a href="#Table-of-contents" class="headerlink" title="Table of contents"></a>Table of contents</h1><ul>
+        <h1 id="table-of-contents">Table of contents</h1>
+<ul>
 <li>Introduction</li>
-<li>Word Embedding<ul>
+<li>Word Embedding
+<ul>
 <li>The Skip-gram model</li>
 <li>CBOW model</li>
 <li>fastText model</li>
-</ul>
-</li>
-<li>Hierarchical Softmax<ul>
-<li>Huffman tree and Huffman Coding</li>
-<li>Derivatives of hierarchical softmax </li>
-</ul>
-</li>
-</ul>
-<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>FastText is a library created by the Facebook Research Team for efficient learning of <strong>word representations</strong> and <strong>sentence classification</strong>. There are two main refernece papers: </p>
+</ul></li>
+<li>Hierarchical Softmax
 <ul>
-<li>P. Bojanowski<em>, E. Grave</em>, A. Joulin, T. Mikolov, <a href="https://arxiv.org/abs/1607.04606" target="_blank" rel="external">Enriching Word Vectors with Subword Information</a></li>
-<li>A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, <a href="https://arxiv.org/abs/1607.01759" target="_blank" rel="external">Bag of Tricks for Efficient Text Classification</a></li>
+<li>Huffman tree and Huffman Coding</li>
+<li>Derivatives of hierarchical softmax</li>
+</ul></li>
 </ul>
-<h1 id="Word-Embedding"><a href="#Word-Embedding" class="headerlink" title="Word Embedding"></a>Word Embedding</h1><p>Representing words in vectors (espicially word2vec) is widely used in Natural Language Processing applications because it’s fast and easy to use. However, there are several drawbacks of word2vec. </p>
-<ol>
-<li>You can not build sentence representations easily. People take like average vector of a sentence and use it, but actually it not works well.</li>
-<li>The other thing is that it doesn’t exploit morphology. Which means words with same radicals do not share parameters. For example: <strong>disastrous</strong> is different from <strong>disaster</strong>.</li>
-</ol>
-<h2 id="The-Skip-gram-Model"><a href="#The-Skip-gram-Model" class="headerlink" title="The Skip-gram Model"></a>The Skip-gram Model</h2><p>Given a word in the middle, we can sucessively predict all the words in its context.<br><img src="/images/skipgram.png" alt=""></p>
+<h1 id="introduction">Introduction</h1>
+<p>FastText is a library created by the Facebook Research Team for efficient learning of <strong>word representations</strong> and <strong>sentence classification</strong>. There are two main refernece papers: - P. Bojanowski<em>, E. Grave</em>, A. Joulin, T. Mikolov, <a href="https://arxiv.org/abs/1607.04606" target="_blank" rel="external">Enriching Word Vectors with Subword Information</a> - A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, <a href="https://arxiv.org/abs/1607.01759" target="_blank" rel="external">Bag of Tricks for Efficient Text Classification</a></p>
+<h1 id="word-embedding">Word Embedding</h1>
+<p>Representing words in vectors (espicially word2vec) is widely used in Natural Language Processing applications because it’s fast and easy to use. However, there are several drawbacks of word2vec. 1. You can not build sentence representations easily. People take like average vector of a sentence and use it, but actually it not works well. 2. The other thing is that it doesn’t exploit morphology. Which means words with same radicals do not share parameters. For example: <strong>disastrous</strong> is different from <strong>disaster</strong>.</p>
+<h2 id="the-skip-gram-model">The Skip-gram Model</h2>
+<p>Given a word in the middle, we can sucessively predict all the words in its context. <img src="/images/skipgram.png"></p>
 <p>For instance: <em>The mighty <strong>knight</strong> Lancelot fought bravely</em>, we use <strong>knight</strong> to predict <em>the</em>, <em>mighty</em>, <em>lancelot</em>, <em>fought</em> and <em>bravely</em>.</p>
 <!-- Our goal is to model probability of a **context word** given a word:
 - feature for word w: $\space x_{w}$
 - classifier for context word c: $\space v_{c}$
  -->
-<p>sfdsfa<br>sdfsf $e^{x<em>{w}^{T}v</em>{c}}}$<br>sdfsf $$e^{x<em>{w}^{T}v</em>{c}}}$$<br><!-- $$p(c|w) = \frac{ e^{ x_{w}^{T}v_{c} } }{ \Sigma_{k=1}^{K}e^{x_{w}^{T}v_{k} } }$$ --></p>
-<h2 id="CBOW-model"><a href="#CBOW-model" class="headerlink" title="CBOW model"></a>CBOW model</h2><p>Given a context and sum the vectors to predict the word in the middle.<br><img src="/images/CBOW.png" alt=""></p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<p>sfdsfa sdfsf <span class="math inline">\(e^{x_{w}^{T}v_{c}}}\)</span> sdfsf <span class="math display">\[e^{x_{w}^{T}v_{c}}}\]</span> <!-- $$p(c|w) = \frac{ e^{ x_{w}^{T}v_{c} } }{ \Sigma_{k=1}^{K}e^{x_{w}^{T}v_{k} } }$$ --></p>
+<h2 id="cbow-model">CBOW model</h2>
+<p>Given a context and sum the vectors to predict the word in the middle. <img src="/images/CBOW.png"></p>
+<h1 id="reference">Reference</h1>
+<ol style="list-style-type: decimal">
 <li><a href="https://www.analyticsvidhya.com/blog/2017/07/word-representations-text-classification-using-fasttext-nlp-facebook/" target="_blank" rel="external">Text Classification &amp; Word Representations using FastText (An NLP library by Facebook)</a></li>
 <li></li>
 </ol>
@@ -494,7 +492,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Table-of-contents"><span class="nav-number">1.</span> <span class="nav-text">Table of contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Word-Embedding"><span class="nav-number">3.</span> <span class="nav-text">Word Embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Skip-gram-Model"><span class="nav-number">3.1.</span> <span class="nav-text">The Skip-gram Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CBOW-model"><span class="nav-number">3.2.</span> <span class="nav-text">CBOW model</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#table-of-contents"><span class="nav-number">1.</span> <span class="nav-text">Table of contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#word-embedding"><span class="nav-number">3.</span> <span class="nav-text">Word Embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-skip-gram-model"><span class="nav-number">3.1.</span> <span class="nav-text">The Skip-gram Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cbow-model"><span class="nav-number">3.2.</span> <span class="nav-text">CBOW model</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>

@@ -306,39 +306,37 @@
       
         
           
-            <h1 id="Table-of-contents"><a href="#Table-of-contents" class="headerlink" title="Table of contents"></a>Table of contents</h1><ul>
+            <h1 id="table-of-contents">Table of contents</h1>
+<ul>
 <li>Introduction</li>
-<li>Word Embedding<ul>
+<li>Word Embedding
+<ul>
 <li>The Skip-gram model</li>
 <li>CBOW model</li>
 <li>fastText model</li>
-</ul>
-</li>
-<li>Hierarchical Softmax<ul>
-<li>Huffman tree and Huffman Coding</li>
-<li>Derivatives of hierarchical softmax </li>
-</ul>
-</li>
-</ul>
-<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>FastText is a library created by the Facebook Research Team for efficient learning of <strong>word representations</strong> and <strong>sentence classification</strong>. There are two main refernece papers: </p>
+</ul></li>
+<li>Hierarchical Softmax
 <ul>
-<li>P. Bojanowski<em>, E. Grave</em>, A. Joulin, T. Mikolov, <a href="https://arxiv.org/abs/1607.04606" target="_blank" rel="external">Enriching Word Vectors with Subword Information</a></li>
-<li>A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, <a href="https://arxiv.org/abs/1607.01759" target="_blank" rel="external">Bag of Tricks for Efficient Text Classification</a></li>
+<li>Huffman tree and Huffman Coding</li>
+<li>Derivatives of hierarchical softmax</li>
+</ul></li>
 </ul>
-<h1 id="Word-Embedding"><a href="#Word-Embedding" class="headerlink" title="Word Embedding"></a>Word Embedding</h1><p>Representing words in vectors (espicially word2vec) is widely used in Natural Language Processing applications because it’s fast and easy to use. However, there are several drawbacks of word2vec. </p>
-<ol>
-<li>You can not build sentence representations easily. People take like average vector of a sentence and use it, but actually it not works well.</li>
-<li>The other thing is that it doesn’t exploit morphology. Which means words with same radicals do not share parameters. For example: <strong>disastrous</strong> is different from <strong>disaster</strong>.</li>
-</ol>
-<h2 id="The-Skip-gram-Model"><a href="#The-Skip-gram-Model" class="headerlink" title="The Skip-gram Model"></a>The Skip-gram Model</h2><p>Given a word in the middle, we can sucessively predict all the words in its context.<br><img src="/images/skipgram.png" alt=""></p>
+<h1 id="introduction">Introduction</h1>
+<p>FastText is a library created by the Facebook Research Team for efficient learning of <strong>word representations</strong> and <strong>sentence classification</strong>. There are two main refernece papers: - P. Bojanowski<em>, E. Grave</em>, A. Joulin, T. Mikolov, <a href="https://arxiv.org/abs/1607.04606" target="_blank" rel="external">Enriching Word Vectors with Subword Information</a> - A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, <a href="https://arxiv.org/abs/1607.01759" target="_blank" rel="external">Bag of Tricks for Efficient Text Classification</a></p>
+<h1 id="word-embedding">Word Embedding</h1>
+<p>Representing words in vectors (espicially word2vec) is widely used in Natural Language Processing applications because it’s fast and easy to use. However, there are several drawbacks of word2vec. 1. You can not build sentence representations easily. People take like average vector of a sentence and use it, but actually it not works well. 2. The other thing is that it doesn’t exploit morphology. Which means words with same radicals do not share parameters. For example: <strong>disastrous</strong> is different from <strong>disaster</strong>.</p>
+<h2 id="the-skip-gram-model">The Skip-gram Model</h2>
+<p>Given a word in the middle, we can sucessively predict all the words in its context. <img src="/images/skipgram.png"></p>
 <p>For instance: <em>The mighty <strong>knight</strong> Lancelot fought bravely</em>, we use <strong>knight</strong> to predict <em>the</em>, <em>mighty</em>, <em>lancelot</em>, <em>fought</em> and <em>bravely</em>.</p>
 <!-- Our goal is to model probability of a **context word** given a word:
 - feature for word w: $\space x_{w}$
 - classifier for context word c: $\space v_{c}$
  -->
-<p>sfdsfa<br>sdfsf $e^{x<em>{w}^{T}v</em>{c}}}$<br>sdfsf $$e^{x<em>{w}^{T}v</em>{c}}}$$<br><!-- $$p(c|w) = \frac{ e^{ x_{w}^{T}v_{c} } }{ \Sigma_{k=1}^{K}e^{x_{w}^{T}v_{k} } }$$ --></p>
-<h2 id="CBOW-model"><a href="#CBOW-model" class="headerlink" title="CBOW model"></a>CBOW model</h2><p>Given a context and sum the vectors to predict the word in the middle.<br><img src="/images/CBOW.png" alt=""></p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<p>sfdsfa sdfsf <span class="math inline">\(e^{x_{w}^{T}v_{c}}}\)</span> sdfsf <span class="math display">\[e^{x_{w}^{T}v_{c}}}\]</span> <!-- $$p(c|w) = \frac{ e^{ x_{w}^{T}v_{c} } }{ \Sigma_{k=1}^{K}e^{x_{w}^{T}v_{k} } }$$ --></p>
+<h2 id="cbow-model">CBOW model</h2>
+<p>Given a context and sum the vectors to predict the word in the middle. <img src="/images/CBOW.png"></p>
+<h1 id="reference">Reference</h1>
+<ol style="list-style-type: decimal">
 <li><a href="https://www.analyticsvidhya.com/blog/2017/07/word-representations-text-classification-using-fasttext-nlp-facebook/" target="_blank" rel="external">Text Classification &amp; Word Representations using FastText (An NLP library by Facebook)</a></li>
 <li></li>
 </ol>
@@ -461,7 +459,7 @@
       
         
           
-            <p>Hello, I’m Ember. A primary school student who is interested in machine learning. </p>
+            <p>Hello, I’m Ember. A primary school student who is interested in machine learning.</p>
 <p>I’m writing this Blog to write down some notes about papers or ideas in my homework.</p>
 <p>If you wanted to discuss with me about some interested things, please feel free to contact me:</p>
 <p>Email: xuan.liang@student.uts.edu.au</p>
@@ -584,18 +582,18 @@
       
         
           
-            <p>This post will decrible how to setup your Blog using GithubPage and Hexo briefly. </p>
-<h1 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h1><h3 id="Requirement"><a href="#Requirement" class="headerlink" title="Requirement"></a>Requirement</h3><ol>
-<li><a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a></li>
-<li><a href="https://git-scm.com" target="_blank" rel="external">Git</a></li>
-</ol>
-<p>If your computer already has these, just install Hexo with npm:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure></p>
-<h1 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h1><p>Once Hexo is installed, run the following commands to initialise Hexo in the target <folder>.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init &lt;folder&gt;</div><div class="line">$ <span class="built_in">cd</span> &lt;folder&gt;</div><div class="line">$ npm install</div></pre></td></tr></table></figure></folder></p>
-<h1 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h1><p>Before your first deployment, you will have to modify some settings in _config.yml. A valid deployment setting must have a type field. For example:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  repo: http://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure></p>
-<p>Before your first deployment, install <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="external">hexo-deployer-git</a>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
-<p>Then need to set your git information as follow:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name <span class="string">"yourname"</span></div><div class="line">git config --global user.email <span class="string">"youremail"</span></div></pre></td></tr></table></figure></p>
-<h1 id="Write"><a href="#Write" class="headerlink" title="Write"></a>Write</h1><p>Then you can write your posts and save them in the folder _post under source.</p>
-<h1 id="Publish"><a href="#Publish" class="headerlink" title="Publish"></a>Publish</h1><p>Just type in the following command to publish your posts:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure></p>
+            <p>This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. <a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a> 2. <a href="https://git-scm.com" target="_blank" rel="external">Git</a></p>
+<p>If your computer already has these, just install Hexo with npm: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure></p>
+<h1 id="setup">Setup</h1>
+<p>Once Hexo is installed, run the following commands to initialise Hexo in the target <folder>. <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init &lt;folder&gt;</div><div class="line">$ <span class="built_in">cd</span> &lt;folder&gt;</div><div class="line">$ npm install</div></pre></td></tr></table></figure></folder></p>
+<h1 id="deployment">Deployment</h1>
+<p>Before your first deployment, you will have to modify some settings in _config.yml. A valid deployment setting must have a type field. For example: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  repo: http://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure></p>
+<p>Before your first deployment, install <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="external">hexo-deployer-git</a>: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
+<p>Then need to set your git information as follow: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name <span class="string">"yourname"</span></div><div class="line">git config --global user.email <span class="string">"youremail"</span></div></pre></td></tr></table></figure></p>
+<h1 id="write">Write</h1>
+<p>Then you can write your posts and save them in the folder _post under source.</p>
+<h1 id="publish">Publish</h1>
+<p>Just type in the following command to publish your posts: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure></p>
 
           
         
