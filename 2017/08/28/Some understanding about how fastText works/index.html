@@ -102,10 +102,12 @@
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Some understanding about how fastText worksTable of contents Introduction Word Embedding The Skip-gram model CBOW model fastText model   Hierarchical Softmax Huffman tree and Huffman Coding Derivativ">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-08-28T02:02:46.000Z">
+<meta property="og:image" content="http://yoursite.com/2017/08/28/Some%20understanding%20about%20how%20fastText%20works/images/skip_gram_model.png">
+<meta property="og:updated_time" content="2017-08-28T02:37:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EmberNLP">
 <meta name="twitter:description" content="Some understanding about how fastText worksTable of contents Introduction Word Embedding The Skip-gram model CBOW model fastText model   Hierarchical Softmax Huffman tree and Huffman Coding Derivativ">
+<meta name="twitter:image" content="http://yoursite.com/2017/08/28/Some%20understanding%20about%20how%20fastText%20works/images/skip_gram_model.png">
 
 
 
@@ -320,11 +322,18 @@
 </ul>
 </li>
 </ul>
-<h1 id="Introdction"><a href="#Introdction" class="headerlink" title="Introdction"></a>Introdction</h1><p>FastText is a library created by the Facebook Research Team for efficient learning of word representations and sentence classification. There are two main refernece papers: </p>
+<h1 id="Introdction"><a href="#Introdction" class="headerlink" title="Introdction"></a>Introdction</h1><p>FastText is a library created by the Facebook Research Team for efficient learning of <strong>word representations</strong> and <strong>sentence classification</strong>. There are two main refernece papers: </p>
 <ul>
 <li>P. Bojanowski<em>, E. Grave</em>, A. Joulin, T. Mikolov, <a href="https://arxiv.org/abs/1607.04606" target="_blank" rel="external">Enriching Word Vectors with Subword Information</a></li>
 <li>A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, <a href="https://arxiv.org/abs/1607.01759" target="_blank" rel="external">Bag of Tricks for Efficient Text Classification</a></li>
 </ul>
+<h1 id="Word-Embedding"><a href="#Word-Embedding" class="headerlink" title="Word Embedding"></a>Word Embedding</h1><p>Representing words in vectors (espicially word2vec) is widely used in Natural Language Processing applications because it’s fast and easy to use. However, there are several drawbacks of word2vec. </p>
+<ol>
+<li>You can not build sentence representations easily. People take like average vector of a sentence and use it, but actually it not works well.</li>
+<li>The other thing is that it doesn’t exploit morphology. Which means words with same radicals do not share parameters. For example: <strong>disastrous</strong> is different from <strong>disaster</strong>.</li>
+</ol>
+<h2 id="The-Skip-gram-Model"><a href="#The-Skip-gram-Model" class="headerlink" title="The Skip-gram Model"></a>The Skip-gram Model</h2><p>Given a word in the middle, you can sucessively predict all the words in its context.<br><img src="images/skip_gram_model.png" alt=""> </p>
+<h2 id="CBOW-model"><a href="#CBOW-model" class="headerlink" title="CBOW model"></a>CBOW model</h2><p>Given a context and sum the vectors to predict the word in the middle.</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
 <li><a href="https://www.analyticsvidhya.com/blog/2017/07/word-representations-text-classification-using-fasttext-nlp-facebook/" target="_blank" rel="external">Text Classification &amp; Word Representations using FastText (An NLP library by Facebook)</a></li>
 <li></li>
@@ -479,7 +488,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-understanding-about-how-fastText-works"><span class="nav-number">1.</span> <span class="nav-text">Some understanding about how fastText works</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Table-of-contents"><span class="nav-number"></span> <span class="nav-text">Table of contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introdction"><span class="nav-number"></span> <span class="nav-text">Introdction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number"></span> <span class="nav-text">Reference</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-understanding-about-how-fastText-works"><span class="nav-number">1.</span> <span class="nav-text">Some understanding about how fastText works</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Table-of-contents"><span class="nav-number"></span> <span class="nav-text">Table of contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introdction"><span class="nav-number"></span> <span class="nav-text">Introdction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Word-Embedding"><span class="nav-number"></span> <span class="nav-text">Word Embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Skip-gram-Model"><span class="nav-number">1.</span> <span class="nav-text">The Skip-gram Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CBOW-model"><span class="nav-number">2.</span> <span class="nav-text">CBOW model</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number"></span> <span class="nav-text">Reference</span></a></div>
             
 
           </div>
