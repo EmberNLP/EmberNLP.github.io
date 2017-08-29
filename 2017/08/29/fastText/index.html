@@ -95,19 +95,22 @@
 
 
 
-<meta name="description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   1. Introducti">
+<meta name="description" content="Table of contents  Introduction Word Embedding  The Skip-gram Model CBOW Model fastText Model  Hierarchical Softmax  Huffman Tree Huffman Coding Derivatives of Hierarchical Softmax   1. Introduction F">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Some understanding about how fastText works">
-<meta property="og:url" content="http://yoursite.com/2017/08/28/Some understanding about how fastText works/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/08/29/fastText/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   1. Introducti">
+<meta property="og:description" content="Table of contents  Introduction Word Embedding  The Skip-gram Model CBOW Model fastText Model  Hierarchical Softmax  Huffman Tree Huffman Coding Derivatives of Hierarchical Softmax   1. Introduction F">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/skipgram.png">
 <meta property="og:image" content="http://yoursite.com/images/CBOW.png">
-<meta property="og:updated_time" content="2017-08-28T11:59:58.000Z">
+<meta property="og:image" content="http://yoursite.com/images/HuffmanTree.png">
+<meta property="og:image" content="http://yoursite.com/images/HuffmanCoding.png">
+<meta property="og:image" content="http://yoursite.com/images/Derivative_of_Softmax.png">
+<meta property="og:updated_time" content="2017-08-29T06:52:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Some understanding about how fastText works">
-<meta name="twitter:description" content="Table of contents  Introduction Word Embedding  The Skip-gram model CBOW model fastText model  Hierarchical Softmax  Huffman tree and Huffman Coding Derivatives of hierarchical softmax   1. Introducti">
+<meta name="twitter:description" content="Table of contents  Introduction Word Embedding  The Skip-gram Model CBOW Model fastText Model  Hierarchical Softmax  Huffman Tree Huffman Coding Derivatives of Hierarchical Softmax   1. Introduction F">
 <meta name="twitter:image" content="http://yoursite.com/images/skipgram.png">
 
 
@@ -138,7 +141,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/28/Some understanding about how fastText works/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/29/fastText/"/>
 
 
 
@@ -241,7 +244,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/28/Some understanding about how fastText works/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/29/fastText/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -270,8 +273,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-28T11:49:26+10:00">
-                2017-08-28
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-29T16:31:06+10:00">
+                2017-08-29
               </time>
             
 
@@ -313,14 +316,15 @@
 <li>Introduction</li>
 <li>Word Embedding
 <ul>
-<li>The Skip-gram model</li>
-<li>CBOW model</li>
-<li>fastText model</li>
+<li>The Skip-gram Model</li>
+<li>CBOW Model</li>
+<li>fastText Model</li>
 </ul></li>
 <li>Hierarchical Softmax
 <ul>
-<li>Huffman tree and Huffman Coding</li>
-<li>Derivatives of hierarchical softmax</li>
+<li>Huffman Tree</li>
+<li>Huffman Coding</li>
+<li>Derivatives of Hierarchical Softmax</li>
 </ul></li>
 </ul>
 <h1 id="introduction">1. Introduction</h1>
@@ -336,7 +340,10 @@
 <li>The other thing is that it doesn’t exploit morphology. Which means words with same radicals do not share parameters. For example: <strong>disastrous</strong> is different from <strong>disaster</strong>.</li>
 </ol>
 <h2 id="the-skip-gram-model">2.1 The Skip-gram Model</h2>
-<p>Given a word in the middle, we can sucessively predict all the words in its context. <img src="/images/skipgram.png"></p>
+<p>Given a word in the middle, we can sucessively predict all the words in its context.</p>
+<center>
+<img src="/images/skipgram.png">
+</center>
 <p>For instance: <em>The mighty <strong>knight</strong> Lancelot fought bravely</em>, we use <strong>knight</strong> to predict <em>the</em>, <em>mighty</em>, <em>lancelot</em>, <em>fought</em> and <em>bravely</em>.</p>
 <p>Our goal is to model probability of a <strong>context word</strong> given a word:</p>
 <ul>
@@ -357,8 +364,11 @@
 <li><em><strong>Hierarchical softmax</strong></em>: represent every word as a set of codes <span class="math inline">\(y_{ck}\)</span>. These codes are obtained by computing the Huffman tree. In the end, very frequent words are going to have short codes and very unfrequent words are going to have longer codes, so it’s very fast to evaluate and just sum over the codes for every example. I’ll explain this method in detail in the next section.</li>
 </ul>
 <p><span class="math display">\[\Sigma_{k{\in}\mathcal{K}_c}log(1 + e^{y_{ck}x^T_{w_t}v_k})\]</span></p>
-<h2 id="cbow-model">2.2 CBOW model</h2>
-<p>Given a context and sum the vectors to predict the word in the middle. <img src="/images/CBOW.png"></p>
+<h2 id="cbow-model">2.2 CBOW Model</h2>
+<p>Given a context and sum the vectors to predict the word in the middle.</p>
+<center>
+<img src="/images/CBOW.png">
+</center>
 <p>For instance: <em>The mighty <strong>knight</strong> Lancelot fought bravely</em>, we use <em>the</em>, <em>mighty</em>, <em>lancelot</em>, <em>fought</em> and <em>bravely</em> to predict <em>knight</em>.</p>
 <p>Our goal is to model the probability of a word given a context:</p>
 <ul>
@@ -366,9 +376,9 @@
 <li>classifier for word <span class="math inline">\(w: v_w\)</span></li>
 </ul>
 <p><span class="math display">\[p(w|\mathcal{C}) = \frac{e^{h^T_{\mathcal{C}}v_w}}{\Sigma^K_{k=1}e^{h^T_{\mathcal{C}}v_k}}\]</span></p>
-<p>And <span class="math inline">\(h_{\mathcal{C}}\)</span> is just the sum of the words in the context and that’s why it is called the <em><em>continuous bag of words</em></em>:</p>
+<p>And <span class="math inline">\(h_{\mathcal{C}}\)</span> is just the sum of the words in the context and that’s why it is called the <em><strong>continuous bag of words</strong></em>:</p>
 <p><span class="math display">\[h_{\mathcal{C}} = \Sigma_{c{\in}\mathcal{C}}x_c\]</span></p>
-<h2 id="fasttext-model">2.3 fastText model</h2>
+<h2 id="fasttext-model">2.3 fastText Model</h2>
 <p>The goal is to model the probability of a <em>label</em> given a <em>paragraph</em> so you have:</p>
 <ul>
 <li>feature for paragraph <span class="math inline">\(\mathcal{P}: h_{\mathcal{p}}\)</span></li>
@@ -381,7 +391,7 @@
 <p><span class="math display">\[h_{\mathcal{p}} = \Sigma_{w{\in}\mathcal{p}}x_w\]</span></p>
 <h4 id="exploiting-sub-word-information">Exploiting sub-word information</h4>
 <ul>
-<li>Represent words as the sum of its <em><em>character n-grams</em></em>.
+<li>Represent words as the sum of its <em><strong>character n-grams</strong></em>.
 <ul>
 <li>Add special positional characters: ^knight$</li>
 <li>All ending n-grams have special meaning</li>
@@ -398,11 +408,55 @@
 <li>Feature of a word computed using n-grams, it takes all the character n-grams and the word itself, using hashing to store them. This makes it possible to build vectors for unseen words.</li>
 </ul>
 <p><span class="math display">\[h_w = \Sigma_{g{\in}w}x_g\]</span></p>
-<h1 id="reference">Reference</h1>
+<h1 id="hierarchical-softmax">3. Hierarchical Softmax</h1>
+<h2 id="hoffman-tree">3.1 Hoffman Tree</h2>
+<p><em><strong>Algorithm of constucting a Huffman Tree</strong></em></p>
 <ol style="list-style-type: decimal">
-<li><a href="https://www.analyticsvidhya.com/blog/2017/07/word-representations-text-classification-using-fasttext-nlp-facebook/" target="_blank" rel="external">Text Classification &amp; Word Representations using FastText (An NLP library by Facebook)</a></li>
-<li></li>
+<li>Create a leaf node for each symbol and add it to the priority queue.</li>
+<li>While there is more than one node in the queue:
+<ul>
+<li>Remove the two nodes of highest priority (lowest probability) from the queue</li>
+<li>Create a new internal node with these two nodes as children and with probability equal to the sum of the two nodes’ probabilities.</li>
+<li>Add the new node to the queue.</li>
+</ul></li>
+<li>The remaining node is the root node and the tree is complete.</li>
 </ol>
+<p>The following graph is an example:</p>
+<center>
+<img src="/images/HuffmanTree.png">
+</center>
+<p>To use Hoffman tree in our language models, symbols here can represents words (for both Skip-gram model and CBOW model) or paragraph labels (fastText Model). And also, from the algorithm, we can easily know that symbols with higher frequency are closer to the root of the Huffman tree.</p>
+<h2 id="hoffman-coding">3.2 Hoffman Coding</h2>
+To code a Huffman tree, just simply code all left nodes as 1 and right nodes as 0. Then we can represent each leaf based on the path from root. Also, nodes closer to the root will have shorter path.
+<center>
+<img src="/images/HuffmanCoding.png">
+</center>
+<p>For exampl, the Huffman coding of node (3) is <em>0111</em>.</p>
+<h2 id="derivatives-of-hierarchical-softmax">3.3 Derivatives of Hierarchical Softmax</h2>
+Let us use the following graph as an example to illustrate how to calculate the derivatives of hierarchical softmax.
+<center>
+<img src="/images/Derivative_of_Softmax.png">
+</center>
+<p>First, let’s define some notations here:</p>
+<ul>
+<li><span class="math inline">\(x_w\)</span> denote the input feature to the hierarchical softmax;</li>
+<li><span class="math inline">\(p^w\)</span>: path from root to leaf <span class="math inline">\(w\)</span>;</li>
+<li><span class="math inline">\(l^w\)</span>: number of nodes in the path <span class="math inline">\(p^w\)</span>;</li>
+<li><span class="math inline">\(p^w_1,p^w_2,...,p^w_{l^w}\)</span>: denote the nodes in the path <span class="math inline">\(p^w\)</span>;</li>
+<li><span class="math inline">\(d^w_2,d^w_3,...,d^w_{l^w}\)</span>: the Huffman code of word w, it consists <span class="math inline">\(l^w-1\)</span> digits (0 or 1);</li>
+<li><span class="math inline">\(\theta^w_1,\theta^w_2,...,\theta^w_{l^w-1}\)</span>: the weights of nodes in the path <span class="math inline">\(p^w\)</span> except for the leaf;</li>
+<li>And just follow Google’s usage, 1 stands for negative samples and 0 stands for positive samples.</li>
+</ul>
+<p>Now, take the node “Sport” as an example. It takes four binary classification to travel from root to node “Sport”:</p>
+<ul>
+<li>First: <span class="math inline">\(\space p(d^w_2|x_w,\theta^w_1) = \sigma(x^T_w\theta^w_1)\)</span></li>
+<li>Second: <span class="math inline">\(\space p(d^w_3|x_w,\theta^w_2) = 1 - \sigma(x^T_w\theta^w_2)\)</span></li>
+<li>Third: <span class="math inline">\(\space p(d^w_4|x_w,\theta^w_3) = 1 - \sigma(x^T_w\theta^w_3)\)</span></li>
+<li>Fourth: <span class="math inline">\(\space p(d^w_5|x_w,\theta^w_4) = 1 - \sigma(x^T_w\theta^w_4)\)</span></li>
+</ul>
+<p>And we have: <span class="math display">\[p(Sport|input) = \prod^5_{j=2}p(d^w_j|x_w,\theta^w_1)\]</span></p>
+<p>In general, we have: <span class="math display">\[p(w|input) = \prod^{l^w}_{j=2}p(d^w_j|x_w,\theta^w_{j-1})\]</span> <span class="math display">\[p(d^w_j|x_w,\theta^w_{j-1}) = [\sigma(x^T_w\theta^w_{j-1})]^{1-d^w_j}[1 - \sigma(x^T_w\theta^w_{j-1})]^{d^w_j}\]</span> The log-likelihood function is: <span class="math display">\[\mathcal{L} = log \prod^{l^w}_{j=2}{[\sigma(x^T_w\theta^w_{j-1})]^{1-d^w_j}[1 - \sigma(x^T_w\theta^w_{j-1})]^{d^w_j}}\]</span> <span class="math display">\[ = \Sigma^{l^w}_{j=2}{(1-d^w_j)log[\sigma(x^T_w\theta^w_{j-1})]+d^w_jlog[1-\sigma(x^T_w\theta^w_{j-1})]}\]</span> The calculation of derivatives are as follows: <span class="math display">\[\frac{\partial \mathcal{L}(w,j)}{\partial \theta^w_{j-1}} = \frac{\partial}{\partial\theta^w_{j-1}}\{(1-d^w_j)log[\sigma(x^T_w\theta^w_{j-1})] + d^w_jlog[1-\sigma(x^T_w\theta^w_{j-1})]\}\]</span> <span class="math display">\[= (1-d^w_j)[1-\sigma(x^T_w\theta^w_{j-1})]x_w-d^w_j\sigma(x^T_w\theta^w_{j-1})x_w\]</span> <span class="math display">\[=\{(1-d^w_j)[1-\sigma(x^T_w\theta^w_{j-1})]-d^w_j\sigma(x^T_w\theta^w_{j-1})\}x_w\]</span> <span class="math display">\[= [1-d^w_j-\sigma(x^T_w\theta^w_{j-1})]x_w\]</span></p>
+<p>And similarly, for <span class="math inline">\(x_w\)</span>: <span class="math display">\[\frac{\partial\mathcal{L}(w,j)}{\partial x_w} = [1-d^w_j-\sigma(x^T_w\theta^w_{j-1})]\theta^w_{j-1}\]</span></p>
 
       
     </div>
@@ -553,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#table-of-contents"><span class="nav-number">1.</span> <span class="nav-text">Table of contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#word-embedding"><span class="nav-number">3.</span> <span class="nav-text">2. Word Embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-skip-gram-model"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 The Skip-gram Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cbow-model"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 CBOW model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fasttext-model"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 fastText model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#exploiting-sub-word-information"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">Exploiting sub-word information</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#table-of-contents"><span class="nav-number">1.</span> <span class="nav-text">Table of contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#word-embedding"><span class="nav-number">3.</span> <span class="nav-text">2. Word Embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-skip-gram-model"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 The Skip-gram Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cbow-model"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 CBOW Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fasttext-model"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 fastText Model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#exploiting-sub-word-information"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">Exploiting sub-word information</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hierarchical-softmax"><span class="nav-number">4.</span> <span class="nav-text">3. Hierarchical Softmax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hoffman-tree"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 Hoffman Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hoffman-coding"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 Hoffman Coding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#derivatives-of-hierarchical-softmax"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 Derivatives of Hierarchical Softmax</span></a></li></ol></li></ol></div>
             
 
           </div>
