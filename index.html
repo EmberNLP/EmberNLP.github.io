@@ -452,6 +452,11 @@ Let us use the following graph as an example to illustrate how to calculate the 
 <p>And we have: <span class="math display">\[p(Sport|input) = \prod^5_{j=2}p(d^w_j|x_w,\theta^w_1)\]</span></p>
 <p>In general, we have: <span class="math display">\[p(w|input) = \prod^{l^w}_{j=2}p(d^w_j|x_w,\theta^w_{j-1})\]</span> <span class="math display">\[p(d^w_j|x_w,\theta^w_{j-1}) = [\sigma(x^T_w\theta^w_{j-1})]^{1-d^w_j}[1 - \sigma(x^T_w\theta^w_{j-1})]^{d^w_j}\]</span> The log-likelihood function is: <span class="math display">\[\mathcal{L} = log \prod^{l^w}_{j=2}{[\sigma(x^T_w\theta^w_{j-1})]^{1-d^w_j}[1 - \sigma(x^T_w\theta^w_{j-1})]^{d^w_j}}\]</span> <span class="math display">\[ = \Sigma^{l^w}_{j=2}{(1-d^w_j)log[\sigma(x^T_w\theta^w_{j-1})]+d^w_jlog[1-\sigma(x^T_w\theta^w_{j-1})]}\]</span> The calculation of derivatives are as follows: <span class="math display">\[\frac{\partial \mathcal{L}(w,j)}{\partial \theta^w_{j-1}} = \frac{\partial}{\partial\theta^w_{j-1}}\{(1-d^w_j)log[\sigma(x^T_w\theta^w_{j-1})] + d^w_jlog[1-\sigma(x^T_w\theta^w_{j-1})]\}\]</span> <span class="math display">\[= (1-d^w_j)[1-\sigma(x^T_w\theta^w_{j-1})]x_w-d^w_j\sigma(x^T_w\theta^w_{j-1})x_w\]</span> <span class="math display">\[=\{(1-d^w_j)[1-\sigma(x^T_w\theta^w_{j-1})]-d^w_j\sigma(x^T_w\theta^w_{j-1})\}x_w\]</span> <span class="math display">\[= [1-d^w_j-\sigma(x^T_w\theta^w_{j-1})]x_w\]</span></p>
 <p>And similarly, for <span class="math inline">\(x_w\)</span>: <span class="math display">\[\frac{\partial\mathcal{L}(w,j)}{\partial x_w} = [1-d^w_j-\sigma(x^T_w\theta^w_{j-1})]\theta^w_{j-1}\]</span></p>
+<h1 id="reference">Reference</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://www.analyticsvidhya.com/blog/2017/07/word-representations-text-classification-using-fasttext-nlp-facebook/" target="_blank" rel="external">Text Classification &amp; Word Representations using FastText (An NLP library by Facebook)</a></li>
+<li><a href="http://www.cnblogs.com/peghoty/p/3857839.html" class="uri" target="_blank" rel="external">http://www.cnblogs.com/peghoty/p/3857839.html</a></li>
+</ol>
 
           
         
