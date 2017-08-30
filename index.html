@@ -321,6 +321,7 @@
 <li>Huffman Coding</li>
 <li>Derivatives of Hierarchical Softmax</li>
 </ul></li>
+<li>Conclusion</li>
 </ul>
 <h1 id="introduction">1. Introduction</h1>
 <p>FastText is a library created by the Facebook Research Team for efficient learning of <strong>word representations</strong> and <strong>sentence classification</strong>. There are two main refernece papers:</p>
@@ -345,7 +346,7 @@
 <li>feature for word w: <span class="math inline">\(\space x_{w}\)</span></li>
 <li>classifier for context word c: <span class="math inline">\(\space v_{c}\)</span></li>
 </ul>
-<p><span class="math display">\[p(x|c) = \frac{exp(x^T_wv_c)}{\Sigma_{k=1}^Kexp(x_w^Tv_k)}\]</span></p>
+<p><span class="math display">\[p(w|c) = \frac{exp(x^T_wv_c)}{\Sigma_{k=1}^Kexp(x_w^Tv_k)}\]</span></p>
 <p>And Word Vectors <span class="math inline">\(x_w\in\mathbb{R}^d\)</span>, are used for some downstream tasks.</p>
 <p>To train this model, we need to minimize a <em><strong>negative log likelihood</strong></em>:</p>
 <p><span class="math display">\[min_{x,v} \space-\Sigma^T_{t=1}\Sigma_{c{\in}C_t}log\frac{e^{x^T_{w_t}v_c}}{\Sigma^K_{k=1}e^{x^T_{w_t}v_k}}\]</span></p>
@@ -400,7 +401,7 @@
 </ul>
 <p><span class="math display">\[p(c|w) = \frac{e^{h^T_w}v_c}{\Sigma^K_{k=1}e^{h^T_wv_k}}\]</span></p>
 <ul>
-<li>Feature of a word computed using n-grams, it takes all the character n-grams and the word itself, using hashing to store them. This makes it possible to build vectors for unseen words.</li>
+<li>Feature of a word is computed using n-grams, it takes all the character n-grams and the word itself, using hashing to store them. This makes it possible to build vectors for unseen words.</li>
 </ul>
 <p><span class="math display">\[h_w = \Sigma_{g{\in}w}x_g\]</span></p>
 <h1 id="hierarchical-softmax">3. Hierarchical Softmax</h1>
@@ -452,6 +453,7 @@ Let us use the following graph as an example to illustrate how to calculate the 
 <p>And we have: <span class="math display">\[p(Sport|input) = \prod^5_{j=2}p(d^w_j|x_w,\theta^w_1)\]</span></p>
 <p>In general, we have: <span class="math display">\[p(w|input) = \prod^{l^w}_{j=2}p(d^w_j|x_w,\theta^w_{j-1})\]</span> <span class="math display">\[p(d^w_j|x_w,\theta^w_{j-1}) = [\sigma(x^T_w\theta^w_{j-1})]^{1-d^w_j}[1 - \sigma(x^T_w\theta^w_{j-1})]^{d^w_j}\]</span> The log-likelihood function is: <span class="math display">\[\mathcal{L} = log \prod^{l^w}_{j=2}{[\sigma(x^T_w\theta^w_{j-1})]^{1-d^w_j}[1 - \sigma(x^T_w\theta^w_{j-1})]^{d^w_j}}\]</span> <span class="math display">\[ = \Sigma^{l^w}_{j=2}{(1-d^w_j)log[\sigma(x^T_w\theta^w_{j-1})]+d^w_jlog[1-\sigma(x^T_w\theta^w_{j-1})]}\]</span> The calculation of derivatives are as follows: <span class="math display">\[\frac{\partial \mathcal{L}(w,j)}{\partial \theta^w_{j-1}} = \frac{\partial}{\partial\theta^w_{j-1}}\{(1-d^w_j)log[\sigma(x^T_w\theta^w_{j-1})] + d^w_jlog[1-\sigma(x^T_w\theta^w_{j-1})]\}\]</span> <span class="math display">\[= (1-d^w_j)[1-\sigma(x^T_w\theta^w_{j-1})]x_w-d^w_j\sigma(x^T_w\theta^w_{j-1})x_w\]</span> <span class="math display">\[=\{(1-d^w_j)[1-\sigma(x^T_w\theta^w_{j-1})]-d^w_j\sigma(x^T_w\theta^w_{j-1})\}x_w\]</span> <span class="math display">\[= [1-d^w_j-\sigma(x^T_w\theta^w_{j-1})]x_w\]</span></p>
 <p>And similarly, for <span class="math inline">\(x_w\)</span>: <span class="math display">\[\frac{\partial\mathcal{L}(w,j)}{\partial x_w} = [1-d^w_j-\sigma(x^T_w\theta^w_{j-1})]\theta^w_{j-1}\]</span></p>
+<h1 id="conclusion">Conclusion</h1>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://www.analyticsvidhya.com/blog/2017/07/word-representations-text-classification-using-fasttext-nlp-facebook/" target="_blank" rel="external">Text Classification &amp; Word Representations using FastText (An NLP library by Facebook)</a></li>

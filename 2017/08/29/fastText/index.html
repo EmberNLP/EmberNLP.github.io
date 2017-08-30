@@ -95,22 +95,22 @@
 
 
 
-<meta name="description" content="Table of contents  Introduction Word Embedding  The Skip-gram Model CBOW Model fastText Model  Hierarchical Softmax  Huffman Tree Huffman Coding Derivatives of Hierarchical Softmax   1. Introduction F">
+<meta name="description" content="Table of contents  Introduction Word Embedding  The Skip-gram Model CBOW Model fastText Model  Hierarchical Softmax  Huffman Tree Huffman Coding Derivatives of Hierarchical Softmax  Conclusion  1. Int">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Some understanding about how fastText works">
 <meta property="og:url" content="http://yoursite.com/2017/08/29/fastText/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="Table of contents  Introduction Word Embedding  The Skip-gram Model CBOW Model fastText Model  Hierarchical Softmax  Huffman Tree Huffman Coding Derivatives of Hierarchical Softmax   1. Introduction F">
+<meta property="og:description" content="Table of contents  Introduction Word Embedding  The Skip-gram Model CBOW Model fastText Model  Hierarchical Softmax  Huffman Tree Huffman Coding Derivatives of Hierarchical Softmax  Conclusion  1. Int">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/skipgram.png">
 <meta property="og:image" content="http://yoursite.com/images/CBOW.png">
 <meta property="og:image" content="http://yoursite.com/images/HuffmanTree.png">
 <meta property="og:image" content="http://yoursite.com/images/HuffmanCoding.png">
 <meta property="og:image" content="http://yoursite.com/images/Derivative_of_Softmax.png">
-<meta property="og:updated_time" content="2017-08-29T06:55:30.000Z">
+<meta property="og:updated_time" content="2017-08-30T05:22:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Some understanding about how fastText works">
-<meta name="twitter:description" content="Table of contents  Introduction Word Embedding  The Skip-gram Model CBOW Model fastText Model  Hierarchical Softmax  Huffman Tree Huffman Coding Derivatives of Hierarchical Softmax   1. Introduction F">
+<meta name="twitter:description" content="Table of contents  Introduction Word Embedding  The Skip-gram Model CBOW Model fastText Model  Hierarchical Softmax  Huffman Tree Huffman Coding Derivatives of Hierarchical Softmax  Conclusion  1. Int">
 <meta name="twitter:image" content="http://yoursite.com/images/skipgram.png">
 
 
@@ -326,6 +326,7 @@
 <li>Huffman Coding</li>
 <li>Derivatives of Hierarchical Softmax</li>
 </ul></li>
+<li>Conclusion</li>
 </ul>
 <h1 id="introduction">1. Introduction</h1>
 <p>FastText is a library created by the Facebook Research Team for efficient learning of <strong>word representations</strong> and <strong>sentence classification</strong>. There are two main refernece papers:</p>
@@ -350,7 +351,7 @@
 <li>feature for word w: <span class="math inline">\(\space x_{w}\)</span></li>
 <li>classifier for context word c: <span class="math inline">\(\space v_{c}\)</span></li>
 </ul>
-<p><span class="math display">\[p(x|c) = \frac{exp(x^T_wv_c)}{\Sigma_{k=1}^Kexp(x_w^Tv_k)}\]</span></p>
+<p><span class="math display">\[p(w|c) = \frac{exp(x^T_wv_c)}{\Sigma_{k=1}^Kexp(x_w^Tv_k)}\]</span></p>
 <p>And Word Vectors <span class="math inline">\(x_w\in\mathbb{R}^d\)</span>, are used for some downstream tasks.</p>
 <p>To train this model, we need to minimize a <em><strong>negative log likelihood</strong></em>:</p>
 <p><span class="math display">\[min_{x,v} \space-\Sigma^T_{t=1}\Sigma_{c{\in}C_t}log\frac{e^{x^T_{w_t}v_c}}{\Sigma^K_{k=1}e^{x^T_{w_t}v_k}}\]</span></p>
@@ -405,7 +406,7 @@
 </ul>
 <p><span class="math display">\[p(c|w) = \frac{e^{h^T_w}v_c}{\Sigma^K_{k=1}e^{h^T_wv_k}}\]</span></p>
 <ul>
-<li>Feature of a word computed using n-grams, it takes all the character n-grams and the word itself, using hashing to store them. This makes it possible to build vectors for unseen words.</li>
+<li>Feature of a word is computed using n-grams, it takes all the character n-grams and the word itself, using hashing to store them. This makes it possible to build vectors for unseen words.</li>
 </ul>
 <p><span class="math display">\[h_w = \Sigma_{g{\in}w}x_g\]</span></p>
 <h1 id="hierarchical-softmax">3. Hierarchical Softmax</h1>
@@ -457,6 +458,7 @@ Let us use the following graph as an example to illustrate how to calculate the 
 <p>And we have: <span class="math display">\[p(Sport|input) = \prod^5_{j=2}p(d^w_j|x_w,\theta^w_1)\]</span></p>
 <p>In general, we have: <span class="math display">\[p(w|input) = \prod^{l^w}_{j=2}p(d^w_j|x_w,\theta^w_{j-1})\]</span> <span class="math display">\[p(d^w_j|x_w,\theta^w_{j-1}) = [\sigma(x^T_w\theta^w_{j-1})]^{1-d^w_j}[1 - \sigma(x^T_w\theta^w_{j-1})]^{d^w_j}\]</span> The log-likelihood function is: <span class="math display">\[\mathcal{L} = log \prod^{l^w}_{j=2}{[\sigma(x^T_w\theta^w_{j-1})]^{1-d^w_j}[1 - \sigma(x^T_w\theta^w_{j-1})]^{d^w_j}}\]</span> <span class="math display">\[ = \Sigma^{l^w}_{j=2}{(1-d^w_j)log[\sigma(x^T_w\theta^w_{j-1})]+d^w_jlog[1-\sigma(x^T_w\theta^w_{j-1})]}\]</span> The calculation of derivatives are as follows: <span class="math display">\[\frac{\partial \mathcal{L}(w,j)}{\partial \theta^w_{j-1}} = \frac{\partial}{\partial\theta^w_{j-1}}\{(1-d^w_j)log[\sigma(x^T_w\theta^w_{j-1})] + d^w_jlog[1-\sigma(x^T_w\theta^w_{j-1})]\}\]</span> <span class="math display">\[= (1-d^w_j)[1-\sigma(x^T_w\theta^w_{j-1})]x_w-d^w_j\sigma(x^T_w\theta^w_{j-1})x_w\]</span> <span class="math display">\[=\{(1-d^w_j)[1-\sigma(x^T_w\theta^w_{j-1})]-d^w_j\sigma(x^T_w\theta^w_{j-1})\}x_w\]</span> <span class="math display">\[= [1-d^w_j-\sigma(x^T_w\theta^w_{j-1})]x_w\]</span></p>
 <p>And similarly, for <span class="math inline">\(x_w\)</span>: <span class="math display">\[\frac{\partial\mathcal{L}(w,j)}{\partial x_w} = [1-d^w_j-\sigma(x^T_w\theta^w_{j-1})]\theta^w_{j-1}\]</span></p>
+<h1 id="conclusion">Conclusion</h1>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://www.analyticsvidhya.com/blog/2017/07/word-representations-text-classification-using-fasttext-nlp-facebook/" target="_blank" rel="external">Text Classification &amp; Word Representations using FastText (An NLP library by Facebook)</a></li>
@@ -612,7 +614,7 @@ Let us use the following graph as an example to illustrate how to calculate the 
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#table-of-contents"><span class="nav-number">1.</span> <span class="nav-text">Table of contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#word-embedding"><span class="nav-number">3.</span> <span class="nav-text">2. Word Embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-skip-gram-model"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 The Skip-gram Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cbow-model"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 CBOW Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fasttext-model"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 fastText Model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#exploiting-sub-word-information"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">Exploiting sub-word information</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hierarchical-softmax"><span class="nav-number">4.</span> <span class="nav-text">3. Hierarchical Softmax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hoffman-tree"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 Hoffman Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hoffman-coding"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 Hoffman Coding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#derivatives-of-hierarchical-softmax"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 Derivatives of Hierarchical Softmax</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#table-of-contents"><span class="nav-number">1.</span> <span class="nav-text">Table of contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#word-embedding"><span class="nav-number">3.</span> <span class="nav-text">2. Word Embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-skip-gram-model"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 The Skip-gram Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cbow-model"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 CBOW Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fasttext-model"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 fastText Model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#exploiting-sub-word-information"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">Exploiting sub-word information</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hierarchical-softmax"><span class="nav-number">4.</span> <span class="nav-text">3. Hierarchical Softmax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hoffman-tree"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 Hoffman Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hoffman-coding"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 Hoffman Coding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#derivatives-of-hierarchical-softmax"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 Derivatives of Hierarchical Softmax</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#conclusion"><span class="nav-number">5.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
