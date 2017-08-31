@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="dl basics," />
 
 
 
@@ -95,17 +95,18 @@
 
 
 
-<meta name="description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta name="description" content="Intuitively, extra hidden layers ought to make the network able to learn more complex classification functions, and thus do a better job classifying. Certainly, things shouldn’t get worse, since the e">
+<meta name="keywords" content="dl basics">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Start Your Blog Using Hexo and Githubpage">
-<meta property="og:url" content="http://yoursite.com/2017/08/27/Start Your Blog Using Hexo and Githubpage/index.html">
+<meta property="og:title" content="Vanishing and Exploding Gradients">
+<meta property="og:url" content="http://yoursite.com/2017/08/31/Vanishing and Exploding Gradients/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta property="og:description" content="Intuitively, extra hidden layers ought to make the network able to learn more complex classification functions, and thus do a better job classifying. Certainly, things shouldn’t get worse, since the e">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-08-31T01:12:44.000Z">
+<meta property="og:updated_time" content="2017-08-31T05:53:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Start Your Blog Using Hexo and Githubpage">
-<meta name="twitter:description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta name="twitter:title" content="Vanishing and Exploding Gradients">
+<meta name="twitter:description" content="Intuitively, extra hidden layers ought to make the network able to learn more complex classification functions, and thus do a better job classifying. Certainly, things shouldn’t get worse, since the e">
 
 
 
@@ -135,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/27/Start Your Blog Using Hexo and Githubpage/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/31/Vanishing and Exploding Gradients/"/>
 
 
 
 
 
-  <title>Start Your Blog Using Hexo and Githubpage | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Vanishing and Exploding Gradients | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -278,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/Start Your Blog Using Hexo and Githubpage/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Vanishing and Exploding Gradients/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -295,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Start Your Blog Using Hexo and Githubpage</h1>
+          <h1 class="post-title" itemprop="name headline">Vanishing and Exploding Gradients</h1>
         
 
         <div class="post-meta">
@@ -307,8 +308,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-27T23:24:53+10:00">
-                2017-08-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T15:08:39+10:00">
+                2017-08-31
               </time>
             
 
@@ -317,6 +318,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -345,18 +368,14 @@
       
 
       
-        <p>This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. <a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a> 2. <a href="https://git-scm.com" target="_blank" rel="external">Git</a></p>
-<p>If your computer already has these, just install Hexo with npm: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure></p>
-<h1 id="setup">Setup</h1>
-<p>Once Hexo is installed, run the following commands to initialise Hexo in the target <folder>. <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init &lt;folder&gt;</div><div class="line">$ <span class="built_in">cd</span> &lt;folder&gt;</div><div class="line">$ npm install</div></pre></td></tr></table></figure></folder></p>
-<h1 id="deployment">Deployment</h1>
-<p>Before your first deployment, you will have to modify some settings in _config.yml. A valid deployment setting must have a type field. For example: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  repo: http://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure></p>
-<p>Before your first deployment, install <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="external">hexo-deployer-git</a>: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
-<p>Then need to set your git information as follow: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name <span class="string">"yourname"</span></div><div class="line">git config --global user.email <span class="string">"youremail"</span></div></pre></td></tr></table></figure></p>
-<h1 id="write">Write</h1>
-<p>Then you can write your posts and save them in the folder _post under source.</p>
-<h1 id="publish">Publish</h1>
-<p>Just type in the following command to publish your posts: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure></p>
+        <p>Intuitively, extra hidden layers ought to make the network able to learn more complex classification functions, and thus do a better job classifying. Certainly, things shouldn’t get worse, since the extra layers can, in the worst case, simply do nothing. But that’s not what’s going on.</p>
+<p>Here is an example to illustrate why the vanishing gradient problem occurs. Let’s explicitly write out the entire expression for the gradient: <span class="math display">\[\frac{\partial Cost}{\partial w1} = \frac{\partial Cost}{\partial a_4}f&#39;(z_4)w_4f&#39;(z_3)w_3f&#39;(z_2)w_2f&#39;(z_1)x_{input}\]</span></p>
+<p>Excepting the very first term and very last term, this expression is a product of terms of the form: <span class="math display">\[f&#39;(z_j)w_j\]</span></p>
+<p>Recall that the standard approach to initialize the weights in the network is to choose the weights using a Gaussian with mean 0 and small standard deviation. So the weights will usually satisfy <span class="math inline">\(|w_j| &lt; 1\)</span>.</p>
+<p>If the non-linear function is the widely used relu function, then the derivative of <span class="math inline">\(f&#39;(z_j)\)</span> can only take the values of 1 or 0. So the terms <span class="math inline">\(f&#39;(z_j)w_j\)</span> will usually much less than 1. And when we take a product of many such terms, the product will tend to exponentially decrease: the more terms, the smaller the product will be. This is starting to smell like a possible explanation for the vanishing gradient problem. In particular, we might wonder whether the weights <span class="math inline">\(w_j\)</span> could grow during training. If they do, it’s possible the terms <span class="math inline">\(f&#39;(z_j)w_j\)</span> in the product will no longer satisfy <span class="math inline">\(|f&#39;(z_j)w_j| &lt; 1\)</span>. Indeed, if the terms get large enough - greater than 1 - then we will no longer have a vanishing gradient problem. Instead, the gradient will actually grow exponentially as we move backward through the layers. Instead of a vanishing gradient problem, we’ll have an exploding gradient problem.</p>
+<p>It is the fact that the gradient in early layers is the product of terms from all the later layers. When there are many layers, that’s an intrinsically unstable situation. The only way all layers can learn at close to the same speed is if all those products of terms come close to balancing out. Without some mechanism or underlying reason for that balancing to occur, it’s highly unlikely to happen simply by chance. In short, the real problem here is that neural networks suffer from an unstable gradient problem. As a result, if we use standard gradient-based learning techniques, different layers in the network will tend to learn at wildly different speeds.</p>
+<h1 id="reference">Reference</h1>
+<p><a href="http://neuralnetworksanddeeplearning.com/chap5.html" target="_blank" rel="external">Neural Network and Deep Leanring Chpater 5</a></p>
 
       
     </div>
@@ -372,6 +391,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/dl-basics/" rel="tag"># dl basics</a>
+          
+        </div>
+      
 
       
       
@@ -381,15 +406,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/08/31/Notes on Neural Network Methods in Natural Language Processing/" rel="next" title="Notes on Neural Network Methods in Natural Language Processing Chapter1-5">
+                <i class="fa fa-chevron-left"></i> Notes on Neural Network Methods in Natural Language Processing Chapter1-5
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/29/fastText/" rel="prev" title="Some understanding about how fastText works">
-                Some understanding about how fastText works <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -525,7 +550,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#setup"><span class="nav-number">1.</span> <span class="nav-text">Setup</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deployment"><span class="nav-number">2.</span> <span class="nav-text">Deployment</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#write"><span class="nav-number">3.</span> <span class="nav-text">Write</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#publish"><span class="nav-number">4.</span> <span class="nav-text">Publish</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>

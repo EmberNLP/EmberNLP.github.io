@@ -275,6 +275,319 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Vanishing and Exploding Gradients/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/31/Vanishing and Exploding Gradients/" itemprop="url">Vanishing and Exploding Gradients</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T15:08:39+10:00">
+                2017-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Intuitively, extra hidden layers ought to make the network able to learn more complex classification functions, and thus do a better job classifying. Certainly, things shouldn’t get worse, since the extra layers can, in the worst case, simply do nothing. But that’s not what’s going on.</p>
+<p>Here is an example to illustrate why the vanishing gradient problem occurs. Let’s explicitly write out the entire expression for the gradient: <span class="math display">\[\frac{\partial Cost}{\partial w1} = \frac{\partial Cost}{\partial a_4}f&#39;(z_4)w_4f&#39;(z_3)w_3f&#39;(z_2)w_2f&#39;(z_1)x_{input}\]</span></p>
+<p>Excepting the very first term and very last term, this expression is a product of terms of the form: <span class="math display">\[f&#39;(z_j)w_j\]</span></p>
+<p>Recall that the standard approach to initialize the weights in the network is to choose the weights using a Gaussian with mean 0 and small standard deviation. So the weights will usually satisfy <span class="math inline">\(|w_j| &lt; 1\)</span>.</p>
+<p>If the non-linear function is the widely used relu function, then the derivative of <span class="math inline">\(f&#39;(z_j)\)</span> can only take the values of 1 or 0. So the terms <span class="math inline">\(f&#39;(z_j)w_j\)</span> will usually much less than 1. And when we take a product of many such terms, the product will tend to exponentially decrease: the more terms, the smaller the product will be. This is starting to smell like a possible explanation for the vanishing gradient problem. In particular, we might wonder whether the weights <span class="math inline">\(w_j\)</span> could grow during training. If they do, it’s possible the terms <span class="math inline">\(f&#39;(z_j)w_j\)</span> in the product will no longer satisfy <span class="math inline">\(|f&#39;(z_j)w_j| &lt; 1\)</span>. Indeed, if the terms get large enough - greater than 1 - then we will no longer have a vanishing gradient problem. Instead, the gradient will actually grow exponentially as we move backward through the layers. Instead of a vanishing gradient problem, we’ll have an exploding gradient problem.</p>
+<p>It is the fact that the gradient in early layers is the product of terms from all the later layers. When there are many layers, that’s an intrinsically unstable situation. The only way all layers can learn at close to the same speed is if all those products of terms come close to balancing out. Without some mechanism or underlying reason for that balancing to occur, it’s highly unlikely to happen simply by chance. In short, the real problem here is that neural networks suffer from an unstable gradient problem. As a result, if we use standard gradient-based learning techniques, different layers in the network will tend to learn at wildly different speeds.</p>
+<h1 id="reference">Reference</h1>
+<p><a href="http://neuralnetworksanddeeplearning.com/chap5.html" target="_blank" rel="external">Neural Network and Deep Leanring Chpater 5</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Notes on Neural Network Methods in Natural Language Processing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/31/Notes on Neural Network Methods in Natural Language Processing/" itemprop="url">Notes on Neural Network Methods in Natural Language Processing Chapter1-5</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T11:41:28+10:00">
+                2017-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Book-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Book notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="chapter-1">Chapter 1</h1>
+<p>1.1 The challenge for computational approaches, including machine leanring:</p>
+<ul>
+<li><strong>Discrete</strong>
+<ul>
+<li>The basic elements of weitten language are characters.</li>
+<li>Characters form words that in turn denote objects, concepts,events, actions and ideas.</li>
+<li>e.g. There is no simple operation that will allow us to move from the word “red” to the word “pink” without using a large lookup table or a dictonary.</li>
+</ul></li>
+<li><strong>Compositional</strong>
+<ul>
+<li>Letters form words, words form phrases and sentences.</li>
+<li>In oder to interpret a text, we need to work beyond the level of letters and words, and look at long sequences of words such as sentences, or even complete documents.</li>
+</ul></li>
+<li><strong>Sparse</strong>
+<ul>
+<li>The combination of the above properties leads to <em>data sparseness</em>.</li>
+<li>The way in which words can be combined to form meanings is practically infinite.</li>
+</ul></li>
+</ul>
+<p>1.2 Deep learning approaches work by learning to not only predict but also to <em><strong>correctly represent</strong></em> the data, such that it is suitable for prediction.</p>
+<h1 id="chapter-2">Chapter 2</h1>
+<p>2.2 Deep learning models often learn a cascade of representations of the input that build on top of each other, in order to best model the problem at hand, and these representations are often not interpretable–we do not know which properties of the input they capture.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/29/fastText/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -341,16 +654,6 @@
           
 
           
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/08/29/fastText/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/29/fastText/" itemprop="commentCount"></span>
-                </a>
-              </span>
             
           
 
@@ -624,16 +927,6 @@ Let us use the following graph as an example to illustrate how to calculate the 
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/08/27/Start Your Blog Using Hexo and Githubpage/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/27/Start Your Blog Using Hexo and Githubpage/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -755,7 +1048,7 @@ Let us use the following graph as an example to illustrate how to calculate the 
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -766,7 +1059,7 @@ Let us use the following graph as an example to illustrate how to calculate the 
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -777,7 +1070,7 @@ Let us use the following graph as an example to illustrate how to calculate the 
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -932,37 +1225,17 @@ Let us use the following graph as an example to illustrate how to calculate the 
 
   
 
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"Comments"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
 
   
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
+
+
+
+
+
+
+
+
   
-
-
-
-
-
-
-
-
 
 
 
