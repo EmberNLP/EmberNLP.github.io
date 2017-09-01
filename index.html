@@ -275,6 +275,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Batch Normalization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/31/Batch Normalization/" itemprop="url">Batch Normalization</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T22:00:34+10:00">
+                2017-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Optimization Methods in Deep Learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -399,7 +541,8 @@ For <em><strong>Stochastic Gradient Descend</strong></em>, take gradient steps w
 </center>
 <p>The red arrows shows the direction taken by one step of mini-batch gradient descent with momentum. The blue points show the direction of the gradient (with respect to the current mini-batch) on each step. Rather than just following the gradient, we let the gradient influence <span class="math inline">\(v\)</span> and then take a step in the direction of <span class="math inline">\(v\)</span>.</p>
 <p>First, let’s gain some intuition from <em><strong>Exponentially Weighted Average</strong></em>.<br>
-Let <span class="math inline">\(v\)</span> denote the variable for later use, and <span class="math inline">\(\theta\)</span> is the current observation <span class="math display">\[v_0 = 0\]</span> <span class="math display">\[v_1 = \beta v_0 + (1-\beta)\theta_1\]</span> <span class="math display">\[v_2 = \beta v_1 + (1-\beta)\theta_2\]</span> <span class="math display">\[.\]</span> <span class="math display">\[.\]</span> <span class="math display">\[.\]</span> <span class="math display">\[v_t = \beta v_{t-1} + (1-\beta)\theta_t\]</span></p>
+Let <span class="math inline">\(v\)</span> denote the variable for later use, and <span class="math inline">\(\theta\)</span> is the current observation <span class="math display">\[v_0 = 0\]</span> <span class="math display">\[v_1 = \beta v_0 + (1-\beta)\theta_1\]</span> <span class="math display">\[v_2 = \beta v_1 + (1-\beta)\theta_2\]</span> <span class="math display">\[.\]</span> <span class="math display">\[.\]</span> <span class="math display">\[.\]</span></p>
+<p><span class="math display">\[v_t = \beta v_{t-1} + (1-\beta)\theta_t\]</span></p>
 The intuition behind the above equation is that:
 <span class="math display">\[\begin{equation}\begin{split}
 v_t &amp;= \beta v_{t-1} + (1-\beta)\theta_t\\\\
@@ -580,173 +723,11 @@ v_t &amp;= \beta v_{t-1} + (1-\beta)\theta_t\\\\
 <p>If the non-linear function is the widely used relu function, then the derivative of <span class="math inline">\(f&#39;(z_j)\)</span> can only take the values of 1 or 0. So the terms <span class="math inline">\(f&#39;(z_j)w_j\)</span> will usually much less than 1. And when we take a product of many such terms, the product will tend to exponentially decrease: the more terms, the smaller the product will be. This is starting to smell like a possible explanation for the vanishing gradient problem. In particular, we might wonder whether the weights <span class="math inline">\(w_j\)</span> could grow during training. If they do, it’s possible the terms <span class="math inline">\(f&#39;(z_j)w_j\)</span> in the product will no longer satisfy <span class="math inline">\(|f&#39;(z_j)w_j| &lt; 1\)</span>. Indeed, if the terms get large enough - greater than 1 - then we will no longer have a vanishing gradient problem. Instead, the gradient will actually grow exponentially as we move backward through the layers. Instead of a vanishing gradient problem, we’ll have an exploding gradient problem.</p>
 <p>It is the fact that the gradient in early layers is the product of terms from all the later layers. When there are many layers, that’s an intrinsically unstable situation. The only way all layers can learn at close to the same speed is if all those products of terms come close to balancing out. Without some mechanism or underlying reason for that balancing to occur, it’s highly unlikely to happen simply by chance. In short, the real problem here is that neural networks suffer from an unstable gradient problem. As a result, if we use standard gradient-based learning techniques, different layers in the network will tend to learn at wildly different speeds.</p>
 <p>To reduce the effect of vanishing or exploding gradient problem, espeically for relu function, we can initilize the weights by: <span class="math display">\[w^{[l]} = np.random.randn(shape) * np.sqrt(\frac{1}{n^{[l-1]}})\]</span> The intuition behind is that: If we need the value of <span class="math inline">\(z = w_1x_1 + ... + w_nx_n + b\)</span> to be near 1, we should set <span class="math inline">\(Var(w) = \frac{1}{n}\)</span>, because the larger is n, the smaller the term <span class="math inline">\(w_jx_j\)</span> should be. In practice, using <span class="math inline">\(\frac{2}{n^{[l-1]}}\)</span> instead works better.</p>
-<h1 id="reference">Reference</h1>
+<p>And for tanh activation function, an effective scheme due to <strong>Glorot and Bengio [2010]</strong>, called <strong>xavier initialization</strong>, suggests initializing a weight matrix <em><span class="math inline">\(W\)</span></em> <span class="math inline">\(\in \mathbb{R}^{d_{in} \times d_{out}}\)</span> as: <span class="math display">\[W \sim U[-\frac{\sqrt{6}}{\sqrt{d_{in}+d_{out}}},+\frac{\sqrt{6}}{\sqrt{d_{in}+d_{out}}}]\]</span></p>
+<p>Another way is to perform <em><strong>Batch Normalization</strong></em>, the simple intuition behind is: for every minibatch, normalizing the inputs to each of the network layers to have zeros mean and unit variance. I’ll talk about this method in another post in detail.</p>
+<p>Besides, dealing with the exploding gradients has a simple but very effective solution: clipping the gradients if their norm exceeds a given threshold. Let <em><span class="math inline">\(g\)</span></em> be the gradients of all parameters in the network, and <em><span class="math inline">\(\|g\|\)</span></em> be their <span class="math inline">\(L_2\)</span> norm. Pascanu et al.[2012] suggest to set: <span class="math inline">\(g \leftarrow \frac{threshlod}{\|g\|}g\)</span> # Reference</p>
 <p>1.<a href="http://neuralnetworksanddeeplearning.com/chap5.html" target="_blank" rel="external">Neural Network and Deep Leanring Chpater 5</a><br>
-2.Andrew Ng’s Deep Learning Course</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Notes on Neural Network Methods in Natural Language Processing/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ember">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EmberNLP">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/31/Notes on Neural Network Methods in Natural Language Processing/" itemprop="url">Notes on Neural Network Methods in Natural Language Processing Chapter1-5</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T11:41:28+10:00">
-                2017-08-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Book-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Book notes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="chapter-1">Chapter 1</h1>
-<p>1.1 The challenge for computational approaches, including machine leanring:</p>
-<ul>
-<li><strong>Discrete</strong>
-<ul>
-<li>The basic elements of weitten language are characters.</li>
-<li>Characters form words that in turn denote objects, concepts,events, actions and ideas.</li>
-<li>e.g. There is no simple operation that will allow us to move from the word “red” to the word “pink” without using a large lookup table or a dictonary.</li>
-</ul></li>
-<li><strong>Compositional</strong>
-<ul>
-<li>Letters form words, words form phrases and sentences.</li>
-<li>In oder to interpret a text, we need to work beyond the level of letters and words, and look at long sequences of words such as sentences, or even complete documents.</li>
-</ul></li>
-<li><strong>Sparse</strong>
-<ul>
-<li>The combination of the above properties leads to <em>data sparseness</em>.</li>
-<li>The way in which words can be combined to form meanings is practically infinite.</li>
-</ul></li>
-</ul>
-<p>1.2 Deep learning approaches work by learning to not only predict but also to <em><strong>correctly represent</strong></em> the data, such that it is suitable for prediction.</p>
-<h1 id="chapter-2">Chapter 2</h1>
-<p>2.2 Deep learning models often learn a cascade of representations of the input that build on top of each other, in order to best model the problem at hand, and these representations are often not interpretable–we do not know which properties of the input they capture.</p>
+2.Andrew Ng’s Deep Learning Course 3.Neural network methods in natural language processing</p>
 
           
         
@@ -1277,7 +1258,7 @@ The calculation of derivatives are as follows:
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -1288,7 +1269,7 @@ The calculation of derivatives are as follows:
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

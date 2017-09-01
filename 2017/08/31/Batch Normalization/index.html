@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="DL Basics,Neural Network Methods in Natural Language Processing," />
+  <meta name="keywords" content="DL Basics," />
 
 
 
@@ -95,18 +95,15 @@
 
 
 
-<meta name="description" content="Chapter 1 1.1 The challenge for computational approaches, including machine leanring:  Discrete  The basic elements of weitten language are characters. Characters form words that in turn denote object">
-<meta name="keywords" content="DL Basics,Neural Network Methods in Natural Language Processing">
+<meta name="keywords" content="DL Basics">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Notes on Neural Network Methods in Natural Language Processing Chapter1-5">
-<meta property="og:url" content="http://yoursite.com/2017/08/31/Notes on Neural Network Methods in Natural Language Processing/index.html">
+<meta property="og:title" content="Batch Normalization">
+<meta property="og:url" content="http://yoursite.com/2017/08/31/Batch Normalization/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="Chapter 1 1.1 The challenge for computational approaches, including machine leanring:  Discrete  The basic elements of weitten language are characters. Characters form words that in turn denote object">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-08-31T05:58:09.000Z">
+<meta property="og:updated_time" content="2017-09-01T01:11:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Notes on Neural Network Methods in Natural Language Processing Chapter1-5">
-<meta name="twitter:description" content="Chapter 1 1.1 The challenge for computational approaches, including machine leanring:  Discrete  The basic elements of weitten language are characters. Characters form words that in turn denote object">
+<meta name="twitter:title" content="Batch Normalization">
 
 
 
@@ -136,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/31/Notes on Neural Network Methods in Natural Language Processing/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/31/Batch Normalization/"/>
 
 
 
 
 
-  <title>Notes on Neural Network Methods in Natural Language Processing Chapter1-5 | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Batch Normalization | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -279,7 +276,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Notes on Neural Network Methods in Natural Language Processing/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Batch Normalization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -296,7 +293,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Notes on Neural Network Methods in Natural Language Processing Chapter1-5</h1>
+          <h1 class="post-title" itemprop="name headline">Batch Normalization</h1>
         
 
         <div class="post-meta">
@@ -308,7 +305,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T11:41:28+10:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T22:00:34+10:00">
                 2017-08-31
               </time>
             
@@ -331,8 +328,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Book-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Book notes</span>
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
                   </a>
                 </span>
 
@@ -368,29 +365,7 @@
       
 
       
-        <h1 id="chapter-1">Chapter 1</h1>
-<p>1.1 The challenge for computational approaches, including machine leanring:</p>
-<ul>
-<li><strong>Discrete</strong>
-<ul>
-<li>The basic elements of weitten language are characters.</li>
-<li>Characters form words that in turn denote objects, concepts,events, actions and ideas.</li>
-<li>e.g. There is no simple operation that will allow us to move from the word “red” to the word “pink” without using a large lookup table or a dictonary.</li>
-</ul></li>
-<li><strong>Compositional</strong>
-<ul>
-<li>Letters form words, words form phrases and sentences.</li>
-<li>In oder to interpret a text, we need to work beyond the level of letters and words, and look at long sequences of words such as sentences, or even complete documents.</li>
-</ul></li>
-<li><strong>Sparse</strong>
-<ul>
-<li>The combination of the above properties leads to <em>data sparseness</em>.</li>
-<li>The way in which words can be combined to form meanings is practically infinite.</li>
-</ul></li>
-</ul>
-<p>1.2 Deep learning approaches work by learning to not only predict but also to <em><strong>correctly represent</strong></em> the data, such that it is suitable for prediction.</p>
-<h1 id="chapter-2">Chapter 2</h1>
-<p>2.2 Deep learning models often learn a cascade of representations of the input that build on top of each other, in order to best model the problem at hand, and these representations are often not interpretable–we do not know which properties of the input they capture.</p>
+        
 
       
     </div>
@@ -410,8 +385,6 @@
           
             <a href="/tags/DL-Basics/" rel="tag"># DL Basics</a>
           
-            <a href="/tags/Neural-Network-Methods-in-Natural-Language-Processing/" rel="tag"># Neural Network Methods in Natural Language Processing</a>
-          
         </div>
       
 
@@ -423,8 +396,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/29/fastText/" rel="next" title="Some understanding about how fastText works">
-                <i class="fa fa-chevron-left"></i> Some understanding about how fastText works
+              <a href="/2017/08/31/Optimization Methods in Deep Learning/" rel="next" title="Optimization Methods in Deep Learning">
+                <i class="fa fa-chevron-left"></i> Optimization Methods in Deep Learning
               </a>
             
           </div>
@@ -432,10 +405,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/31/Vanishing and Exploding Gradients/" rel="prev" title="Vanishing and Exploding Gradients">
-                Vanishing and Exploding Gradients <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -487,17 +456,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -525,7 +485,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -536,7 +496,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -561,22 +521,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-1"><span class="nav-number">1.</span> <span class="nav-text">Chapter 1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-2"><span class="nav-number">2.</span> <span class="nav-text">Chapter 2</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
