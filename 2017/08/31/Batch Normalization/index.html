@@ -95,15 +95,18 @@
 
 
 
+<meta name="description" content="Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters tha">
 <meta name="keywords" content="DL Basics">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Batch Normalization">
 <meta property="og:url" content="http://yoursite.com/2017/08/31/Batch Normalization/index.html">
 <meta property="og:site_name" content="EmberNLP">
+<meta property="og:description" content="Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters tha">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-01T01:11:54.000Z">
+<meta property="og:updated_time" content="2017-09-01T05:48:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Batch Normalization">
+<meta name="twitter:description" content="Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters tha">
 
 
 
@@ -365,7 +368,22 @@
       
 
       
-        
+        <p>Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters that work well, and will also enable you to much more easily train even very deep networks. Normalizing the input feature values can turn the contours of the learning problem from something that might be very elongated to something that is more round and easier for an algorithm like gradient descend to optimize. So, can we apply normalization to the intermediate layers? This is where batch normalization inspired from!</p>
+<strong>Batch Normalization Algorithm </strong><br>
+Given some intermediate values in a neural network, <span class="math inline">\({z^{(1)},z^{(2)},...,z^{(m)}}\)</span>
+<span class="math display">\[\begin{equation}\begin{split}
+\mu = \frac{1}{m}\Sigma_i z^{(i)}\\\\
+\sigma^2 = \frac{1}{m}\Sigma_i (z^{(i)} - \mu)^2\\\\
+z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
+\widehat{z}^{(i)} = \gamma z^{(i)}_{norm} + \beta
+\end{split}\end{equation}\]</span>
+<p>With batch normalization, the entire computational process should be: <span class="math display">\[X \stackrel{W^{[1]},b^{[1]}}{\longrightarrow}Z^{[1]}\stackrel{\beta^{[1]},\gamma^{[1]}}{\longrightarrow}\widehat{Z}^{[1]}\rightarrow A^{[1]} \stackrel{W^{[2]},b^{[2]},BN}{\longrightarrow} \widehat{Z}^{[2]} \rightarrow \cdot\cdot\cdot\]</span> The training parameters includes: <span class="math inline">\(w^{[1]}, b^{[1]}, ... ,w^{[l]}, b^{[l]}\)</span> and <span class="math inline">\(\beta^{[1]}, \gamma^{[1]}, ... ,\beta^{[l]}, \gamma^{[l]}\)</span> We should notice that, b can be eliminated due to that BN zeros out the mean.</p>
+<p>The intuition behind is that:<br>
+- Batch Normalization reduces the problem of the input values changing, it really causes these values to become stable, so that the later layers of the neural network has more firm ground to stand on.<br>
+- Due to mini-batch, it adds some noise to each hidden layers’ activations, and produces some light regularization impact.</p>
+<p>At test time, <span class="math inline">\(\mu and \sigma\)</span> are estimated by using exponentially weighted average across mini-batch. For a specific layer l, we use EWA to keep track of the values of <span class="math inline">\(\mu and \sigma\)</span> of layer l during training which will be used at test time.</p>
+<h1 id="reference">Reference</h1>
+<p>Andrew Ng’s Deep Learning Course</p>
 
       
     </div>
@@ -405,6 +423,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/01/CNN for NLP/" rel="prev" title="CNN for NLP">
+                CNN for NLP <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -456,8 +478,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -474,7 +505,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -485,7 +516,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -496,7 +527,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -521,6 +552,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
