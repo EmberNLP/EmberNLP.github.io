@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="DL Basics,RNN," />
 
 
 
@@ -95,17 +95,18 @@
 
 
 
-<meta name="description" content="Hello, I’m Ember. A primary school student who is interested in machine learning. I’m writing this Blog to write down some notes about papers or ideas in my homework. If you wanted to discuss with me">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta name="description" content="This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of the mean value theorem to go one step further than Pascanu et a">
+<meta name="keywords" content="DL Basics,RNN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Intuition Behind LSTM">
+<meta property="og:url" content="http://yoursite.com/2017/09/04/The Intuition Behind LSTM/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="Hello, I’m Ember. A primary school student who is interested in machine learning. I’m writing this Blog to write down some notes about papers or ideas in my homework. If you wanted to discuss with me">
+<meta property="og:description" content="This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of the mean value theorem to go one step further than Pascanu et a">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-08-31T01:10:39.000Z">
+<meta property="og:updated_time" content="2017-09-04T05:31:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="Hello, I’m Ember. A primary school student who is interested in machine learning. I’m writing this Blog to write down some notes about papers or ideas in my homework. If you wanted to discuss with me">
+<meta name="twitter:title" content="Intuition Behind LSTM">
+<meta name="twitter:description" content="This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of the mean value theorem to go one step further than Pascanu et a">
 
 
 
@@ -135,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/04/The Intuition Behind LSTM/"/>
 
 
 
 
 
-  <title>about | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Intuition Behind LSTM | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -266,37 +267,186 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/The Intuition Behind LSTM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>Hello, I’m Ember. A primary school student who is interested in machine learning.</p>
-<p>I’m writing this Blog to write down some notes about papers or ideas in my homework.</p>
-<p>If you wanted to discuss with me about some interesting things, please feel free to contact me.</p>
-<p>Email: xuan.liang@student.uts.edu.au</p>
-
+          <h1 class="post-title" itemprop="name headline">Intuition Behind LSTM</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-04T10:55:06+10:00">
+                2017-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of the mean value theorem to go one step further than Pascanu et al. and reach a slightly stronger result, effectively showing vanishing causation rather than vanishing sensitivity. Note that mathematical analyses of vanishing and exploding gradients date back to the early 1990s, in Bengio et al. (1994) and Hochreiter (1991) (original in German, relevant portions summarized in Hochreiter and Schmidhuber (1997)).</p>
+To begin, from the definition of a vanilla RNN cell, we have: <span class="math display">\[s_{t+1} = \phi (z_t), where \space z_t = Wx_t + Ux_{t-1} + b\]</span> Recall the <em><strong>Mean value theorem</strong></em>: If a function <span class="math inline">\(f\)</span> is continuous on the closed interval <span class="math inline">\([a,b]\)</span>, and differentiable on the open interval <span class="math inline">\((a,b)\)</span> , then there exists a point <span class="math inline">\(c\)</span> in <span class="math inline">\((a,b)\)</span> such that: <span class="math display">\[f&#39;(c) = \frac{f(b)-f(a)}{b-a}\]</span> Applying the mean value theorem, we get that there exists <span class="math inline">\(c \in [z_t, z_t + \Delta z_t]\)</span> such that:
+<span class="math display">\[\begin{equation}\begin{split}
+\Delta S_{t+1} &amp;= [\phi&#39;(c)] \Delta z_t\\\\
+&amp;= [\phi&#39;(c)] \Delta (Ws_t)\\\\
+&amp;= [\phi&#39;(c)] W\Delta(z_t)
+\end{split}\end{equation}\]</span>
+<p>Now let <span class="math inline">\(\left \| A \right \|\)</span> represent the matrix 2-norm, <span class="math inline">\(\left | v \right |\)</span>the Euclidean vector norm, and define: <span class="math display">\[\gamma = sup_{c \in \{z_t, z_t + \Delta z_t\}} \left \| [\phi&#39; (c)] \right \|\]</span> Note that for the logistic sigmoid, <span class="math inline">\(\gamma \leq \frac{1}{4}\)</span>, and for tanh, <span class="math inline">\(\gamma \leq 1\)</span>.</p>
+Taking the vector norm of each side, we obtain, where the first inequality comes from the definition of the 2-norm (applied twice), and second from the definition of supremum:
+<span class="math display">\[\begin{equation}\begin{split}
+\left | \Delta s_{t+1} \right | &amp;= \left | [\phi&#39;(c)] W \Delta s_t \right |\\\\
+&amp;\leq \left \| [\phi&#39;(c)] \right \| \left \| W \right \| \left | \Delta s_t \right |\\\\
+&amp;\leq \gamma \left \| W \right \| \left | \Delta s_t \right |\\\\
+&amp;= \left \| \gamma W \right \| \left | \Delta s_t \right |
+\end{split}\end{equation}\]</span>
+<p>By expanding this formula over <span class="math inline">\(k\)</span> time steps we get: <span class="math display">\[\left | \Delta s_{t+k} \right | \leq \left \| \gamma W \right \|^k \left | \Delta s_t \right |\]</span> So that: <span class="math display">\[\frac{\left | \Delta s_{t+k} \right |}{\left | \Delta s_t \right |} = \left \| \gamma W \right \|^k\]</span></p>
+<p>Therefore, if <span class="math inline">\(\left \| \gamma W \right \| &lt; 1\)</span> , we have that <span class="math inline">\(\frac{\left | \Delta s_{t+k} \right |}{\left | \Delta s_t \right |}\)</span> decreases exponentially in time.</p>
+<h1 id="reference">Reference</h1>
+<p><a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms" target="_blank" rel="external">Written memories the intuition behind lstms</a></p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DL-Basics/" rel="tag"># DL Basics</a>
+          
+            <a href="/tags/RNN/" rel="tag"># RNN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/02/RNN for NLP/" rel="next" title="RNN for NLP">
+                <i class="fa fa-chevron-left"></i> RNN for NLP
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -329,8 +479,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -394,6 +553,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -514,6 +689,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 

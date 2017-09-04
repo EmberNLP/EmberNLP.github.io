@@ -275,6 +275,308 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/The Intuition Behind LSTM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/04/The Intuition Behind LSTM/" itemprop="url">Intuition Behind LSTM</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-04T10:55:06+10:00">
+                2017-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of the mean value theorem to go one step further than Pascanu et al. and reach a slightly stronger result, effectively showing vanishing causation rather than vanishing sensitivity. Note that mathematical analyses of vanishing and exploding gradients date back to the early 1990s, in Bengio et al. (1994) and Hochreiter (1991) (original in German, relevant portions summarized in Hochreiter and Schmidhuber (1997)).</p>
+To begin, from the definition of a vanilla RNN cell, we have: <span class="math display">\[s_{t+1} = \phi (z_t), where \space z_t = Wx_t + Ux_{t-1} + b\]</span> Recall the <em><strong>Mean value theorem</strong></em>: If a function <span class="math inline">\(f\)</span> is continuous on the closed interval <span class="math inline">\([a,b]\)</span>, and differentiable on the open interval <span class="math inline">\((a,b)\)</span> , then there exists a point <span class="math inline">\(c\)</span> in <span class="math inline">\((a,b)\)</span> such that: <span class="math display">\[f&#39;(c) = \frac{f(b)-f(a)}{b-a}\]</span> Applying the mean value theorem, we get that there exists <span class="math inline">\(c \in [z_t, z_t + \Delta z_t]\)</span> such that:
+<span class="math display">\[\begin{equation}\begin{split}
+\Delta S_{t+1} &amp;= [\phi&#39;(c)] \Delta z_t\\\\
+&amp;= [\phi&#39;(c)] \Delta (Ws_t)\\\\
+&amp;= [\phi&#39;(c)] W\Delta(z_t)
+\end{split}\end{equation}\]</span>
+<p>Now let <span class="math inline">\(\left \| A \right \|\)</span> represent the matrix 2-norm, <span class="math inline">\(\left | v \right |\)</span>the Euclidean vector norm, and define: <span class="math display">\[\gamma = sup_{c \in \{z_t, z_t + \Delta z_t\}} \left \| [\phi&#39; (c)] \right \|\]</span> Note that for the logistic sigmoid, <span class="math inline">\(\gamma \leq \frac{1}{4}\)</span>, and for tanh, <span class="math inline">\(\gamma \leq 1\)</span>.</p>
+Taking the vector norm of each side, we obtain, where the first inequality comes from the definition of the 2-norm (applied twice), and second from the definition of supremum:
+<span class="math display">\[\begin{equation}\begin{split}
+\left | \Delta s_{t+1} \right | &amp;= \left | [\phi&#39;(c)] W \Delta s_t \right |\\\\
+&amp;\leq \left \| [\phi&#39;(c)] \right \| \left \| W \right \| \left | \Delta s_t \right |\\\\
+&amp;\leq \gamma \left \| W \right \| \left | \Delta s_t \right |\\\\
+&amp;= \left \| \gamma W \right \| \left | \Delta s_t \right |
+\end{split}\end{equation}\]</span>
+<p>By expanding this formula over <span class="math inline">\(k\)</span> time steps we get: <span class="math display">\[\left | \Delta s_{t+k} \right | \leq \left \| \gamma W \right \|^k \left | \Delta s_t \right |\]</span> So that: <span class="math display">\[\frac{\left | \Delta s_{t+k} \right |}{\left | \Delta s_t \right |} = \left \| \gamma W \right \|^k\]</span></p>
+<p>Therefore, if <span class="math inline">\(\left \| \gamma W \right \| &lt; 1\)</span> , we have that <span class="math inline">\(\frac{\left | \Delta s_{t+k} \right |}{\left | \Delta s_t \right |}\)</span> decreases exponentially in time.</p>
+<h1 id="reference">Reference</h1>
+<p><a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms" target="_blank" rel="external">Written memories the intuition behind lstms</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/02/RNN for NLP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/02/RNN for NLP/" itemprop="url">RNN for NLP</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-02T17:49:17+10:00">
+                2017-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DL/" itemprop="url" rel="index">
+                    <span itemprop="name">DL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/CNN for NLP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -387,7 +689,12 @@ The graph above is an example of only one convolution and max-pooling for senten
 As an example, in one dimension a filter w of size 3 would compute over input <span class="math inline">\(x\)</span> the following: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">w[0]*x[0] + w[1]*x[1] + w[2]*x[2]</div></pre></td></tr></table></figure></p>
 <p>This is dilation of 0. For dilation 1 the filter would instead compute: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">w[0]*x[0] + w[1]*x[2] + w[2]*x[4]</div></pre></td></tr></table></figure></p>
 <p>In other words there is a gap of 1 between the applications. This can be very useful in some settings to use in conjunction with 0-dilated filters because it allows you to merge spatial information across the inputs much more agressively with fewer layers. For example, if you stack two 3x3 CONV layers on top of each other then you can convince yourself that the neurons on the 2nd layer are a function of a 5x5 patch of the input (we would say that the effective receptive field of these neurons is 5x5). If we use dilated convolutions then this effective receptive field would grow much quicker.</p>
-<p>Reference 1. http://cs231n.github.io/convolutional-networks/ 2. http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/ 3. Neural Network Methods in Natural Language Processing Chapter 13</p>
+<h1 id="reference">Reference</h1>
+<ol style="list-style-type: decimal">
+<li>http://cs231n.github.io/convolutional-networks/</li>
+<li>http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/</li>
+<li>Neural Network Methods in Natural Language Processing Chapter 13</li>
+</ol>
 
           
         
@@ -1423,7 +1730,7 @@ The calculation of derivatives are as follows:
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1445,7 +1752,7 @@ The calculation of derivatives are as follows:
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
