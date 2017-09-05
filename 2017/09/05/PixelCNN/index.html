@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="CNN,DL Basics," />
+  <meta name="keywords" content="CNN," />
 
 
 
@@ -95,21 +95,24 @@
 
 
 
-<meta name="description" content="A convolutional neural network is designed to identify indicative local predictors in a large structure, and to combine them to produce a fixed size vector representation of the structure, capturing t">
-<meta name="keywords" content="CNN,DL Basics">
+<meta name="description" content="Content  PixelCNN Gated Convolutional Layer Conditional PixelCNN PixelRNN  PixelCNN PixelCNNs (and PixelRNNs) model the joint distribution of pixels over an image \(x\) as the following product of con">
+<meta name="keywords" content="CNN">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CNN for NLP">
-<meta property="og:url" content="http://yoursite.com/2017/09/01/CNN for NLP/index.html">
+<meta property="og:title" content="PixelCNN">
+<meta property="og:url" content="http://yoursite.com/2017/09/05/PixelCNN/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="A convolutional neural network is designed to identify indicative local predictors in a large structure, and to combine them to produce a fixed size vector representation of the structure, capturing t">
+<meta property="og:description" content="Content  PixelCNN Gated Convolutional Layer Conditional PixelCNN PixelRNN  PixelCNN PixelCNNs (and PixelRNNs) model the joint distribution of pixels over an image \(x\) as the following product of con">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/images/CNN%20for%20NLP/single%20layer%20cnn.png">
-<meta property="og:image" content="http://yoursite.com/images/CNN%20for%20NLP/hierarchical%20cnn.png">
-<meta property="og:updated_time" content="2017-09-04T04:47:52.000Z">
+<meta property="og:image" content="http://yoursite.com/images/PixelCNN/PixelCNN.png">
+<meta property="og:image" content="http://yoursite.com/images/PixelCNN/RGB.png">
+<meta property="og:image" content="http://yoursite.com/images/PixelCNN/PixelCNNPred.png">
+<meta property="og:image" content="http://yoursite.com/images/PixelCNN/BlindSpot.png">
+<meta property="og:image" content="http://yoursite.com/images/PixelCNN/PixelCNNStack.png">
+<meta property="og:updated_time" content="2017-09-05T09:09:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CNN for NLP">
-<meta name="twitter:description" content="A convolutional neural network is designed to identify indicative local predictors in a large structure, and to combine them to produce a fixed size vector representation of the structure, capturing t">
-<meta name="twitter:image" content="http://yoursite.com/images/CNN%20for%20NLP/single%20layer%20cnn.png">
+<meta name="twitter:title" content="PixelCNN">
+<meta name="twitter:description" content="Content  PixelCNN Gated Convolutional Layer Conditional PixelCNN PixelRNN  PixelCNN PixelCNNs (and PixelRNNs) model the joint distribution of pixels over an image \(x\) as the following product of con">
+<meta name="twitter:image" content="http://yoursite.com/images/PixelCNN/PixelCNN.png">
 
 
 
@@ -139,13 +142,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/01/CNN for NLP/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/05/PixelCNN/"/>
 
 
 
 
 
-  <title>CNN for NLP | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>PixelCNN | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -282,7 +285,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/CNN for NLP/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/PixelCNN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -299,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">CNN for NLP</h1>
+          <h1 class="post-title" itemprop="name headline">PixelCNN</h1>
         
 
         <div class="post-meta">
@@ -311,8 +314,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-01T14:45:30+10:00">
-                2017-09-01
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:49:49+10:00">
+                2017-09-05
               </time>
             
 
@@ -334,8 +337,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DL/" itemprop="url" rel="index">
-                    <span itemprop="name">DL</span>
+                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper Notes</span>
                   </a>
                 </span>
 
@@ -371,30 +374,50 @@
       
 
       
-        <p>A convolutional neural network is designed to identify indicative local predictors in a large structure, and to combine them to produce a fixed size vector representation of the structure, capturing the local aspects that are most informative for the prediction task at hand. For instance, the convolutional architecture will identy n-grams that are predictive for the task at hand, without the need to pre-specify an embedding vector for each possible n-gram.<br>
-The convolutional architecture also allows to share predictive behavior between n-grams that share similar components, even if the exact n-gram was never seen at test time.<br>
-It could be expanded into a hierarchy of convolution layers, each one effectively looking at longer range of n-grams in the sentence.</p>
+        <h1 id="content">Content</h1>
+<ul>
+<li>PixelCNN</li>
+<li>Gated Convolutional Layer</li>
+<li>Conditional PixelCNN</li>
+<li>PixelRNN</li>
+</ul>
+<h2 id="pixelcnn">PixelCNN</h2>
+<p>PixelCNNs (and PixelRNNs) model the joint distribution of pixels over an image <span class="math inline">\(x\)</span> as the following product of conditional distributions, where <span class="math inline">\(x_i\)</span> is a single pixel: <span class="math display">\[p(x) = \prod\limits^{n^2}_{i=1}p(x_i|x_1,...,x_{i-1})\]</span> The ordering of the pixel dependencies is in raster scan order: row by row and pixel by pixel within every row. Every pixel therefore depends on all the pixels above and to the left of it, and not on any of other pixels.</p>
+<p>In PixelCNN every conditional distribution is modelled by a convolutional neural network. To make sure the CNN can only use information about pixels above and to the left of the current pixel, the convolution are <em><strong>masked</strong></em> as the figure below.</p>
 <center>
-<img src="/images/CNN%20for%20NLP/single%20layer%20cnn.png">
+<img src="/images/PixelCNN/PixelCNN.png">
 </center>
-The graph above is an example of only one convolution and max-pooling for sentence classification whose filters have different sizes. Without the pooling layer and scarifice the diverse filter sizes, we can generalize CNN model to hierarchical form.
+<p>For image with only one channel (like mnist dataset): <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">filter_mid_h = shape[0]//2</div><div class="line">filter_mid_w = shape[1]//2</div><div class="line">mask_filter =np.ones(shape, dtype= np.float32)</div><div class="line">mask_filter[filter_mid_h,filter_mid_w+1:, :, :] = 0.</div><div class="line">mask_filter[filter_mid_h+1:, :, :, :] = 0.</div><div class="line"><span class="comment"># W *= mask_filter</span></div></pre></td></tr></table></figure></p>
+<p>For a <span class="math inline">\(7 * 7\)</span> filter, the mask tensor should look like this: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">array([[ 1.,  1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 1.,  1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 1.,  1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 1.,  1.,  1.,  0.,  0.,  0.,  0.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.]])</div></pre></td></tr></table></figure></p>
+<p>For colourful images with three channels (R,G,B), in the first layer, each of the RGB channels is connected to previous channels and to the context, but is not connected to itself. In subsequent layers, the channels are also connected to themselves (Shown below).</p>
 <center>
-<img src="/images/CNN%20for%20NLP/hierarchical%20cnn.png">
+<img src="/images/PixelCNN/RGB.png">
 </center>
-<h3 id="about-channels">About Channels</h3>
-<p>When applying a convolution to an image in computer vision, it is common to apply a different set of filters to each channel, and then combine the three resulting vectors into a single vector. For text processing, we can still have multiple channels. For example, one channel will be the <em><strong>sequence of words</strong></em>, one channel will be the sequence of the corresponding <em><strong>POS</strong></em> tags and one will be the sequence of the corresponding <em><strong>positions</strong></em>. These three views can then be combined either by summation or by concatenation.</p>
-<h3 id="feature-hashing">Feature Hashing</h3>
-<p>There is no need to pre-compute vocabulary-to-index mapping, instead, allocate an embedding matrix <em><span class="math inline">\(E\)</span></em> with N rows. N should be sufficiently large, but no prohibitive. When a k-gram is seen in training, we assign it to a row in <em><span class="math inline">\(E\)</span></em> by applying hash function that will deterministically map it into a number in the range <span class="math inline">\([1,N]\)</span>. Then use the corresponding row as the embedding vector.</p>
-<h3 id="dilated-convolution-architecture">Dilated Convolution Architecture</h3>
-<p>A recent development (e.g. see paper by Fisher Yu and Vladlen Koltun) is to introduce one more hyperparameter to the CONV layer called the dilation. The normal CONV filters are contiguous. However, it’s possible to have filters that have spaces between each cell, called dilation.<br>
-As an example, in one dimension a filter w of size 3 would compute over input <span class="math inline">\(x\)</span> the following: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">w[0]*x[0] + w[1]*x[1] + w[2]*x[2]</div></pre></td></tr></table></figure></p>
-<p>This is dilation of 0. For dilation 1 the filter would instead compute: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">w[0]*x[0] + w[1]*x[2] + w[2]*x[4]</div></pre></td></tr></table></figure></p>
-<p>In other words there is a gap of 1 between the applications. This can be very useful in some settings to use in conjunction with 0-dilated filters because it allows you to merge spatial information across the inputs much more agressively with fewer layers. For example, if you stack two 3x3 CONV layers on top of each other then you can convince yourself that the neurons on the 2nd layer are a function of a 5x5 patch of the input (we would say that the effective receptive field of these neurons is 5x5). If we use dilated convolutions then this effective receptive field would grow much quicker.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">def bmask(i_in, i_out):</div><div class="line">	cin_idx = np.expand_dims(np.arange(Cin) % 3 == i_in, 1)</div><div class="line">    cout_idx = np.expand_dims(np.arange(Cout) % 3 == i_out, 0)</div><div class="line">    a1, a2 = np.broadcast_arrays(cin_idx, cout_idx)</div><div class="line">    <span class="built_in">return</span> a1 * a2</div><div class="line"></div><div class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(3):</div><div class="line">    mask_filter[filter_mid_h,filter_mid_w][bmask(j,j)] = 0. <span class="keyword">if</span> mask ==<span class="string">"A"</span> <span class="keyword">else</span> 1.</div><div class="line"></div><div class="line">mask_filter[filter_mid_h,filter_mid_w][bmask(1, 0)] = 0.</div><div class="line">mask_filter[filter_mid_h,filter_mid_w][bmask(2, 0)] = 0.</div><div class="line">mask_filter[filter_mid_h,filter_mid_w][bmask(2, 1)] = 0.</div></pre></td></tr></table></figure>
+<p>For example, <span class="math inline">\(i_{in} = 3\)</span>, <span class="math inline">\(i_{out} = 6\)</span>, the last two dimensions should look like this: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Mask A</span></div><div class="line">array([[ 0.,  1.,  1.,  0.,  1.,  1.],</div><div class="line">       [ 0.,  0.,  1.,  0.,  0.,  1.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.]])</div><div class="line"><span class="comment"># Mask B</span></div><div class="line">array([[ 1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 0.,  1.,  1.,  0.,  1.,  1.],</div><div class="line">       [ 0.,  0.,  1.,  0.,  0.,  1.]])</div></pre></td></tr></table></figure></p>
+<center>
+<img src="/images/PixelCNN/PixelCNNPred.png">
+</center>
+<p>As shown above, the 256 possible values for each colour channel are then modelled using a softmax.</p>
+<p>PixelCNN typically consists of a stack of masked convolutional layers that takes an <span class="math inline">\((N,N,3)\)</span> image as input and produces <span class="math inline">\((N,N,3,256)\)</span> predictions as output. The use of convolutions allows the predictions for all the pixels to be made in parallel during training.</p>
+<p>During sampling the predictions are sequential: every time a pixel is predicted, it is fed back into the network to predict the next pixel. This sequentiality is essential to generating high quality images, as it allows every pixel to depend in a highly non-linear and multimodal way on the previous pixels.</p>
+<h2 id="gated-convolutional-layer">Gated Convolutional Layer</h2>
+<p>For a gated convolutional layer, relu activation block with more complex combination of sigmoid (as a forget gate) and tanh (as real activation). It suggests that: <span class="math display">\[y = tanh(W_{k,f} \ast x) \odot \sigma(W_{k,g} \ast x)\]</span></p>
+<p>Here is the code to illustrate the formula: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">W_f = get_weights(W_shape, <span class="string">"v_W"</span>, mask=mask)</div><div class="line">W_g = get_weights(W_shape, <span class="string">"h_W"</span>, mask=mask)</div><div class="line"></div><div class="line">b_f = tf.get_variable(<span class="string">"v_b"</span> , b_shape, tf.float32, tf.zeros_initializer)</div><div class="line">b_g = tf.get_variable(<span class="string">"h_b"</span> , b_shape, tf.float32, tf.zeros_initializer)</div><div class="line"></div><div class="line">conv_f = tf.nn.conv2d(input_layer, W_f, strides=[1,1,1,1], padding=<span class="string">'SAME'</span>)</div><div class="line">conv_g = tf.nn.conv2d(input_layer, W_g, strides=[1,1,1,1], padding=<span class="string">'SAME'</span>)</div><div class="line">output_layer = tf.mul(tf.tanh(conv_f + b_f), tf.sigmoid(conv_g+ b_g))</div></pre></td></tr></table></figure></p>
+<h2 id="conditional-pixelcnn">Conditional PixelCNN</h2>
+<p>Note that a significant portion of the input image is ignored by the masked convolutional architecture. This ‘blind spot’ can cover as much as a quarter of the potential receptive field (e.g., when using 3x3 filters), meaning that none of the content to the right of the current pixel would be taken into account.</p>
+<center>
+<img src="/images/PixelCNN/BlindSpot.png">
+</center>
+<p>To remove the blind spot, authors introduce neat idea: they split convolution into two different operations: two separate stacks - vertical and horizontal.</p>
+<center>
+<img src="/images/PixelCNN/PixelCNNStack.png">
+</center>
+<p>Here we have horizontal stack (in purple): convolution operation that conditions on only current row, so it has access to left pixels. Vertical stack (blue) has access to all top pixels. Implementation details would follow. Note that horizontal and vertical stacks are sort of independent: vertical stack should not access any information horizontal stack has: otherwise it will have access to pixels it shouldn’t see. But vertical stack can be connected to vertical as it predicts pixel following those in vertical stack.</p>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
-<li>http://cs231n.github.io/convolutional-networks/</li>
-<li>http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/</li>
-<li>Neural Network Methods in Natural Language Processing Chapter 13</li>
+<li><a href="https://arxiv.org/pdf/1601.06759.pdf" target="_blank" rel="external">Pixel Recurrent Neural Networks</a></li>
+<li><a href="https://arxiv.org/pdf/1606.05328.pdf" target="_blank" rel="external">Conditional Image Generation with PixelCNN Decoders</a></li>
 </ol>
 
       
@@ -415,8 +438,6 @@ As an example, in one dimension a filter w of size 3 would compute over input <s
           
             <a href="/tags/CNN/" rel="tag"># CNN</a>
           
-            <a href="/tags/DL-Basics/" rel="tag"># DL Basics</a>
-          
         </div>
       
 
@@ -428,8 +449,8 @@ As an example, in one dimension a filter w of size 3 would compute over input <s
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/31/Batch Normalization/" rel="next" title="Batch Normalization">
-                <i class="fa fa-chevron-left"></i> Batch Normalization
+              <a href="/2017/09/04/The Intuition Behind LSTM/" rel="next" title="Intuition Behind LSTM">
+                <i class="fa fa-chevron-left"></i> Intuition Behind LSTM
               </a>
             
           </div>
@@ -437,10 +458,6 @@ As an example, in one dimension a filter w of size 3 would compute over input <s
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/02/RNN for NLP/" rel="prev" title="RNN for NLP">
-                RNN for NLP <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -576,7 +593,7 @@ As an example, in one dimension a filter w of size 3 would compute over input <s
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#about-channels"><span class="nav-number">1.</span> <span class="nav-text">About Channels</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#feature-hashing"><span class="nav-number">2.</span> <span class="nav-text">Feature Hashing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dilated-convolution-architecture"><span class="nav-number">3.</span> <span class="nav-text">Dilated Convolution Architecture</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number"></span> <span class="nav-text">Reference</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#content"><span class="nav-number">1.</span> <span class="nav-text">Content</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pixelcnn"><span class="nav-number">1.1.</span> <span class="nav-text">PixelCNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gated-convolutional-layer"><span class="nav-number">1.2.</span> <span class="nav-text">Gated Convolutional Layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conditional-pixelcnn"><span class="nav-number">1.3.</span> <span class="nav-text">Conditional PixelCNN</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>

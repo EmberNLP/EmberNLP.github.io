@@ -275,6 +275,192 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/PixelCNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/05/PixelCNN/" itemprop="url">PixelCNN</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:49:49+10:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="content">Content</h1>
+<ul>
+<li>PixelCNN</li>
+<li>Gated Convolutional Layer</li>
+<li>Conditional PixelCNN</li>
+<li>PixelRNN</li>
+</ul>
+<h2 id="pixelcnn">PixelCNN</h2>
+<p>PixelCNNs (and PixelRNNs) model the joint distribution of pixels over an image <span class="math inline">\(x\)</span> as the following product of conditional distributions, where <span class="math inline">\(x_i\)</span> is a single pixel: <span class="math display">\[p(x) = \prod\limits^{n^2}_{i=1}p(x_i|x_1,...,x_{i-1})\]</span> The ordering of the pixel dependencies is in raster scan order: row by row and pixel by pixel within every row. Every pixel therefore depends on all the pixels above and to the left of it, and not on any of other pixels.</p>
+<p>In PixelCNN every conditional distribution is modelled by a convolutional neural network. To make sure the CNN can only use information about pixels above and to the left of the current pixel, the convolution are <em><strong>masked</strong></em> as the figure below.</p>
+<center>
+<img src="/images/PixelCNN/PixelCNN.png">
+</center>
+<p>For image with only one channel (like mnist dataset): <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">filter_mid_h = shape[0]//2</div><div class="line">filter_mid_w = shape[1]//2</div><div class="line">mask_filter =np.ones(shape, dtype= np.float32)</div><div class="line">mask_filter[filter_mid_h,filter_mid_w+1:, :, :] = 0.</div><div class="line">mask_filter[filter_mid_h+1:, :, :, :] = 0.</div><div class="line"><span class="comment"># W *= mask_filter</span></div></pre></td></tr></table></figure></p>
+<p>For a <span class="math inline">\(7 * 7\)</span> filter, the mask tensor should look like this: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">array([[ 1.,  1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 1.,  1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 1.,  1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 1.,  1.,  1.,  0.,  0.,  0.,  0.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.]])</div></pre></td></tr></table></figure></p>
+<p>For colourful images with three channels (R,G,B), in the first layer, each of the RGB channels is connected to previous channels and to the context, but is not connected to itself. In subsequent layers, the channels are also connected to themselves (Shown below).</p>
+<center>
+<img src="/images/PixelCNN/RGB.png">
+</center>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">def bmask(i_in, i_out):</div><div class="line">	cin_idx = np.expand_dims(np.arange(Cin) % 3 == i_in, 1)</div><div class="line">    cout_idx = np.expand_dims(np.arange(Cout) % 3 == i_out, 0)</div><div class="line">    a1, a2 = np.broadcast_arrays(cin_idx, cout_idx)</div><div class="line">    <span class="built_in">return</span> a1 * a2</div><div class="line"></div><div class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(3):</div><div class="line">    mask_filter[filter_mid_h,filter_mid_w][bmask(j,j)] = 0. <span class="keyword">if</span> mask ==<span class="string">"A"</span> <span class="keyword">else</span> 1.</div><div class="line"></div><div class="line">mask_filter[filter_mid_h,filter_mid_w][bmask(1, 0)] = 0.</div><div class="line">mask_filter[filter_mid_h,filter_mid_w][bmask(2, 0)] = 0.</div><div class="line">mask_filter[filter_mid_h,filter_mid_w][bmask(2, 1)] = 0.</div></pre></td></tr></table></figure>
+<p>For example, <span class="math inline">\(i_{in} = 3\)</span>, <span class="math inline">\(i_{out} = 6\)</span>, the last two dimensions should look like this: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Mask A</span></div><div class="line">array([[ 0.,  1.,  1.,  0.,  1.,  1.],</div><div class="line">       [ 0.,  0.,  1.,  0.,  0.,  1.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.]])</div><div class="line"><span class="comment"># Mask B</span></div><div class="line">array([[ 1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 0.,  1.,  1.,  0.,  1.,  1.],</div><div class="line">       [ 0.,  0.,  1.,  0.,  0.,  1.]])</div></pre></td></tr></table></figure></p>
+<center>
+<img src="/images/PixelCNN/PixelCNNPred.png">
+</center>
+<p>As shown above, the 256 possible values for each colour channel are then modelled using a softmax.</p>
+<p>PixelCNN typically consists of a stack of masked convolutional layers that takes an <span class="math inline">\((N,N,3)\)</span> image as input and produces <span class="math inline">\((N,N,3,256)\)</span> predictions as output. The use of convolutions allows the predictions for all the pixels to be made in parallel during training.</p>
+<p>During sampling the predictions are sequential: every time a pixel is predicted, it is fed back into the network to predict the next pixel. This sequentiality is essential to generating high quality images, as it allows every pixel to depend in a highly non-linear and multimodal way on the previous pixels.</p>
+<h2 id="gated-convolutional-layer">Gated Convolutional Layer</h2>
+<p>For a gated convolutional layer, relu activation block with more complex combination of sigmoid (as a forget gate) and tanh (as real activation). It suggests that: <span class="math display">\[y = tanh(W_{k,f} \ast x) \odot \sigma(W_{k,g} \ast x)\]</span></p>
+<p>Here is the code to illustrate the formula: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">W_f = get_weights(W_shape, <span class="string">"v_W"</span>, mask=mask)</div><div class="line">W_g = get_weights(W_shape, <span class="string">"h_W"</span>, mask=mask)</div><div class="line"></div><div class="line">b_f = tf.get_variable(<span class="string">"v_b"</span> , b_shape, tf.float32, tf.zeros_initializer)</div><div class="line">b_g = tf.get_variable(<span class="string">"h_b"</span> , b_shape, tf.float32, tf.zeros_initializer)</div><div class="line"></div><div class="line">conv_f = tf.nn.conv2d(input_layer, W_f, strides=[1,1,1,1], padding=<span class="string">'SAME'</span>)</div><div class="line">conv_g = tf.nn.conv2d(input_layer, W_g, strides=[1,1,1,1], padding=<span class="string">'SAME'</span>)</div><div class="line">output_layer = tf.mul(tf.tanh(conv_f + b_f), tf.sigmoid(conv_g+ b_g))</div></pre></td></tr></table></figure></p>
+<h2 id="conditional-pixelcnn">Conditional PixelCNN</h2>
+<p>Note that a significant portion of the input image is ignored by the masked convolutional architecture. This ‘blind spot’ can cover as much as a quarter of the potential receptive field (e.g., when using 3x3 filters), meaning that none of the content to the right of the current pixel would be taken into account.</p>
+<center>
+<img src="/images/PixelCNN/BlindSpot.png">
+</center>
+<p>To remove the blind spot, authors introduce neat idea: they split convolution into two different operations: two separate stacks - vertical and horizontal.</p>
+<center>
+<img src="/images/PixelCNN/PixelCNNStack.png">
+</center>
+<p>Here we have horizontal stack (in purple): convolution operation that conditions on only current row, so it has access to left pixels. Vertical stack (blue) has access to all top pixels. Implementation details would follow. Note that horizontal and vertical stacks are sort of independent: vertical stack should not access any information horizontal stack has: otherwise it will have access to pixels it shouldn’t see. But vertical stack can be connected to vertical as it predicts pixel following those in vertical stack.</p>
+<h1 id="reference">Reference</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://arxiv.org/pdf/1601.06759.pdf" target="_blank" rel="external">Pixel Recurrent Neural Networks</a></li>
+<li><a href="https://arxiv.org/pdf/1606.05328.pdf" target="_blank" rel="external">Conditional Image Generation with PixelCNN Decoders</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/The Intuition Behind LSTM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -368,7 +554,8 @@
       
         
           
-            <p>This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of the mean value theorem to go one step further than Pascanu et al. and reach a slightly stronger result, effectively showing vanishing causation rather than vanishing sensitivity. Note that mathematical analyses of vanishing and exploding gradients date back to the early 1990s, in Bengio et al. (1994) and Hochreiter (1991) (original in German, relevant portions summarized in Hochreiter and Schmidhuber (1997)).</p>
+            <h1 id="a-mathematically-sufficient-condition-for-vanishing-sensitivity">A mathematically Sufficient Condition For Vanishing Sensitivity</h1>
+<p>This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of the mean value theorem to go one step further than Pascanu et al. and reach a slightly stronger result, effectively showing vanishing causation rather than vanishing sensitivity. Note that mathematical analyses of vanishing and exploding gradients date back to the early 1990s, in Bengio et al. (1994) and Hochreiter (1991) (original in German, relevant portions summarized in Hochreiter and Schmidhuber (1997)).</p>
 To begin, from the definition of a vanilla RNN cell, we have: <span class="math display">\[s_{t+1} = \phi (z_t), where \space z_t = Wx_t + Ux_{t-1} + b\]</span> Recall the <em><strong>Mean value theorem</strong></em>: If a function <span class="math inline">\(f\)</span> is continuous on the closed interval <span class="math inline">\([a,b]\)</span>, and differentiable on the open interval <span class="math inline">\((a,b)\)</span> , then there exists a point <span class="math inline">\(c\)</span> in <span class="math inline">\((a,b)\)</span> such that: <span class="math display">\[f&#39;(c) = \frac{f(b)-f(a)}{b-a}\]</span> Applying the mean value theorem, we get that there exists <span class="math inline">\(c \in [z_t, z_t + \Delta z_t]\)</span> such that:
 <span class="math display">\[\begin{equation}\begin{split}
 \Delta S_{t+1} &amp;= [\phi&#39;(c)] \Delta z_t\\\\
@@ -385,6 +572,23 @@ Taking the vector norm of each side, we obtain, where the first inequality comes
 \end{split}\end{equation}\]</span>
 <p>By expanding this formula over <span class="math inline">\(k\)</span> time steps we get: <span class="math display">\[\left | \Delta s_{t+k} \right | \leq \left \| \gamma W \right \|^k \left | \Delta s_t \right |\]</span> So that: <span class="math display">\[\frac{\left | \Delta s_{t+k} \right |}{\left | \Delta s_t \right |} = \left \| \gamma W \right \|^k\]</span></p>
 <p>Therefore, if <span class="math inline">\(\left \| \gamma W \right \| &lt; 1\)</span> , we have that <span class="math inline">\(\frac{\left | \Delta s_{t+k} \right |}{\left | \Delta s_t \right |}\)</span> decreases exponentially in time.</p>
+<h1 id="a-minimum-weight-initialization-to-avoid-vanishing-gradients">A minimum Weight Initialization to Avoid Vanishing Gradients</h1>
+<p>It is beneficial to find a weight initialization that will not immediately suffer from this problem. Extending the above analysis to find the initialization of <span class="math inline">\(W\)</span> that gets us as close to equality as possible leads to a nice result. First, let us assume that <span class="math inline">\(\phi = tanh\)</span> and take <span class="math inline">\(\gamma = 1\)</span>. Our goal is to find an initialization of W for which:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\left \| \gamma W \right \| = 1\)</span></li>
+<li>We get as close to equality as possible in above equation.</li>
+</ol>
+<p>From point 1, since we took <span class="math inline">\(\gamma\)</span> to be 1, we have <span class="math inline">\(\left \| W \right \| = 1\)</span>. From point 2, we get that we should try to set all singular values of <span class="math inline">\(W\)</span> to 1, not just the largest. Then, if all singular values of <span class="math inline">\(W\)</span> equal 1, that means that the norm of each column of <span class="math inline">\(W\)</span> is 1 (since each column is <span class="math inline">\(We_i\)</span> for some elementary basis vector <span class="math inline">\(e_i\)</span> and we have <span class="math inline">\(\left |We_i \right | = \left | e_i \right | = 1\)</span>). That means that for column <span class="math inline">\(j\)</span> we have: <span class="math display">\[\Sigma_i w_{ij}^2 = 1\]</span></p>
+<p>There are <span class="math inline">\(n\)</span> entries in column <span class="math inline">\(j\)</span>, and we are choosing each from the same random distribution, so let us find a distribution for a random weight <span class="math inline">\(w\)</span> for which: <span class="math display">\[n\mathbb{E}(w^2) = 1\]</span></p>
+<p>Now let’s suppose we want to initialize <span class="math inline">\(w\)</span> uniformly in the interval <span class="math inline">\([-R,R]\)</span>. Then the mean of <span class="math inline">\(w\)</span> is 0, so that, by definition, <span class="math inline">\(\mathbb{E}(w^2)\)</span> is its variance, <span class="math inline">\(\mathbb{V}(w)\)</span>. The variance of a uniform distribution over the interval <span class="math inline">\([a,b]\)</span> is given by <span class="math inline">\(\frac{(b-a)^2}{12}\)</span>, from which we get <span class="math inline">\(\mathbb{V}(w) = \frac{R^2}{3}\)</span>. Substituting this into our equation we get: <span class="math display">\[n\frac{R^2}{3} = 1\]</span></p>
+<p>So that: <span class="math display">\[R = \frac{\sqrt{3}}{\sqrt{n}}\]</span></p>
+<p>This is a nice result because it is the Xavier-Glorot initialization for a square weight matrix, yet was motivated by a different idea. The Xavier-Glorot initialization, introduced by Glorot and Bengio (2010), has proven to be an effective weight initialization prescription in practice. More generally, the Xavier-Glorot prescription applies to m-by-n weight matrices used in a layer that has an activation function whose derivative is near one at the origin (like tanh), and says that we should initialize our weights according to a uniform distribution of the interval: <span class="math display">\[[-\frac{\sqrt{6}}{\sqrt{m+n}},+\frac{\sqrt{6}}{\sqrt{m+n}}]\]</span></p>
+<p>We saw above that good weight initializations are crucial, but this only impacts the start of training.</p>
+<h1 id="written-memories-the-intuition-behind-lstms">Written memories: the intuition behind LSTMs</h1>
+<p>Very much like the messages passed by children playing a game of broken telephone, information is morphed by RNN cells and the original message is lost. A small change in the original message may not have made any difference in the final message, or it may have resulted in something completely different.</p>
+<p>How can we protect the integrity of messages? This is the fundamental principle of LSTMs: to ensure the integrity of our messages in the real world, we write them down. Writing is <em><strong>a delta to the current state</strong></em>: it is an act of creation (pen on paper) or destruction (carving in stone); the subject itself does not morph when you write on it and the error gradient on the backward-pass is constant.</p>
+<p>This is precisely what was proposed by the landmark paper of Hocreiter and Schmidhuber (1997), which introduced the LSTM. They asked: “how can we achieve constant error flow through a single unit with a single connection to itself [i.e., a single piece of isolated information]?”</p>
+<p>The answer, quite simply, is to avoid information morphing: changes to the state of an LSTM are explicitly written in, by an explicit addition or subtraction, so that each element of the state stays constant without outside interference: “the unit’s activation has to remain constant … this will be ensured by using the identity function”.</p>
 <h1 id="reference">Reference</h1>
 <p><a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms" target="_blank" rel="external">Written memories the intuition behind lstms</a></p>
 
@@ -1030,8 +1234,8 @@ The intuition behind the above equation is that:
 <span class="math display">\[\begin{equation}\begin{split}
 v_t &amp;= \beta v_{t-1} + (1-\beta)\theta_t\\\\
 &amp;= (1 - \beta)\theta_t + \beta(\beta v_{t-2} + (1-\beta)\theta_{t-1})\\\\
-&amp;=(1-\beta)\theta_t + \beta(1-\beta)\theta_{t-1} + \beta^2v_{t-2}\\\\
-&amp;=(1-\beta)\theta_t + \beta(1-\beta)\theta_{t-1} + \beta^2(1-\beta)\theta_{t-2} + ...
+&amp;= (1-\beta)\theta_t + \beta(1-\beta)\theta_{t-1} + \beta^2v_{t-2}\\\\
+&amp;= (1-\beta)\theta_t + \beta(1-\beta)\theta_{t-1} + \beta^2(1-\beta)\theta_{t-2} + ...
 \end{split}\end{equation}\]</span>
 <p>It’s just the exponentially weighted average of all the observations.</p>
 <p>Inspired by the above equations, we define the gradient descent with momentum as follows: <span class="math display">\[v_{d_w} = \beta v_{d_w} + (1 - \beta)d_w\]</span> <span class="math display">\[v_{d_b} = \beta v_{d_b} + (1 - \beta)d_b\]</span> <span class="math display">\[w := w - \alpha v_{d_w}\]</span> <span class="math display">\[b := w - \alpha v_{d_b}\]</span></p>
@@ -1730,7 +1934,7 @@ The calculation of derivatives are as follows:
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

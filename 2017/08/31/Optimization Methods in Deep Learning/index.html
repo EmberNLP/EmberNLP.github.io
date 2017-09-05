@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://yoursite.com/images/Optimization/SGD_GD.png">
 <meta property="og:image" content="http://yoursite.com/images/Optimization/SGD_BGD.png">
 <meta property="og:image" content="http://yoursite.com/images/Optimization/Momentum.png">
-<meta property="og:updated_time" content="2017-09-01T06:37:54.000Z">
+<meta property="og:updated_time" content="2017-09-05T08:39:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Optimization Methods in Deep Learning">
 <meta name="twitter:description" content="Why Gradient Descend Works? Gradient Descend is the fundamental optimization method to learn parameters. To illustrate why it works, let’s take the simple example $f(x) = (x - 1)^2 $ to gain some intu">
@@ -410,8 +410,8 @@ The intuition behind the above equation is that:
 <span class="math display">\[\begin{equation}\begin{split}
 v_t &amp;= \beta v_{t-1} + (1-\beta)\theta_t\\\\
 &amp;= (1 - \beta)\theta_t + \beta(\beta v_{t-2} + (1-\beta)\theta_{t-1})\\\\
-&amp;=(1-\beta)\theta_t + \beta(1-\beta)\theta_{t-1} + \beta^2v_{t-2}\\\\
-&amp;=(1-\beta)\theta_t + \beta(1-\beta)\theta_{t-1} + \beta^2(1-\beta)\theta_{t-2} + ...
+&amp;= (1-\beta)\theta_t + \beta(1-\beta)\theta_{t-1} + \beta^2v_{t-2}\\\\
+&amp;= (1-\beta)\theta_t + \beta(1-\beta)\theta_{t-1} + \beta^2(1-\beta)\theta_{t-2} + ...
 \end{split}\end{equation}\]</span>
 <p>It’s just the exponentially weighted average of all the observations.</p>
 <p>Inspired by the above equations, we define the gradient descent with momentum as follows: <span class="math display">\[v_{d_w} = \beta v_{d_w} + (1 - \beta)d_w\]</span> <span class="math display">\[v_{d_b} = \beta v_{d_b} + (1 - \beta)d_b\]</span> <span class="math display">\[w := w - \alpha v_{d_w}\]</span> <span class="math display">\[b := w - \alpha v_{d_b}\]</span></p>
@@ -561,7 +561,7 @@ v_t &amp;= \beta v_{t-1} + (1-\beta)\theta_t\\\\
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
