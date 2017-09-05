@@ -589,6 +589,15 @@ Taking the vector norm of each side, we obtain, where the first inequality comes
 <p>How can we protect the integrity of messages? This is the fundamental principle of LSTMs: to ensure the integrity of our messages in the real world, we write them down. Writing is <em><strong>a delta to the current state</strong></em>: it is an act of creation (pen on paper) or destruction (carving in stone); the subject itself does not morph when you write on it and the error gradient on the backward-pass is constant.</p>
 <p>This is precisely what was proposed by the landmark paper of Hocreiter and Schmidhuber (1997), which introduced the LSTM. They asked: “how can we achieve constant error flow through a single unit with a single connection to itself [i.e., a single piece of isolated information]?”</p>
 <p>The answer, quite simply, is to avoid information morphing: changes to the state of an LSTM are explicitly written in, by an explicit addition or subtraction, so that each element of the state stays constant without outside interference: “the unit’s activation has to remain constant … this will be ensured by using the identity function”.</p>
+<span class="math display">\[\begin{equation}\begin{split}
+f_t &amp;= \sigma (W_f \cdot [h_{t-1}, x_t] + b_f)\\\\
+i_t &amp;= \sigma (W_i \cdot [h_{t-1}, x_t] + b_i)\\\\
+\tilde{C}_t &amp;= tanh(W_c \cdot [h_{t-1}, x_t] +b_c)\\\\
+C_t &amp;= f_t \ast C_{t-1} + i_t \ast \tilde{C}_t \\\\
+o_t &amp;= \sigma (W_o \cdot [h_{t-1}, x_t] + b_o)\\\\
+h_t &amp;= o_t \ast tanh(C_t)
+\end{split}\end{equation}\]</span>
+<p>Suppose we have calculated the value of <span class="math inline">\(\frac{\partial L}{C_{t+k}}\)</span>, then: <span class="math display">\[\frac{\partial L}{C_t} = \frac{\partial L}{C_{t+k}} \odot f_{t+k-1} \odot f_{t+k-2} ... \odot f_{t}\]</span> Except the very first term, the vanishing problem still exist.</p>
 <h1 id="reference">Reference</h1>
 <p><a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms" target="_blank" rel="external">Written memories the intuition behind lstms</a></p>
 
