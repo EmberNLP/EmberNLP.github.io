@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="DL Basics," />
 
 
 
@@ -95,17 +95,18 @@
 
 
 
-<meta name="description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta name="description" content="The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosin">
+<meta name="keywords" content="DL Basics">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Start Your Blog Using Hexo and Githubpage">
-<meta property="og:url" content="http://yoursite.com/2017/08/27/Start Your Blog Using Hexo and Githubpage/index.html">
+<meta property="og:title" content="Siamese Network">
+<meta property="og:url" content="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta property="og:description" content="The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosin">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-02T11:32:05.000Z">
+<meta property="og:updated_time" content="2017-09-06T08:29:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Start Your Blog Using Hexo and Githubpage">
-<meta name="twitter:description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta name="twitter:title" content="Siamese Network">
+<meta name="twitter:description" content="The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosin">
 
 
 
@@ -135,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/27/Start Your Blog Using Hexo and Githubpage/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/"/>
 
 
 
 
 
-  <title>Start Your Blog Using Hexo and Githubpage | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Siamese Network | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -278,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/Start Your Blog Using Hexo and Githubpage/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -295,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Start Your Blog Using Hexo and Githubpage</h1>
+          <h1 class="post-title" itemprop="name headline">Siamese Network</h1>
         
 
         <div class="post-meta">
@@ -307,8 +308,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-27T23:24:53+10:00">
-                2017-08-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-06T16:56:51+10:00">
+                2017-09-06
               </time>
             
 
@@ -317,6 +318,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -345,18 +368,11 @@
       
 
       
-        <p>This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. <a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a> 2. <a href="https://git-scm.com" target="_blank" rel="external">Git</a></p>
-<p>If your computer already has these, just install Hexo with npm: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure></p>
-<h1 id="setup">Setup</h1>
-<p>Once Hexo is installed, run the following commands to initialise Hexo in the target <folder>. <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init &lt;folder&gt;</div><div class="line">$ <span class="built_in">cd</span> &lt;folder&gt;</div><div class="line">$ npm install</div></pre></td></tr></table></figure></folder></p>
-<h1 id="deployment">Deployment</h1>
-<p>Before your first deployment, you will have to modify some settings in _config.yml. A valid deployment setting must have a type field. For example: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  repo: http://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure></p>
-<p>Before your first deployment, install <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="external">hexo-deployer-git</a>: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
-<p>Then need to set your git information as follow: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name <span class="string">"yourname"</span></div><div class="line">git config --global user.email <span class="string">"youremail"</span></div></pre></td></tr></table></figure></p>
-<h1 id="write">Write</h1>
-<p>Then you can write your posts and save them in the folder _post under source.</p>
-<h1 id="publish">Publish</h1>
-<p>Just type in the following command to publish your posts: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure></p>
+        <p>The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosine Similarity) to compare the extent of similarity. During training, the goal is to minimize the value of cost functon of the pairs of samples from same category, in the meantime, maximize the value of cost function of the pairs from different categories. For a given neural network (CNN, RNN), the goal is to optimize its parameters <span class="math inline">\(\mathbf{W}\)</span> to make:</p>
+<p><span class="math inline">\(E_w = \left \| G_w(X_1) - G_w(X_2) \right \|\)</span>, small if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are in the same category</p>
+<p><span class="math inline">\(E_w = \left \| G_w(X_1) - G_w(X_2) \right \|\)</span>, large if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are in the different categories</p>
+<p>The only assumption about W is differentiable.</p>
+<p>And the cost function is defined as below: <span class="math display">\[\mathcal{L}(W) = \Sigma^n_{i=1} (1-Y)L_G(E_w(x_1,x_2)^i) + YL_I(E_w(X_1,X_2)^i)\]</span></p>
 
       
     </div>
@@ -372,6 +388,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/DL-Basics/" rel="tag"># DL Basics</a>
+          
+        </div>
+      
 
       
       
@@ -381,15 +403,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/09/05/2017-09-05PixelCNN/" rel="next" title="PixelCNN">
+                <i class="fa fa-chevron-left"></i> PixelCNN
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/29/fastText/" rel="prev" title="Some understanding about how fastText works">
-                Some understanding about how fastText works <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -441,17 +463,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -468,7 +481,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -515,22 +528,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#setup"><span class="nav-number">1.</span> <span class="nav-text">Setup</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deployment"><span class="nav-number">2.</span> <span class="nav-text">Deployment</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#write"><span class="nav-number">3.</span> <span class="nav-text">Write</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#publish"><span class="nav-number">4.</span> <span class="nav-text">Publish</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

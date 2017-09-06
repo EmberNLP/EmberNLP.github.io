@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/PixelCNN/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -294,7 +294,153 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/05/PixelCNN/" itemprop="url">PixelCNN</a></h1>
+                <a class="post-title-link" href="/2017/09/06/2017-09-06Siamese Network/" itemprop="url">Siamese Network</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-06T16:56:51+10:00">
+                2017-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosine Similarity) to compare the extent of similarity. During training, the goal is to minimize the value of cost functon of the pairs of samples from same category, in the meantime, maximize the value of cost function of the pairs from different categories. For a given neural network (CNN, RNN), the goal is to optimize its parameters <span class="math inline">\(\mathbf{W}\)</span> to make:</p>
+<p><span class="math inline">\(E_w = \left \| G_w(X_1) - G_w(X_2) \right \|\)</span>, small if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are in the same category</p>
+<p><span class="math inline">\(E_w = \left \| G_w(X_1) - G_w(X_2) \right \|\)</span>, large if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are in the different categories</p>
+<p>The only assumption about W is differentiable.</p>
+<p>And the cost function is defined as below: <span class="math display">\[\mathcal{L}(W) = \Sigma^n_{i=1} (1-Y)L_G(E_w(x_1,x_2)^i) + YL_I(E_w(X_1,X_2)^i)\]</span></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/2017-09-05PixelCNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/05/2017-09-05PixelCNN/" itemprop="url">PixelCNN</a></h1>
         
 
         <div class="post-meta">
@@ -374,6 +520,7 @@
 <li>Gated Convolutional Layer</li>
 <li>BlindSpot And Solution</li>
 <li>Conditional PixelCNN</li>
+<li>fast PixelCNN ++</li>
 <li>PixelRNN</li>
 </ul>
 <h2 id="pixelcnn">PixelCNN</h2>
@@ -469,7 +616,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/The Intuition Behind LSTM/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/2017-09-04The Intuition Behind LSTM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -488,7 +635,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/04/The Intuition Behind LSTM/" itemprop="url">Intuition Behind LSTM</a></h1>
+                <a class="post-title-link" href="/2017/09/04/2017-09-04The Intuition Behind LSTM/" itemprop="url">Intuition Behind LSTM</a></h1>
         
 
         <div class="post-meta">
@@ -656,7 +803,7 @@ h_t &amp;= o_t \ast tanh(C_t)
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/02/RNN for NLP/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/02/2017-09-02RNN for NLP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -675,7 +822,7 @@ h_t &amp;= o_t \ast tanh(C_t)
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/02/RNN for NLP/" itemprop="url">RNN for NLP</a></h1>
+                <a class="post-title-link" href="/2017/09/02/2017-09-02RNN for NLP/" itemprop="url">RNN for NLP</a></h1>
         
 
         <div class="post-meta">
@@ -798,7 +945,7 @@ h_t &amp;= o_t \ast tanh(C_t)
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/CNN for NLP/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/2017-09-01CNN for NLP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -817,7 +964,7 @@ h_t &amp;= o_t \ast tanh(C_t)
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/01/CNN for NLP/" itemprop="url">CNN for NLP</a></h1>
+                <a class="post-title-link" href="/2017/09/01/2017-09-01CNN for NLP/" itemprop="url">CNN for NLP</a></h1>
         
 
         <div class="post-meta">
@@ -906,8 +1053,9 @@ The graph above is an example of only one convolution and max-pooling for senten
 <h3 id="feature-hashing">Feature Hashing</h3>
 <p>There is no need to pre-compute vocabulary-to-index mapping, instead, allocate an embedding matrix <em><span class="math inline">\(E\)</span></em> with N rows. N should be sufficiently large, but no prohibitive. When a k-gram is seen in training, we assign it to a row in <em><span class="math inline">\(E\)</span></em> by applying hash function that will deterministically map it into a number in the range <span class="math inline">\([1,N]\)</span>. Then use the corresponding row as the embedding vector.</p>
 <h3 id="dilated-convolution-architecture">Dilated Convolution Architecture</h3>
-<p>A recent development (e.g. see paper by Fisher Yu and Vladlen Koltun) is to introduce one more hyperparameter to the CONV layer called the dilation. The normal CONV filters are contiguous. However, it’s possible to have filters that have spaces between each cell, called dilation.<br>
-As an example, in one dimension a filter w of size 3 would compute over input <span class="math inline">\(x\)</span> the following: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">w[0]*x[0] + w[1]*x[1] + w[2]*x[2]</div></pre></td></tr></table></figure></p>
+<p>A recent development (e.g. see paper by Fisher Yu and Vladlen Koltun) is to introduce one more hyperparameter to the CONV layer called the dilation. The normal CONV filters are contiguous. However, it’s possible to have filters that have spaces between each cell, called dilation.</p>
+<p>It’s perhaps useful to first note why vanilla convolutions struggle to integrate global context. Consider a purely convolutional network composed of layers of <span class="math inline">\(k \times k\)</span> convolutions, without pooling. It is easy to see that size of the receptive field of each unit — the block of pixels which can influence its activation — is <span class="math inline">\(l \ast (k-1) + k\)</span>, where l is the layer index. So the effective receptive field of units can only grow linearly with layers. This is very limiting, especially for high-resolution input images.</p>
+<p>As an example, in one dimension a filter w of size 3 would compute over input <span class="math inline">\(x\)</span> the following: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">w[0]*x[0] + w[1]*x[1] + w[2]*x[2]</div></pre></td></tr></table></figure></p>
 <p>This is dilation of 0. For dilation 1 the filter would instead compute: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">w[0]*x[0] + w[1]*x[2] + w[2]*x[4]</div></pre></td></tr></table></figure></p>
 <p>In other words there is a gap of 1 between the applications. This can be very useful in some settings to use in conjunction with 0-dilated filters because it allows you to merge spatial information across the inputs much more agressively with fewer layers. For example, if you stack two 3x3 CONV layers on top of each other then you can convince yourself that the neurons on the 2nd layer are a function of a 5x5 patch of the input (we would say that the effective receptive field of these neurons is 5x5). If we use dilated convolutions then this effective receptive field would grow much quicker.</p>
 <h1 id="reference">Reference</h1>
@@ -964,7 +1112,7 @@ As an example, in one dimension a filter w of size 3 would compute over input <s
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Batch Normalization/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/2017-08-31Batch Normalization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -983,7 +1131,7 @@ As an example, in one dimension a filter w of size 3 would compute over input <s
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/31/Batch Normalization/" itemprop="url">Batch Normalization</a></h1>
+                <a class="post-title-link" href="/2017/08/31/2017-08-31Batch Normalization/" itemprop="url">Batch Normalization</a></h1>
         
 
         <div class="post-meta">
@@ -1121,7 +1269,7 @@ z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Optimization Methods in Deep Learning/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/2017-08-31Optimization Methods in Deep Learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -1140,7 +1288,7 @@ z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/31/Optimization Methods in Deep Learning/" itemprop="url">Optimization Methods in Deep Learning</a></h1>
+                <a class="post-title-link" href="/2017/08/31/2017-08-31Optimization Methods in Deep Learning/" itemprop="url">Optimization Methods in Deep Learning</a></h1>
         
 
         <div class="post-meta">
@@ -1327,7 +1475,7 @@ v_t &amp;= \beta v_{t-1} + (1-\beta)\theta_t\\\\
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/Vanishing and Exploding Gradients/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/2017-08-31Vanishing and Exploding Gradients/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -1346,7 +1494,7 @@ v_t &amp;= \beta v_{t-1} + (1-\beta)\theta_t\\\\
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/31/Vanishing and Exploding Gradients/" itemprop="url">Vanishing and Exploding Gradients</a></h1>
+                <a class="post-title-link" href="/2017/08/31/2017-08-31Vanishing and Exploding Gradients/" itemprop="url">Vanishing and Exploding Gradients</a></h1>
         
 
         <div class="post-meta">
@@ -1480,7 +1628,7 @@ v_t &amp;= \beta v_{t-1} + (1-\beta)\theta_t\\\\
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/29/fastText/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/29/2017-08-29fastText/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -1499,7 +1647,7 @@ v_t &amp;= \beta v_{t-1} + (1-\beta)\theta_t\\\\
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/29/fastText/" itemprop="url">Some understanding about how fastText works</a></h1>
+                <a class="post-title-link" href="/2017/08/29/2017-08-29fastText/" itemprop="url">Some understanding about how fastText works</a></h1>
         
 
         <div class="post-meta">
@@ -1785,7 +1933,7 @@ The calculation of derivatives are as follows:
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/Start Your Blog Using Hexo and Githubpage/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/2017-08-26Start Your Blog Using Hexo and Githubpage/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -1804,7 +1952,7 @@ The calculation of derivatives are as follows:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/27/Start Your Blog Using Hexo and Githubpage/" itemprop="url">Start Your Blog Using Hexo and Githubpage</a></h1>
+                <a class="post-title-link" href="/2017/08/27/2017-08-26Start Your Blog Using Hexo and Githubpage/" itemprop="url">Start Your Blog Using Hexo and Githubpage</a></h1>
         
 
         <div class="post-meta">
@@ -1951,7 +2099,7 @@ The calculation of derivatives are as follows:
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
