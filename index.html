@@ -752,7 +752,7 @@ C_t &amp;= f_t \ast C_{t-1} + i_t \ast \tilde{C}_t \\\\
 o_t &amp;= \sigma (W_o \cdot [h_{t-1}, x_t] + b_o)\\\\
 h_t &amp;= o_t \ast tanh(C_t)
 \end{split}\end{equation}\]</span>
-<p>Suppose we have calculated the value of <span class="math inline">\(\frac{\partial L}{C_{t+k}}\)</span>, then: <span class="math display">\[\frac{\partial L}{C_t} = \frac{\partial L}{C_{t+k}} \odot f_{t+k-1} \odot f_{t+k-2} ... \odot f_{t}\]</span> Except the very first term, the vanishing problem still exist.</p>
+<p>Suppose we have calculated the value of <span class="math inline">\(\frac{\partial L}{C_{t+k}}\)</span>, then: <span class="math display">\[\frac{\partial L}{C_t} = \frac{\partial L}{C_{t+k}} \odot f_{t+k-1} \odot f_{t+k-2} ... \odot f_{t}\]</span> Except for the very first term, the vanishing problem still exist.</p>
 <h1 id="reference">Reference</h1>
 <p><a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms" target="_blank" rel="external">Written memories the intuition behind lstms</a></p>
 
