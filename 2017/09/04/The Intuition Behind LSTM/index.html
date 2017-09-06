@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="A mathematically Sufficient Condition For Vanishing Sensitivity This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-05T10:58:13.000Z">
+<meta property="og:updated_time" content="2017-09-05T23:58:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Intuition Behind LSTM">
 <meta name="twitter:description" content="A mathematically Sufficient Condition For Vanishing Sensitivity This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of">
@@ -370,11 +370,11 @@
       
         <h1 id="a-mathematically-sufficient-condition-for-vanishing-sensitivity">A mathematically Sufficient Condition For Vanishing Sensitivity</h1>
 <p>This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of the mean value theorem to go one step further than Pascanu et al. and reach a slightly stronger result, effectively showing vanishing causation rather than vanishing sensitivity. Note that mathematical analyses of vanishing and exploding gradients date back to the early 1990s, in Bengio et al. (1994) and Hochreiter (1991) (original in German, relevant portions summarized in Hochreiter and Schmidhuber (1997)).</p>
-To begin, from the definition of a vanilla RNN cell, we have: <span class="math display">\[s_{t+1} = \phi (z_t), where \space z_t = Wx_t + Ux_{t-1} + b\]</span> Recall the <em><strong>Mean value theorem</strong></em>: If a function <span class="math inline">\(f\)</span> is continuous on the closed interval <span class="math inline">\([a,b]\)</span>, and differentiable on the open interval <span class="math inline">\((a,b)\)</span> , then there exists a point <span class="math inline">\(c\)</span> in <span class="math inline">\((a,b)\)</span> such that: <span class="math display">\[f&#39;(c) = \frac{f(b)-f(a)}{b-a}\]</span> Applying the mean value theorem, we get that there exists <span class="math inline">\(c \in [z_t, z_t + \Delta z_t]\)</span> such that:
+To begin, from the definition of a vanilla RNN cell, we have: <span class="math display">\[s_{t+1} = \phi (z_t), where \space z_t = Ws_t + Ux_{t+1} + b\]</span> Recall the <em><strong>Mean value theorem</strong></em>: If a function <span class="math inline">\(f\)</span> is continuous on the closed interval <span class="math inline">\([a,b]\)</span>, and differentiable on the open interval <span class="math inline">\((a,b)\)</span> , then there exists a point <span class="math inline">\(c\)</span> in <span class="math inline">\((a,b)\)</span> such that: <span class="math display">\[f&#39;(c) = \frac{f(b)-f(a)}{b-a}\]</span> Applying the mean value theorem, we get that there exists <span class="math inline">\(c \in [z_t, z_t + \Delta z_t]\)</span> such that:
 <span class="math display">\[\begin{equation}\begin{split}
 \Delta S_{t+1} &amp;= [\phi&#39;(c)] \Delta z_t\\\\
 &amp;= [\phi&#39;(c)] \Delta (Ws_t)\\\\
-&amp;= [\phi&#39;(c)] W\Delta(z_t)
+&amp;= [\phi&#39;(c)] W\Delta(s_t)
 \end{split}\end{equation}\]</span>
 <p>Now let <span class="math inline">\(\left \| A \right \|\)</span> represent the matrix 2-norm, <span class="math inline">\(\left | v \right |\)</span>the Euclidean vector norm, and define: <span class="math display">\[\gamma = sup_{c \in \{z_t, z_t + \Delta z_t\}} \left \| [\phi&#39; (c)] \right \|\]</span> Note that for the logistic sigmoid, <span class="math inline">\(\gamma \leq \frac{1}{4}\)</span>, and for tanh, <span class="math inline">\(\gamma \leq 1\)</span>.</p>
 Taking the vector norm of each side, we obtain, where the first inequality comes from the definition of the 2-norm (applied twice), and second from the definition of supremum:
