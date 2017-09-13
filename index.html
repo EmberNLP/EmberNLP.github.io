@@ -275,6 +275,198 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/13/2017-09-12Show attend and tell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/13/2017-09-12Show attend and tell/" itemprop="url">Show attend and tell</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-13T10:01:52+10:00">
+                2017-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Let’s introduce an example to explain attention mechanism. The task we want to achieve is image captioning: we want to generate a caption for a given image.</p>
+<p>A <em>classic</em> image captioning system would encode the image, using a pre-trained Convolutional Neural Network that would produce a hidden state h. Then, it would decode this hidden state by using a Recurrent Neural Network (RNN), and generate recursively each word of the caption. See image below:</p>
+<center>
+<img src="/images/ShowAttendAndTell/ClassicImageCaptioning.png">
+</center>
+<p>The problem with this method is that, when the model is trying to generate the next word of the caption, this word is usually describing only a part of the image. Using the whole representation of the image <span class="math inline">\(h\)</span> to condition the generation of each word cannot efficiently produce different words for different parts of the image. This is exactly where an attention mechanism is helpful.</p>
+<p>With an attention mechanism, the image is first divided into <span class="math inline">\(L\)</span> parts, and we compute with a Convolutional Neural Network (CNN) representations of each part <span class="math inline">\(a = \{ a_1, ..., a_L \}\)</span>. When the RNN is generating a new word, the attention mechanism is focusing on the relevant part of the image, so the decoder only uses specific parts of the image.</p>
+<p>On the figure below (upper row), we can see for each word of the caption what part of the image (in white) is used to generate it.</p>
+<center>
+<img src="/images/ShowAttendAndTell/AttentionCaptioning.png">
+</center>
+<h2 id="what-is-an-attention-model">What is an attention model</h2>
+<p>An attention model is a method that takes <span class="math inline">\(n\)</span> arguments <span class="math inline">\(y_1, ..., y_n\)</span> (in the precedent examples, the <span class="math inline">\(y_i\)</span> would be the <span class="math inline">\(a_i\)</span>), and a context <span class="math inline">\(c\)</span>. It returns a vector <span class="math inline">\(z\)</span> which is supposed to be the summary of the <span class="math inline">\(y_i\)</span>, focusing on information linked to the context <span class="math inline">\(c\)</span>. More formally, it returns a weighted arithmetic mean of the <span class="math inline">\(y_i\)</span>, and the weights are chosen according the relevance of each <span class="math inline">\(y_i\)</span> given the context <span class="math inline">\(c\)</span>.</p>
+<p>In the example presented before, the context is the beginning of the generated sentence, the <span class="math inline">\(y_i\)</span> are the representations of the parts of the image (<span class="math inline">\(a_i\)</span>), and the output is a representation of the filtered image, with a filter putting the focus of the interesting part for the word currently generated.</p>
+<p>One interesting feature of attention model is that the weight of the arithmetic means are accessible and can be plotted. This is exactly the figures we were showing before, a pixel is whiter if the weight of this image is high.</p>
+<h2 id="show-attend-and-tell">Show Attend and Tell</h2>
+<p>I’ll explain the details of paper <a href="https://arxiv.org/abs/1502.03044" target="_blank" rel="external">Show Attend and Tell</a>.</p>
+<p>The model takes a single raw image and generates a caption <span class="math inline">\(\mathbf{y}\)</span> encoded as a sequence of <span class="math inline">\(1-of-K\)</span> encoded words. <span class="math display">\[y = \{ \mathbf{y}_1,\mathbf{y}_2,...,\mathbf{y}_C \}, \space \mathbf{y}_i \in \mathbb{R}^K\]</span></p>
+<h3 id="encoder-convolutional-features">Encoder: Convolutional Features</h3>
+<p>The encoder uses a convolutional neural network to extract a set of feature vectors which refer to as annotation vectors. The extractor produces <span class="math inline">\(L\)</span> vectors, each of which is a D-dimensional representation corresponding to a part of the image. <span class="math display">\[a = \{ \mathbf{a}_1,\mathbf{a}_2,...,\mathbf{a}_L\}, \space \mathbf{a}_i \in \mathbb{R}^D\]</span> In order to obtain a correspondence between the feature vectors and portions of the 2-D image, the features are extracted from a lower convolutional layer. This allows the decoder to selectively focus on certain parts of an image by selecting a subset of all the feature vectors.</p>
+<p>For a concrete example, we resize the input image to <span class="math inline">\(224 \times 224\)</span>. Feature vectors <span class="math inline">\(a\)</span> use <span class="math inline">\(14 \times 14 \times 512\)</span> dimensional feature maps of layer <span class="math inline">\(conv5\_3\)</span> of VGG net. So the number of regions is <span class="math inline">\(L = 14 \times 14 = 196\)</span>, and the dimension of each feature vector is <span class="math inline">\(D = 512\)</span>.</p>
+<h3 id="decoder-lstm-network">Decoder: LSTM network</h3>
+The decoder is a LSTM network that produces a caption bt generating one word at ecery time step conditioned on a context vector, the previous hidden state and the previously generated words.
+<center>
+<img src="/images/ShowAttendAndTell/DecoderLSTM.png">
+</center>
+From the figure above, we can see:
+<span class="math display">\[\begin{equation}\begin{split}
+f_t &amp;= \sigma(W_f[Ey_{t-1}, h_{t-1}, z_t]) \\\\
+i_t &amp;= \sigma(W_i[Ey_{t-1}, h_{t-1}, z_t]) \\\\
+o_t &amp;= \sigma(W_o[Ey_{t-1}, h_{t-1}, z_t]) \\\\
+g_t &amp;= tanh(W_g[Ey_{t-1}, h_{t-1}, z_t]) \\\\
+c_t &amp;= f_t \odot c_{t-1} + i_t \odot g_t\\\\
+h_t &amp;= o_t \odot tanh(c_t)
+\end{split}\end{equation}\]</span>
+<p>Here, <span class="math inline">\(i_t,f_t,c_t,o_t,h_t\)</span> are the input, forget, memory, output and hidden state of the LSTM, respectively.</p>
+<ul>
+<li><span class="math inline">\(y_{t-1}\)</span>: the previously generated word, <span class="math inline">\(y_i \in \mathbb{R}^K\)</span>, <span class="math inline">\(K\)</span> is the size of the vocabulary.</li>
+<li><span class="math inline">\(E\)</span>: the Embedding lookup table which are learned parameters initialized randomly, <span class="math inline">\(E \in \mathbb{R}^{m \times K}\)</span>, <span class="math inline">\(m\)</span> denotes the Embedding dimensionality.</li>
+<li><span class="math inline">\(z_t\)</span>: the context vector, it’s a function of annotation vectors <span class="math inline">\(a\)</span>, capturing the visual information associated with a particular input location, <span class="math inline">\(z_t \in \mathbb{R}^D\)</span></li>
+</ul>
+<p>It’s time to illustrate the attention part, that is where <span class="math inline">\(z_t\)</span> comes from.</p>
+<p>In simple terms, the context vectors <span class="math inline">\(\mathbf{z}_t\)</span> is a dynamic representation of the relevant part of the image input at time <span class="math inline">\(t\)</span>. Mechanism <span class="math inline">\(\phi\)</span> is defined to compute <span class="math inline">\(\mathbf{z}_t\)</span> from annotatioin vectors <span class="math inline">\(\mathbf{a}_i, i=1,2,...,L\)</span> corresponding to the features extracted at different image locations. For each location <span class="math inline">\(i\)</span>, the mechanism generates a positive weight location <span class="math inline">\(\alpha_i\)</span> which can be interpreted either as the probability that location <span class="math inline">\(i\)</span> is the right place to focus for producing the next word (the ‘hard’ but stochastic attention mechanism), or as the relative importance to give to location <span class="math inline">\(i\)</span> in blending the <span class="math inline">\(a_i\)</span>’s together. The weight <span class="math inline">\(\alpha_i\)</span> of each annotation vectors <span class="math inline">\(a_i\)</span> is computed using an attention model <span class="math inline">\(f_{att}\)</span> which is a multilayer perceptron conditioned on the previous hidden state <span class="math inline">\(h_{t-1}\)</span> <span class="math display">\[e_{ti} = f_{att} ( \mathbf{a}_i, \mathbf{h}_{t-1} )\]</span> <span class="math display">\[\alpha_{ti} = \frac{exp(e_{ti})}{\Sigma^L_{k=1}exp} (e_{tk} )\]</span> Once the weigths (which sums to 1) are computed, the context vector <span class="math inline">\(\mathbf{z}_t\)</span> is computed by: <span class="math display">\[\mathbf{z}_t = \phi ( \{ \mathbf{a}_i \}, \{ \alpha_i \})\]</span> For <em><strong>soft attention</strong></em>: <span class="math display">\[\mathbf{z}_t = \phi ( \{ \mathbf{a}_i \}, \{ \alpha_i \}) = \Sigma^L_{i=1} \alpha_i \mathbf{a}_i\]</span></p>
+<p>The initial memory state and hidden state of the LSTM are predicted by an average of the annotation vectors fed through two separate MLPs: <span class="math display">\[\mathbf{c}_0 = f_{init,c} (\frac{1}{L} \Sigma^L_i \mathbf{a}_1)\]</span> <span class="math display">\[\mathbf{h}_0 = f_{init,h} (\frac{1}{L} \Sigma^L_i \mathbf{a}_1)\]</span></p>
+<h3 id="output-layer">Output Layer</h3>
+<p>Output is a deep layer to compute the output word probability given the LSTM state, the context voector and the previous word: <span class="math display">\[p(y_t|a,y^{t-1}_1 \propto exp(L_0(Ey_{t-1} + L_hh_t + Lzz_t))\]</span></p>
+<h1 id="reference">Reference</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://arxiv.org/abs/1502.03044" target="_blank" rel="external">Show, Attend and Tell: Neural Image Caption Generation with Visual Attention</a></li>
+<li><a href="https://blog.heuritech.com/2016/01/20/attention-mechanism/" target="_blank" rel="external">Attention Mechanism</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -709,7 +901,14 @@
       
         
           
-            <h1 id="a-mathematically-sufficient-condition-for-vanishing-sensitivity">A mathematically Sufficient Condition For Vanishing Sensitivity</h1>
+            <h1 id="content">Content</h1>
+<ul>
+<li>A mathematically Sufficient Condition For Vanishing Sensitivity</li>
+<li>A minimum Weight Initialization to Avoid Vanishing Gradients</li>
+<li>Written memories: the intuition behind LSTMs</li>
+<li>Different Between Tanh and Sigmoid Function</li>
+</ul>
+<h2 id="a-mathematically-sufficient-condition-for-vanishing-sensitivity">A mathematically Sufficient Condition For Vanishing Sensitivity</h2>
 <p>This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of the mean value theorem to go one step further than Pascanu et al. and reach a slightly stronger result, effectively showing vanishing causation rather than vanishing sensitivity. Note that mathematical analyses of vanishing and exploding gradients date back to the early 1990s, in Bengio et al. (1994) and Hochreiter (1991) (original in German, relevant portions summarized in Hochreiter and Schmidhuber (1997)).</p>
 To begin, from the definition of a vanilla RNN cell, we have: <span class="math display">\[s_{t+1} = \phi (z_t), where \space z_t = Ws_t + Ux_{t+1} + b\]</span> Recall the <em><strong>Mean value theorem</strong></em>: If a function <span class="math inline">\(f\)</span> is continuous on the closed interval <span class="math inline">\([a,b]\)</span>, and differentiable on the open interval <span class="math inline">\((a,b)\)</span> , then there exists a point <span class="math inline">\(c\)</span> in <span class="math inline">\((a,b)\)</span> such that: <span class="math display">\[f&#39;(c) = \frac{f(b)-f(a)}{b-a}\]</span> Applying the mean value theorem, we get that there exists <span class="math inline">\(c \in [z_t, z_t + \Delta z_t]\)</span> such that:
 <span class="math display">\[\begin{equation}\begin{split}
@@ -727,7 +926,7 @@ Taking the vector norm of each side, we obtain, where the first inequality comes
 \end{split}\end{equation}\]</span>
 <p>By expanding this formula over <span class="math inline">\(k\)</span> time steps we get: <span class="math display">\[\left | \Delta s_{t+k} \right | \leq \left \| \gamma W \right \|^k \left | \Delta s_t \right |\]</span> So that: <span class="math display">\[\frac{\left | \Delta s_{t+k} \right |}{\left | \Delta s_t \right |} = \left \| \gamma W \right \|^k\]</span></p>
 <p>Therefore, if <span class="math inline">\(\left \| \gamma W \right \| &lt; 1\)</span> , we have that <span class="math inline">\(\frac{\left | \Delta s_{t+k} \right |}{\left | \Delta s_t \right |}\)</span> decreases exponentially in time.</p>
-<h1 id="a-minimum-weight-initialization-to-avoid-vanishing-gradients">A minimum Weight Initialization to Avoid Vanishing Gradients</h1>
+<h2 id="a-minimum-weight-initialization-to-avoid-vanishing-gradients">A minimum Weight Initialization to Avoid Vanishing Gradients</h2>
 <p>It is beneficial to find a weight initialization that will not immediately suffer from this problem. Extending the above analysis to find the initialization of <span class="math inline">\(W\)</span> that gets us as close to equality as possible leads to a nice result. First, let us assume that <span class="math inline">\(\phi = tanh\)</span> and take <span class="math inline">\(\gamma = 1\)</span>. Our goal is to find an initialization of W for which:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(\left \| \gamma W \right \| = 1\)</span></li>
@@ -739,7 +938,7 @@ Taking the vector norm of each side, we obtain, where the first inequality comes
 <p>So that: <span class="math display">\[R = \frac{\sqrt{3}}{\sqrt{n}}\]</span></p>
 <p>This is a nice result because it is the Xavier-Glorot initialization for a square weight matrix, yet was motivated by a different idea. The Xavier-Glorot initialization, introduced by Glorot and Bengio (2010), has proven to be an effective weight initialization prescription in practice. More generally, the Xavier-Glorot prescription applies to m-by-n weight matrices used in a layer that has an activation function whose derivative is near one at the origin (like tanh), and says that we should initialize our weights according to a uniform distribution of the interval: <span class="math display">\[[-\frac{\sqrt{6}}{\sqrt{m+n}},+\frac{\sqrt{6}}{\sqrt{m+n}}]\]</span></p>
 <p>We saw above that good weight initializations are crucial, but this only impacts the start of training.</p>
-<h1 id="written-memories-the-intuition-behind-lstms">Written memories: the intuition behind LSTMs</h1>
+<h2 id="written-memories-the-intuition-behind-lstms">Written memories: the intuition behind LSTMs</h2>
 <p>Very much like the messages passed by children playing a game of broken telephone, information is morphed by RNN cells and the original message is lost. A small change in the original message may not have made any difference in the final message, or it may have resulted in something completely different.</p>
 <p>How can we protect the integrity of messages? This is the fundamental principle of LSTMs: to ensure the integrity of our messages in the real world, we write them down. Writing is <em><strong>a delta to the current state</strong></em>: it is an act of creation (pen on paper) or destruction (carving in stone); the subject itself does not morph when you write on it and the error gradient on the backward-pass is constant.</p>
 <p>This is precisely what was proposed by the landmark paper of Hocreiter and Schmidhuber (1997), which introduced the LSTM. They asked: “how can we achieve constant error flow through a single unit with a single connection to itself [i.e., a single piece of isolated information]?”</p>
@@ -753,8 +952,13 @@ o_t &amp;= \sigma (W_o \cdot [h_{t-1}, x_t] + b_o)\\\\
 h_t &amp;= o_t \ast tanh(C_t)
 \end{split}\end{equation}\]</span>
 <p>Suppose we have calculated the value of <span class="math inline">\(\frac{\partial L}{C_{t+k}}\)</span>, then: <span class="math display">\[\frac{\partial L}{C_t} = \frac{\partial L}{C_{t+k}} \odot f_{t+k-1} \odot f_{t+k-2} ... \odot f_{t}\]</span> Except for the very first term, the vanishing problem still exist.</p>
+<h2 id="different-between-tanh-and-sigmoid-function">Different Between Tanh and Sigmoid Function</h2>
+<ul>
+<li>Sigmoid function have domain of all real numbers, ranging from 0 to 1, campared with Tanh function whose domain ranging from -1 to 1. The problem of Sigmoid is that the activation value is always positive, which give rise to the phenomenon that the derivative of weights are always all positive or all negative.</li>
+<li>When a sigmoidal activation function must be used, the hyperbolic tangent activation function typically performs better than the logistic sigmoid. It <em><strong>resembles the identity function more closely</strong></em>, in the sense that <span class="math inline">\(tanh(0) = 0\)</span> while <span class="math inline">\(\sigma(0) = \frac{1}{2}\)</span>. Because tanh is similar to the identity function near 0, training a deep neural network <span class="math inline">\(\hat{y} = W^T tanh(U^T tanh(V^TX))\)</span> resembles training a linear model <span class="math inline">\(\hat{y} = W^TU^TV^TX\)</span> so long as the activations of the network can be kept small. This makes training the tanh network easier.</li>
+</ul>
 <h1 id="reference">Reference</h1>
-<p><a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms" target="_blank" rel="external">Written memories the intuition behind lstms</a></p>
+<p><a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms" target="_blank" rel="external">Written memories the intuition behind lstms</a> <a href="http://www.deeplearningbook.org/contents/mlp.html" target="_blank" rel="external">Deep Learning Chap6</a></p>
 
           
         
@@ -897,6 +1101,9 @@ h_t &amp;= o_t \ast tanh(C_t)
         
           
             <p>When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one.</p>
+<p>Applying dropout to RNNs can be a bit tricky, that is, the dropout masks are sampled once per sequence, and not once per time step.</p>
+<p>For longer sentences classification, Li et al.[2015] found it useful to use a hierarchical architecture, in which the sentence is split into smaller spans based on punctuation. Then, each span is fed into a forward and a backward RNN. Sequence of resulting vectors (one for each span) are then fed into an RNN acceptor.</p>
+<p>To represent a word, except for general word embedding method like word2vec, we can use two character-level RNNs. For a word <span class="math inline">\(w\)</span>, made of characters <span class="math inline">\(c_1,c_2,...,c_l\)</span>, we will map each character into a corresponding embedding vector <span class="math inline">\(\mathbf{c}_i\)</span>. The word will then be encoded using a forward RNN and a reverse RNN over the characters. These RNNs can then either replace the word embedding vector, or, better yet, be concatenated.</p>
 
           
         
@@ -1219,6 +1426,7 @@ z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
 - Batch Normalization reduces the problem of the input values changing, it really causes these values to become stable, so that the later layers of the neural network has more firm ground to stand on.<br>
 - Due to mini-batch, it adds some noise to each hidden layers’ activations, and produces some light regularization impact.</p>
 <p>At test time, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are estimated by using exponentially weighted average across mini-batch. For a specific layer <span class="math inline">\(l\)</span>, we use EWA to keep track of the values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> of layer <span class="math inline">\(l\)</span> during training which will be used at test time.</p>
+<p>For CNN model, for a mini-batch of size <span class="math inline">\(m\)</span> and feature maps of size <span class="math inline">\(p \times q\)</span>, we use the effecive mini-batch of size <span class="math inline">\(m&#39; = m \cdot pq\)</span>. We learn a pair of parameters <span class="math inline">\(\gamma^{(k)}\)</span> and <span class="math inline">\(\beta^{(k)}\)</span> per feature map, rather than per activation.</p>
 <h1 id="reference">Reference</h1>
 <p>Andrew Ng’s Deep Learning Course</p>
 
@@ -1920,140 +2128,13 @@ The calculation of derivatives are as follows:
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/2017-08-26Start Your Blog Using Hexo and Githubpage/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ember">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EmberNLP">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/27/2017-08-26Start Your Blog Using Hexo and Githubpage/" itemprop="url">Start Your Blog Using Hexo and Githubpage</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-27T23:24:53+10:00">
-                2017-08-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. <a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a> 2. <a href="https://git-scm.com" target="_blank" rel="external">Git</a></p>
-<p>If your computer already has these, just install Hexo with npm: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure></p>
-<h1 id="setup">Setup</h1>
-<p>Once Hexo is installed, run the following commands to initialise Hexo in the target <folder>. <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init &lt;folder&gt;</div><div class="line">$ <span class="built_in">cd</span> &lt;folder&gt;</div><div class="line">$ npm install</div></pre></td></tr></table></figure></folder></p>
-<h1 id="deployment">Deployment</h1>
-<p>Before your first deployment, you will have to modify some settings in _config.yml. A valid deployment setting must have a type field. For example: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  repo: http://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure></p>
-<p>Before your first deployment, install <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="external">hexo-deployer-git</a>: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
-<p>Then need to set your git information as follow: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name <span class="string">"yourname"</span></div><div class="line">git config --global user.email <span class="string">"youremail"</span></div></pre></td></tr></table></figure></p>
-<h1 id="write">Write</h1>
-<p>Then you can write your posts and save them in the folder _post under source.</p>
-<h1 id="publish">Publish</h1>
-<p>Just type in the following command to publish your posts: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2099,7 +2180,7 @@ The calculation of derivatives are as follows:
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

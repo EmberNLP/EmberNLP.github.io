@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters tha">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-06T07:00:38.000Z">
+<meta property="og:updated_time" content="2017-09-12T22:59:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Batch Normalization">
 <meta name="twitter:description" content="Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters tha">
@@ -382,6 +382,7 @@ z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
 - Batch Normalization reduces the problem of the input values changing, it really causes these values to become stable, so that the later layers of the neural network has more firm ground to stand on.<br>
 - Due to mini-batch, it adds some noise to each hidden layers’ activations, and produces some light regularization impact.</p>
 <p>At test time, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are estimated by using exponentially weighted average across mini-batch. For a specific layer <span class="math inline">\(l\)</span>, we use EWA to keep track of the values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> of layer <span class="math inline">\(l\)</span> during training which will be used at test time.</p>
+<p>For CNN model, for a mini-batch of size <span class="math inline">\(m\)</span> and feature maps of size <span class="math inline">\(p \times q\)</span>, we use the effecive mini-batch of size <span class="math inline">\(m&#39; = m \cdot pq\)</span>. We learn a pair of parameters <span class="math inline">\(\gamma^{(k)}\)</span> and <span class="math inline">\(\beta^{(k)}\)</span> per feature map, rather than per activation.</p>
 <h1 id="reference">Reference</h1>
 <p>Andrew Ng’s Deep Learning Course</p>
 
@@ -505,7 +506,7 @@ z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

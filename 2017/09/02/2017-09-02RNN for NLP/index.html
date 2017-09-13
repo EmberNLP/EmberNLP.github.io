@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one.">
+<meta name="description" content="When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one. Applying dropout to RNNs can be a bit tricky, that is">
 <meta name="keywords" content="DL Basics,RNN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RNN for NLP">
 <meta property="og:url" content="http://yoursite.com/2017/09/02/2017-09-02RNN for NLP/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one.">
+<meta property="og:description" content="When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one. Applying dropout to RNNs can be a bit tricky, that is">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-04T04:44:48.000Z">
+<meta property="og:updated_time" content="2017-09-07T00:22:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RNN for NLP">
-<meta name="twitter:description" content="When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one.">
+<meta name="twitter:description" content="When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one. Applying dropout to RNNs can be a bit tricky, that is">
 
 
 
@@ -369,6 +369,9 @@
 
       
         <p>When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one.</p>
+<p>Applying dropout to RNNs can be a bit tricky, that is, the dropout masks are sampled once per sequence, and not once per time step.</p>
+<p>For longer sentences classification, Li et al.[2015] found it useful to use a hierarchical architecture, in which the sentence is split into smaller spans based on punctuation. Then, each span is fed into a forward and a backward RNN. Sequence of resulting vectors (one for each span) are then fed into an RNN acceptor.</p>
+<p>To represent a word, except for general word embedding method like word2vec, we can use two character-level RNNs. For a word <span class="math inline">\(w\)</span>, made of characters <span class="math inline">\(c_1,c_2,...,c_l\)</span>, we will map each character into a corresponding embedding vector <span class="math inline">\(\mathbf{c}_i\)</span>. The word will then be encoded using a forward RNN and a reverse RNN over the characters. These RNNs can then either replace the word embedding vector, or, better yet, be concatenated.</p>
 
       
     </div>
@@ -483,7 +486,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
