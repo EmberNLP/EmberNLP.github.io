@@ -104,7 +104,10 @@
 <meta property="og:description" content="Contents  Introduction The Natural Language Inference Task Encoder Models  LSTM and GRU BiLSTM With Mean/Max Pooling Self-attentive Network Hierarchical ConvNet   Introduction This paper studies the t">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/GenericNLITrainingScheme.png">
-<meta property="og:updated_time" content="2017-09-14T06:25:11.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/BiLSTMMaxPoolingNetwork.png">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/InnerAttentionNetworkArchitecture.png">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/HierarchicalConvNetArchitecture.png">
+<meta property="og:updated_time" content="2017-09-14T07:01:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Supervised Learning of Universal Sentence Representations from Natural Language Inference Data">
 <meta name="twitter:description" content="Contents  Introduction The Natural Language Inference Task Encoder Models  LSTM and GRU BiLSTM With Mean/Max Pooling Self-attentive Network Hierarchical ConvNet   Introduction This paper studies the t">
@@ -393,6 +396,31 @@
 </center>
 <h1 id="encoder-models">Encoder Models</h1>
 <h3 id="lstm-and-gru">LSTM and GRU</h3>
+<p>Encoders apply recurrent neural networks using either LSTM or GRU modules, as in sequence to sequence encoders. For a sequence of T words <span class="math inline">\((w_1,...,w_T)\)</span>, the network computes a set of <span class="math inline">\(T\)</span> hidden representations <span class="math inline">\(h_1,h_2,...,h_T\)</span>, with <span class="math inline">\(h_t = \overrightarrow{LSTM}(w_1,...,w_T)\)</span> (or GRU units instead). A sentence is represented by the last hidden vector, <span class="math inline">\(h_T\)</span>.</p>
+<h3 id="bilstm-with-meanmax-pooling">BiLSTM With Mean/Max Pooling</h3>
+<center>
+<img src="/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/BiLSTMMaxPoolingNetwork.png">
+</center>
+<span class="math display">\[\begin{equation}\begin{split}
+\overrightarrow{h_t} &amp;= \overrightarrow{LSTM}_t(w_1,...,w_T)\\\\
+\overleftarrow{h_t} &amp;= \overleftarrow{LSTM}_t(w_1,...,w_T)\\\\
+h_t &amp;= [\overrightarrow{h_t}, \overleftarrow{h_t}]
+\end{split}\end{equation}\]</span>
+<h3 id="self-attentive-network">Self-attentive Network</h3>
+<center>
+<img src="/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/InnerAttentionNetworkArchitecture.png">
+</center>
+<span class="math display">\[\begin{equation}\begin{split}
+\overline{h}_i &amp;= tanh(Wh_i + b_w)\\\\
+\alpha_i &amp;= \frac{e^{\overline{h}^T_i u_w}}{\Sigma_i e^{\overline{h}^T_i u_w}}\\\\
+u &amp;= \Sigma_i \alpha_i h_i
+\end{split}\end{equation}\]</span>
+<p>Where {<span class="math inline">\(h_1,...,h_T\)</span>} are the output vectors of a BiLSTM. These are fed to an affine transformation (<span class="math inline">\(W, b_w\)</span>) whcih outputs a set of keys (<span class="math inline">\(\overline{h}_1,...,\overline{h}_T\)</span>). The {<span class="math inline">\(\alpha_i\)</span>} represent the score of similarity between the keys and a learned context query vector <span class="math inline">\(u_w\)</span>. These weights are used to produce the final representation <span class="math inline">\(u\)</span>, which is a weighted linear combination of the hidden vectors.</p>
+<h3 id="hierarchical-convnet">Hierarchical ConvNet</h3>
+<center>
+<img src="/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/HierarchicalConvNetArchitecture.png">
+</center>
+<p>One of the currently best performing models on classification tasks is a convolutional architecture. It concatenates different representations of the sentences at different level of abstractions. The paper introduces a faster version consisting of 4 convolutional layers. At every layer, a representation <span class="math inline">\(u_i\)</span> is computed by a max-pooling operation over the feature maps. The final representation <span class="math inline">\(u = [u_1,u_2,u_3,u_4]\)</span> concatenates representations at different levels of the input sentence. The model thus captures hierarchical abstractions of an input sentence in a fixed-size representation.</p>
 
       
     </div>
@@ -567,7 +595,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#the-natural-language-inference-task"><span class="nav-number">3.</span> <span class="nav-text">The Natural Language Inference Task</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#encoder-models"><span class="nav-number">4.</span> <span class="nav-text">Encoder Models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lstm-and-gru"><span class="nav-number">4.0.1.</span> <span class="nav-text">LSTM and GRU</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#the-natural-language-inference-task"><span class="nav-number">3.</span> <span class="nav-text">The Natural Language Inference Task</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#encoder-models"><span class="nav-number">4.</span> <span class="nav-text">Encoder Models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lstm-and-gru"><span class="nav-number">4.0.1.</span> <span class="nav-text">LSTM and GRU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bilstm-with-meanmax-pooling"><span class="nav-number">4.0.2.</span> <span class="nav-text">BiLSTM With Mean/Max Pooling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#self-attentive-network"><span class="nav-number">4.0.3.</span> <span class="nav-text">Self-attentive Network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hierarchical-convnet"><span class="nav-number">4.0.4.</span> <span class="nav-text">Hierarchical ConvNet</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
