@@ -275,6 +275,159 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/2017-08-31Vanishing and Exploding Gradients/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/31/2017-08-31Vanishing and Exploding Gradients/" itemprop="url">Vanishing and Exploding Gradients</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T15:08:39+10:00">
+                2017-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Intuitively, extra hidden layers ought to make the network able to learn more complex classification functions, and thus do a better job classifying. Certainly, things shouldn’t get worse, since the extra layers can, in the worst case, simply do nothing. But that’s not what’s going on.</p>
+<p>Here is an example to illustrate why the vanishing gradient problem occurs. Let’s explicitly write out the entire expression for the gradient: <span class="math display">\[\frac{\partial Cost}{\partial w1} = \frac{\partial Cost}{\partial a_4}f&#39;(z_4)w_4f&#39;(z_3)w_3f&#39;(z_2)w_2f&#39;(z_1)x_{input}\]</span></p>
+<p>Excepting the very first term and very last term, this expression is a product of terms of the form: <span class="math display">\[f&#39;(z_j)w_j\]</span></p>
+<p>Recall that the standard approach to initialize the weights in the network is to choose the weights using a Gaussian with mean 0 and small standard deviation. So the weights will usually satisfy <span class="math inline">\(|w_j| &lt; 1\)</span>.</p>
+<p>If the non-linear function is the widely used relu function, then the derivative of <span class="math inline">\(f&#39;(z_j)\)</span> can only take the values of 1 or 0. So the terms <span class="math inline">\(f&#39;(z_j)w_j\)</span> will usually much less than 1. And when we take a product of many such terms, the product will tend to exponentially decrease: the more terms, the smaller the product will be. This is starting to smell like a possible explanation for the vanishing gradient problem. In particular, we might wonder whether the weights <span class="math inline">\(w_j\)</span> could grow during training. If they do, it’s possible the terms <span class="math inline">\(f&#39;(z_j)w_j\)</span> in the product will no longer satisfy <span class="math inline">\(|f&#39;(z_j)w_j| &lt; 1\)</span>. Indeed, if the terms get large enough - greater than 1 - then we will no longer have a vanishing gradient problem. Instead, the gradient will actually grow exponentially as we move backward through the layers. Instead of a vanishing gradient problem, we’ll have an exploding gradient problem.</p>
+<p>It is the fact that the gradient in early layers is the product of terms from all the later layers. When there are many layers, that’s an intrinsically unstable situation. The only way all layers can learn at close to the same speed is if all those products of terms come close to balancing out. Without some mechanism or underlying reason for that balancing to occur, it’s highly unlikely to happen simply by chance. In short, the real problem here is that neural networks suffer from an unstable gradient problem. As a result, if we use standard gradient-based learning techniques, different layers in the network will tend to learn at wildly different speeds.</p>
+<p>To reduce the effect of vanishing or exploding gradient problem, espeically for relu function, we can initilize the weights by: <span class="math display">\[w^{[l]} = np.random.randn(shape) * np.sqrt(\frac{1}{n^{[l-1]}})\]</span> The intuition behind is that: If we need the value of <span class="math inline">\(z = w_1x_1 + ... + w_nx_n + b\)</span> to be near 1, we should set <span class="math inline">\(Var(w) = \frac{1}{n}\)</span>, because the larger is n, the smaller the term <span class="math inline">\(w_jx_j\)</span> should be. In practice, using <span class="math inline">\(\frac{2}{n^{[l-1]}}\)</span> instead works better.</p>
+<p>And for tanh activation function, an effective scheme due to <strong>Glorot and Bengio [2010]</strong>, called <strong>xavier initialization</strong>, suggests initializing a weight matrix <em><span class="math inline">\(W\)</span></em> <span class="math inline">\(\in \mathbb{R}^{d_{in} \times d_{out}}\)</span> as: <span class="math display">\[W \sim U[-\frac{\sqrt{6}}{\sqrt{d_{in}+d_{out}}},+\frac{\sqrt{6}}{\sqrt{d_{in}+d_{out}}}]\]</span></p>
+<p>Another way is to perform <em><strong>Batch Normalization</strong></em>, the simple intuition behind is: for every minibatch, normalizing the inputs to each of the network layers to have zeros mean and unit variance. I’ll talk about this method in another post in detail.</p>
+<p>Besides, dealing with the exploding gradients has a simple but very effective solution: clipping the gradients if their norm exceeds a given threshold. Let <em><span class="math inline">\(g\)</span></em> be the gradients of all parameters in the network, and <em><span class="math inline">\(\|g\|\)</span></em> be their <span class="math inline">\(L_2\)</span> norm. Pascanu et al.[2012] suggest to set: <span class="math inline">\(g \leftarrow \frac{threshlod}{\|g\|}g\)</span> # Reference</p>
+<p>1.<a href="http://neuralnetworksanddeeplearning.com/chap5.html" target="_blank" rel="external">Neural Network and Deep Leanring Chpater 5</a><br>
+2.Andrew Ng’s Deep Learning Course 3.Neural network methods in natural language processing</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/29/2017-08-29fastText/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -750,7 +903,7 @@ The calculation of derivatives are as follows:
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -772,7 +925,7 @@ The calculation of derivatives are as follows:
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
