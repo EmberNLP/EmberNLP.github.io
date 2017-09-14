@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="DL Basics," />
+  <meta name="keywords" content="Sentence Embedding," />
 
 
 
@@ -95,18 +95,20 @@
 
 
 
-<meta name="description" content="The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosin">
-<meta name="keywords" content="DL Basics">
+<meta name="description" content="Contents  Introduction The Natural Language Inference Task Encoder Models  LSTM and GRU BiLSTM With Mean/Max Pooling Self-attentive Network Hierarchical ConvNet   Introduction This paper studies the t">
+<meta name="keywords" content="Sentence Embedding">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Siamese Network">
-<meta property="og:url" content="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/index.html">
+<meta property="og:title" content="Supervised Learning of Universal Sentence Representations from Natural Language Inference Data">
+<meta property="og:url" content="http://yoursite.com/2017/09/14/2017-09-14Supervised Learning of Universal Sentence Representations from Natural Language Inference Data/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosin">
+<meta property="og:description" content="Contents  Introduction The Natural Language Inference Task Encoder Models  LSTM and GRU BiLSTM With Mean/Max Pooling Self-attentive Network Hierarchical ConvNet   Introduction This paper studies the t">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-06T08:29:57.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/GenericNLITrainingScheme.png">
+<meta property="og:updated_time" content="2017-09-14T06:23:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Siamese Network">
-<meta name="twitter:description" content="The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosin">
+<meta name="twitter:title" content="Supervised Learning of Universal Sentence Representations from Natural Language Inference Data">
+<meta name="twitter:description" content="Contents  Introduction The Natural Language Inference Task Encoder Models  LSTM and GRU BiLSTM With Mean/Max Pooling Self-attentive Network Hierarchical ConvNet   Introduction This paper studies the t">
+<meta name="twitter:image" content="http://yoursite.com/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/GenericNLITrainingScheme.png">
 
 
 
@@ -136,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/14/2017-09-14Supervised Learning of Universal Sentence Representations from Natural Language Inference Data/"/>
 
 
 
 
 
-  <title>Siamese Network | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Supervised Learning of Universal Sentence Representations from Natural Language Inference Data | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -279,7 +281,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/14/2017-09-14Supervised Learning of Universal Sentence Representations from Natural Language Inference Data/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -296,7 +298,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Siamese Network</h1>
+          <h1 class="post-title" itemprop="name headline">Supervised Learning of Universal Sentence Representations from Natural Language Inference Data</h1>
         
 
         <div class="post-meta">
@@ -308,8 +310,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-06T16:56:51+10:00">
-                2017-09-06
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-14T15:52:30+10:00">
+                2017-09-14
               </time>
             
 
@@ -368,11 +370,29 @@
       
 
       
-        <p>The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosine Similarity) to compare the extent of similarity. During training, the goal is to minimize the value of cost functon of the pairs of samples from same category, in the meantime, maximize the value of cost function of the pairs from different categories. For a given neural network (CNN, RNN), the goal is to optimize its parameters <span class="math inline">\(\mathbf{W}\)</span> to make:</p>
-<p><span class="math inline">\(E_w = \left \| G_w(X_1) - G_w(X_2) \right \|\)</span>, small if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are in the same category</p>
-<p><span class="math inline">\(E_w = \left \| G_w(X_1) - G_w(X_2) \right \|\)</span>, large if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are in the different categories</p>
-<p>The only assumption about W is differentiable.</p>
-<p>And the cost function is defined as below: <span class="math display">\[\mathcal{L}(W) = \Sigma^n_{i=1} (1-Y)L_G(E_w(x_1,x_2)^i) + YL_I(E_w(X_1,X_2)^i)\]</span></p>
+        <h1 id="contents">Contents</h1>
+<ul>
+<li>Introduction</li>
+<li>The Natural Language Inference Task</li>
+<li>Encoder Models
+<ul>
+<li>LSTM and GRU</li>
+<li>BiLSTM With Mean/Max Pooling</li>
+<li>Self-attentive Network</li>
+<li>Hierarchical ConvNet</li>
+</ul></li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>This paper studies the task of learning universal representations of sentences, i.e., a sentence encoder model that is trained on a large corpus and subsequently transferred to other tasks.</p>
+<p>Unlike in computer vision, where convolutional neural networks are predominant, there are multiple ways to encode a sentence using neural networks. The experiments of this paper show that an encoder based on a bi-directional LSTM architecture with max pooling, trained the Stanford Natural Language Inference dataset, yields state-of-the-art sentence embeddings compared to all existing alternative unsupervised approaches like SkipThought or FastSent, while being much faster to train.</p>
+<p>The difficulty for this task is that neural networks are very good at capturing the biases of the task on which they are trained, but can easily forget the overall information or semantics of the input data by specializing too much on these biases.</p>
+<h1 id="the-natural-language-inference-task">The Natural Language Inference Task</h1>
+<p>The SNLI dataset consists of 570k human-generated English sentence pairs, manually labeled with one of three categories: entailment, contradiction and neutral. It captures natural language inference, also known in previous incarnations as Recognizing Textual Entailment (RTE), and constitutes one of the largest high-quality labeled resources explicitly constructed in order to require understanding sentence semantics.</p>
+<center>
+<img src="/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/GenericNLITrainingScheme.png">
+</center>
+<h1 id="encoder-models">Encoder Models</h1>
+<h3 id="lstm-and-gru">LSTM and GRU</h3>
 
       
     </div>
@@ -390,7 +410,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/DL-Basics/" rel="tag"># DL Basics</a>
+            <a href="/tags/Sentence-Embedding/" rel="tag"># Sentence Embedding</a>
           
         </div>
       
@@ -403,8 +423,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/05/2017-09-05PixelCNN/" rel="next" title="PixelCNN">
-                <i class="fa fa-chevron-left"></i> PixelCNN
+              <a href="/2017/09/13/2017-09-13Show attend and tell/" rel="next" title="Show Attend and Tell">
+                <i class="fa fa-chevron-left"></i> Show Attend and Tell
               </a>
             
           </div>
@@ -412,10 +432,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/13/2017-09-13Show attend and tell/" rel="prev" title="Show Attend and Tell">
-                Show Attend and Tell <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -467,8 +483,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -532,6 +557,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#the-natural-language-inference-task"><span class="nav-number">3.</span> <span class="nav-text">The Natural Language Inference Task</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#encoder-models"><span class="nav-number">4.</span> <span class="nav-text">Encoder Models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lstm-and-gru"><span class="nav-number">4.0.1.</span> <span class="nav-text">LSTM and GRU</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

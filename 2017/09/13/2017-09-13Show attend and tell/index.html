@@ -99,18 +99,18 @@
 <meta name="keywords" content="CNN,RNN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Show Attend and Tell">
-<meta property="og:url" content="http://yoursite.com/2017/09/13/2017-09-12Show attend and tell/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/09/13/2017-09-13Show attend and tell/index.html">
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Let’s introduce an example to explain attention mechanism. The task we want to achieve is image captioning: we want to generate a caption for a given image. A classic image captioning system would enc">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/images/ShowAttendAndTell/ClassicImageCaptioning.png">
-<meta property="og:image" content="http://yoursite.com/images/ShowAttendAndTell/AttentionCaptioning.png">
-<meta property="og:image" content="http://yoursite.com/images/ShowAttendAndTell/DecoderLSTM.png">
-<meta property="og:updated_time" content="2017-09-13T06:54:15.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-13Show%20attend%20and%20tell/ClassicImageCaptioning.png">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-13Show%20attend%20and%20tell/AttentionCaptioning.png">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-13Show%20attend%20and%20tell/DecoderLSTM.png">
+<meta property="og:updated_time" content="2017-09-14T06:24:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Show Attend and Tell">
 <meta name="twitter:description" content="Let’s introduce an example to explain attention mechanism. The task we want to achieve is image captioning: we want to generate a caption for a given image. A classic image captioning system would enc">
-<meta name="twitter:image" content="http://yoursite.com/images/ShowAttendAndTell/ClassicImageCaptioning.png">
+<meta name="twitter:image" content="http://yoursite.com/images/2017-09-13Show%20attend%20and%20tell/ClassicImageCaptioning.png">
 
 
 
@@ -140,7 +140,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/13/2017-09-12Show attend and tell/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/13/2017-09-13Show attend and tell/"/>
 
 
 
@@ -283,7 +283,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/13/2017-09-12Show attend and tell/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/13/2017-09-13Show attend and tell/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -375,13 +375,13 @@
         <p>Let’s introduce an example to explain attention mechanism. The task we want to achieve is image captioning: we want to generate a caption for a given image.</p>
 <p>A <em>classic</em> image captioning system would encode the image, using a pre-trained Convolutional Neural Network that would produce a hidden state h. Then, it would decode this hidden state by using a Recurrent Neural Network (RNN), and generate recursively each word of the caption. See image below:</p>
 <center>
-<img src="/images/ShowAttendAndTell/ClassicImageCaptioning.png">
+<img src="/images/2017-09-13Show%20attend%20and%20tell/ClassicImageCaptioning.png">
 </center>
 <p>The problem with this method is that, when the model is trying to generate the next word of the caption, this word is usually describing only a part of the image. Using the whole representation of the image <span class="math inline">\(h\)</span> to condition the generation of each word cannot efficiently produce different words for different parts of the image. This is exactly where an attention mechanism is helpful.</p>
 <p>With an attention mechanism, the image is first divided into <span class="math inline">\(L\)</span> parts, and we compute with a Convolutional Neural Network (CNN) representations of each part <span class="math inline">\(a = \{ a_1, ..., a_L \}\)</span>. When the RNN is generating a new word, the attention mechanism is focusing on the relevant part of the image, so the decoder only uses specific parts of the image.</p>
 <p>On the figure below (upper row), we can see for each word of the caption what part of the image (in white) is used to generate it.</p>
 <center>
-<img src="/images/ShowAttendAndTell/AttentionCaptioning.png">
+<img src="/images/2017-09-13Show%20attend%20and%20tell/AttentionCaptioning.png">
 </center>
 <h2 id="what-is-an-attention-model">What is an attention model</h2>
 <p>An attention model is a method that takes <span class="math inline">\(n\)</span> arguments <span class="math inline">\(y_1, ..., y_n\)</span> (in the precedent examples, the <span class="math inline">\(y_i\)</span> would be the <span class="math inline">\(a_i\)</span>), and a context <span class="math inline">\(c\)</span>. It returns a vector <span class="math inline">\(z\)</span> which is supposed to be the summary of the <span class="math inline">\(y_i\)</span>, focusing on information linked to the context <span class="math inline">\(c\)</span>. More formally, it returns a weighted arithmetic mean of the <span class="math inline">\(y_i\)</span>, and the weights are chosen according the relevance of each <span class="math inline">\(y_i\)</span> given the context <span class="math inline">\(c\)</span>.</p>
@@ -396,7 +396,7 @@
 <h3 id="decoder-lstm-network">Decoder: LSTM network</h3>
 The decoder is a LSTM network that produces a caption bt generating one word at ecery time step conditioned on a context vector, the previous hidden state and the previously generated words.
 <center>
-<img src="/images/ShowAttendAndTell/DecoderLSTM.png">
+<img src="/images/2017-09-13Show%20attend%20and%20tell/DecoderLSTM.png">
 </center>
 From the figure above, we can see:
 <span class="math display">\[\begin{equation}\begin{split}
@@ -464,6 +464,10 @@ h_t &amp;= o_t \odot tanh(c_t)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/14/2017-09-14Supervised Learning of Universal Sentence Representations from Natural Language Inference Data/" rel="prev" title="Supervised Learning of Universal Sentence Representations from Natural Language Inference Data">
+                Supervised Learning of Universal Sentence Representations from Natural Language Inference Data <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -542,7 +546,7 @@ h_t &amp;= o_t \odot tanh(c_t)
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -564,7 +568,7 @@ h_t &amp;= o_t \odot tanh(c_t)
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
