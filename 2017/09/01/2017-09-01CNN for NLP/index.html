@@ -103,13 +103,13 @@
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="A convolutional neural network is designed to identify indicative local predictors in a large structure, and to combine them to produce a fixed size vector representation of the structure, capturing t">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/images/CNN%20for%20NLP/single%20layer%20cnn.png">
-<meta property="og:image" content="http://yoursite.com/images/CNN%20for%20NLP/hierarchical%20cnn.png">
-<meta property="og:updated_time" content="2017-09-06T06:37:22.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-01CNN%20for%20NLP/single%20layer%20cnn.png">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-01CNN%20for%20NLP/hierarchical%20cnn.png">
+<meta property="og:updated_time" content="2017-09-14T06:26:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN for NLP">
 <meta name="twitter:description" content="A convolutional neural network is designed to identify indicative local predictors in a large structure, and to combine them to produce a fixed size vector representation of the structure, capturing t">
-<meta name="twitter:image" content="http://yoursite.com/images/CNN%20for%20NLP/single%20layer%20cnn.png">
+<meta name="twitter:image" content="http://yoursite.com/images/2017-09-01CNN%20for%20NLP/single%20layer%20cnn.png">
 
 
 
@@ -375,11 +375,11 @@
 The convolutional architecture also allows to share predictive behavior between n-grams that share similar components, even if the exact n-gram was never seen at test time.<br>
 It could be expanded into a hierarchy of convolution layers, each one effectively looking at longer range of n-grams in the sentence.</p>
 <center>
-<img src="/images/CNN%20for%20NLP/single%20layer%20cnn.png">
+<img src="/images/2017-09-01CNN%20for%20NLP/single%20layer%20cnn.png">
 </center>
 The graph above is an example of only one convolution and max-pooling for sentence classification whose filters have different sizes. Without the pooling layer and scarifice the diverse filter sizes, we can generalize CNN model to hierarchical form.
 <center>
-<img src="/images/CNN%20for%20NLP/hierarchical%20cnn.png">
+<img src="/images/2017-09-01CNN%20for%20NLP/hierarchical%20cnn.png">
 </center>
 <h3 id="about-channels">About Channels</h3>
 <p>When applying a convolution to an image in computer vision, it is common to apply a different set of filters to each channel, and then combine the three resulting vectors into a single vector. For text processing, we can still have multiple channels. For example, one channel will be the <em><strong>sequence of words</strong></em>, one channel will be the sequence of the corresponding <em><strong>POS</strong></em> tags and one will be the sequence of the corresponding <em><strong>positions</strong></em>. These three views can then be combined either by summation or by concatenation.</p>

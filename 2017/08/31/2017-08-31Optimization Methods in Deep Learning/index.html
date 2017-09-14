@@ -103,15 +103,15 @@
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Why Gradient Descend Works? Gradient Descend is the fundamental optimization method to learn parameters. To illustrate why it works, let’s take the simple example $f(x) = (x - 1)^2 $ to gain some intu">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/images/Optimization/GD_intuition.png">
-<meta property="og:image" content="http://yoursite.com/images/Optimization/SGD_GD.png">
-<meta property="og:image" content="http://yoursite.com/images/Optimization/SGD_BGD.png">
-<meta property="og:image" content="http://yoursite.com/images/Optimization/Momentum.png">
-<meta property="og:updated_time" content="2017-09-05T08:39:57.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2017-08-31Optimization%20Methods%20in%20Deep%20Learning/GD_intuition.png">
+<meta property="og:image" content="http://yoursite.com/images/2017-08-31Optimization%20Methods%20in%20Deep%20Learning/SGD_GD.png">
+<meta property="og:image" content="http://yoursite.com/images/2017-08-31Optimization%20Methods%20in%20Deep%20Learning/SGD_BGD.png">
+<meta property="og:image" content="http://yoursite.com/images/2017-08-31Optimization%20Methods%20in%20Deep%20Learning/Momentum.png">
+<meta property="og:updated_time" content="2017-09-14T06:26:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Optimization Methods in Deep Learning">
 <meta name="twitter:description" content="Why Gradient Descend Works? Gradient Descend is the fundamental optimization method to learn parameters. To illustrate why it works, let’s take the simple example $f(x) = (x - 1)^2 $ to gain some intu">
-<meta name="twitter:image" content="http://yoursite.com/images/Optimization/GD_intuition.png">
+<meta name="twitter:image" content="http://yoursite.com/images/2017-08-31Optimization%20Methods%20in%20Deep%20Learning/GD_intuition.png">
 
 
 
@@ -376,7 +376,7 @@
         <h1 id="why-gradient-descend-works">Why Gradient Descend Works?</h1>
 Gradient Descend is the fundamental optimization method to learn parameters. To illustrate why it works, let’s take the simple example $f(x) = (x - 1)^2 $ to gain some intuition.
 <center>
-<img src="/images/Optimization/GD_intuition.png">
+<img src="/images/2017-08-31Optimization%20Methods%20in%20Deep%20Learning/GD_intuition.png">
 </center>
 <ul>
 <li>For point <span class="math inline">\(x=3\)</span>, <span class="math inline">\(f&#39;(x)=4&gt;0\)</span></li>
@@ -389,18 +389,18 @@ Gradient Descend is the fundamental optimization method to learn parameters. To 
 <h1 id="the-difference-among-gd-sgd-batch-sgd">The difference among GD, SGD, Batch-SGD</h1>
 For <em><strong>Gradient Descend</strong></em>, take gradient steps with respect to all training examples on each step:
 <center>
-<img src="/images/Optimization/SGD_GD.png">
+<img src="/images/2017-08-31Optimization%20Methods%20in%20Deep%20Learning/SGD_GD.png">
 </center>
 For <em><strong>Stochastic Gradient Descend</strong></em>, take gradient steps with respect to just one random training example on each step:
 <center>
-<img src="/images/Optimization/SGD_BGD.png">
+<img src="/images/2017-08-31Optimization%20Methods%20in%20Deep%20Learning/SGD_BGD.png">
 </center>
 <p>For <em><strong>Batch Gradient Descend</strong></em>, take gradient steps with respect to <span class="math inline">\(m\)</span> training examples on each step.</p>
 <h1 id="momentum">Momentum</h1>
 <p>Because mini-batch gradient descent makes a parameter update after seeing just a subset of examples, the direction of the update has some variance, and so the path taken by mini-batch gradient descent will <em><strong>oscillate</strong></em> toward convergence. Using momentum can reduce these oscillations.</p>
 <p>Momentum takes into account the past gradients to smooth out the update. We will store the <em><strong>direction</strong></em> of the previous gradients in the variable <span class="math inline">\(v\)</span>. Formally, this will be the exponentially weighted average of the gradient on previous steps. You can also think of <span class="math inline">\(v\)</span> as the <em><strong>velocity</strong></em> of a ball rolling downhill, building up speed (and momentum) according to the direction of the gradient/slope of the hill.</p>
 <center>
-<img src="/images/Optimization/Momentum.png">
+<img src="/images/2017-08-31Optimization%20Methods%20in%20Deep%20Learning/Momentum.png">
 </center>
 <p>The red arrows shows the direction taken by one step of mini-batch gradient descent with momentum. The blue points show the direction of the gradient (with respect to the current mini-batch) on each step. Rather than just following the gradient, we let the gradient influence <span class="math inline">\(v\)</span> and then take a step in the direction of <span class="math inline">\(v\)</span>.</p>
 <p>First, let’s gain some intuition from <em><strong>Exponentially Weighted Average</strong></em>.<br>
