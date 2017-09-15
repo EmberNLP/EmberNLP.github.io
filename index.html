@@ -382,6 +382,12 @@
 h_t &amp;= sigm(W^{hx}x_t + W^{hh}h_{t-1})\\\\
 y_t &amp;= W^{yh}h_t
 \end{split}\end{equation}\]</span>
+<p>The RNN can easily map sequences to sequences whenever the alignment between the inputs the outputs is known ahead of time. However, it is not clear how to apply an RNN to problems whose input and the output sequences have different lengths with complicated and non-monotonic relationships.</p>
+<p>A simple strategy for general sequence learning is to map the input sequence to a fixed-sized vector using one RNN, and then to map the vector to the target sequence with another RNN. While it could work in principle since the RNN is provided with all the relevant information, it would be difficult to train the RNNs due to the resulting long term dependencies. However, the Long Short-Term Memory (LSTM) is known to learn problems with long range temporal dependencies, so an LSTM may succeed in this setting.</p>
+<p>The goal of the LSTM is to estimate the conditional probability <span class="math inline">\(p(y_1,...,y_{T&#39;} | x_1,...,x_T)\)</span> where <span class="math inline">\((x_1,...,x_T)\)</span> is an input sequence and <span class="math inline">\((y_1,...,y_{T&#39;}\)</span> is its corresponding output sequence whose length <span class="math inline">\(T&#39;\)</span> may differ from T. The LSTM computes this conditional probability by first obtaining the fixed-dimensional representation <span class="math inline">\(v\)</span> of the input sequence <span class="math inline">\((x_1,...,x_T)\)</span> given by the last hidden state of the LSTM, and then computing the probability of <span class="math inline">\(y_1,...,y_{T&#39;}\)</span> with a standard LSTM-LM formulation whose initial hidden state is set to the representation <span class="math inline">\(v\)</span> of <span class="math inline">\(x_1,...,x_T\)</span>:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+p(y_1,...,y_{T&#39;} | x_1,...,x_T) = \limits\prod^{T&#39;}_{t=1}p(y_t|v,y_1,...,y_{t-1})
+\end{split}\end{equation}\]</span>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf" target="_blank" rel="external">Sequence to Sequence Learning with Neural Networks</a></li>
