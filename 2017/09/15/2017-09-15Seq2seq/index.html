@@ -104,7 +104,7 @@
 <meta property="og:description" content="Contents  Sequence to Sequence Learning with Neural Networks Neural Machine Translation by Jointly Learning to Align and Translate  Sequence to Sequence Learning with Neural Networks    The Recurrent">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-15Seq2seq/GeneralSeq2seq.png">
-<meta property="og:updated_time" content="2017-09-15T00:49:49.000Z">
+<meta property="og:updated_time" content="2017-09-15T01:01:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sequenc To Sequence Models">
 <meta name="twitter:description" content="Contents  Sequence to Sequence Learning with Neural Networks Neural Machine Translation by Jointly Learning to Align and Translate  Sequence to Sequence Learning with Neural Networks    The Recurrent">
@@ -391,6 +391,8 @@ y_t &amp;= W^{yh}h_t
 p(y_1,...,y_{T&#39;} | x_1,...,x_T) = \prod\limits^{T&#39;}_{t=1}p(y_t|v,y_1,...,y_{t-1})
 \end{split}\end{equation}\]</span>
 <p>In this equation, each <span class="math inline">\(p(y_t|v,y_1,...,y_{t-1})\)</span> distribution is represented with a softmax over all the words in the vocabulary. Note that each sentence ends with a special end-of-sentence symbol “<eos>”, which enables the model to define a distribution over sequences of all possible lengths. The overall scheme is outlined in figure 1, where the shown LSTM computes the representation of “A”, “B”, “C”, “<eos>” and then uses this representation to compute the probability of “W”, “X”, “Y”, “Z”, “<eos>”.</eos></eos></eos></p>
+<p>Three things to note: 1. Two LSTM are used, one for the encoder and one for the decoder. 2. Deep LSTMs significantly outputperformed shallow LSTMs. 3. It extremely valuable to reverse the order of the words of the input sentence. 4. Different sentences have different lengths. Most sentences are short, but some sentences are long, so a minibatch of 128 randomly chosen training sentences will have many short sentences and few long sentences, and as a result, much of the computation in the minibatch is wasted. The strategy is that make sure all sentences in a minibatch are roughly of the same length.</p>
+<h3 id="neural-machine-translation-by-jointly-learning-to-align-and-translate">Neural Machine Translation by Jointly Learning to Align and Translate</h3>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf" target="_blank" rel="external">Sequence to Sequence Learning with Neural Networks</a></li>
@@ -572,7 +574,7 @@ p(y_1,...,y_{T&#39;} | x_1,...,x_T) = \prod\limits^{T&#39;}_{t=1}p(y_t|v,y_1,...
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sequence-to-sequence-learning-with-neural-networks"><span class="nav-number">1.0.1.</span> <span class="nav-text">Sequence to Sequence Learning with Neural Networks</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sequence-to-sequence-learning-with-neural-networks"><span class="nav-number">1.0.1.</span> <span class="nav-text">Sequence to Sequence Learning with Neural Networks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#neural-machine-translation-by-jointly-learning-to-align-and-translate"><span class="nav-number">1.0.2.</span> <span class="nav-text">Neural Machine Translation by Jointly Learning to Align and Translate</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
