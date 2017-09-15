@@ -555,9 +555,10 @@ z^{(i)}_{norm} &amp;= \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
 <p>In feed-forward networks with fixed depth, it is straightforward to store the statistics separately for each hidden layer. However, the summed inputs to the recurrent neurons in a recurrent neural network (RNN) often vary with the length of the sequence so applying batch normalization to RNNs appears to require different statistics for different time-steps.</p>
 <p>Notice that changes in the output of one layer will tend to cause highly correlated changes in the summed inputs to the next layer, especially with ReLU units whose outputs can change by a lot. This suggests the “covariate shift” problem can be reduced by fixing the mean and the variance of the summed inputs within each layer. Thus, this paper proposes to compute the layer normalization statistics over all the hidden units in the same layer as follows:</p>
 <span class="math display">\[\begin{equation}\begin{split}
-\mu^L &amp;= \frac{1}{H} \Sigma\limits^H_{i=1} a^L_i\\\\
-\sigma &amp;= \sqrt{ \frac{1}{H} \Sigma\limits^H_{i=1} (a^l_i - \mu^l)^2 }
+\mu^L &amp;= \frac{1}{H} \Sigma^H_{i=1} a^L_i\\\\
+\sigma &amp;= \sqrt{ \frac{1}{H} \Sigma^H_{i=1} (a^l_i - \mu^l)^2 }
 \end{split}\end{equation}\]</span>
+<p>where <span class="math inline">\(H\)</span> denotes the number of hidden units in a layer. The difference between Eq. (1) and Eq. (2) is that under layer normalization, all the hidden units in a layer share the same normalization terms <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>, but different training cases have different normalization terms. Unlike batch normalization, layer normaliztion does not impose any constraint on the size of a mini-batch and it can be used in the pure online regime with batch size 1.</p>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li>Andrew Ng’s Deep Learning Course</li>
