@@ -401,18 +401,15 @@ p(y_1,...,y_{T&#39;} | x_1,...,x_T) = \prod\limits^{T&#39;}_{t=1}p(y_t|v,y_1,...
 <img src="/images/2017-09-15Seq2seq/SoftAttentionSeq2seq.png">
 </center>
 <p>Each conditional probability is defined as:</p>
-begin{equation}
-<span class="math display">\[\begin{split}
+<span class="math display">\[\begin{equation}\begin{split}
 p(y_i|y_1,...,y_{i-1},\mathbf{x}) = g(y_{i-1},s_i,c_i)
-\end{split}\]</span>
-<p>\end{equation}</p>
-where <span class="math inline">\(s_i\)</span> is an RNN hidden state for time <span class="math inline">\(i\)</span>, computed by: begin{equation}
-<span class="math display">\[\begin{split}
+\end{split}\end{equation}\]</span>
+where <span class="math inline">\(s_i\)</span> is an RNN hidden state for time <span class="math inline">\(i\)</span>, computed by:
+<span class="math display">\[\begin{equation}\begin{split}
 s_i = f(s_{i-1},y_{i-1},c_i)
-\end{split}\]</span>
-<p>\end{equation}</p>
+\end{split}\end{equation}\]</span>
 <p>It should be noted that unlike the above general encoder-decoder approach, here the probability is conditioned on a distinct context vector <span class="math inline">\(c_i\)</span> for each target <span class="math inline">\(y_i\)</span>.</p>
-<p>The context vector <span class="math inline">\(c_i\)</span> depends on a sequence of annotations $(h_1,…,h_{T_x}) to which an encoder maps the input sentence. Each annotation <span class="math inline">\(h_i\)</span> contains information about the whole input sequence with a strong focus on the parts surrounding the i-th word of the input sequence. The context vector <span class="math inline">\(c_i\)</span> is, then, computed as a weighted sum of these annotations <span class="math inline">\(h_i\)</span>:</p>
+<p>The context vector <span class="math inline">\(c_i\)</span> depends on a sequence of annotations <span class="math inline">\((h_1,...,h_{T_x})\)</span> to which an encoder maps the input sentence. Each annotation <span class="math inline">\(h_i\)</span> contains information about the whole input sequence with a strong focus on the parts surrounding the i-th word of the input sequence. The context vector <span class="math inline">\(c_i\)</span> is, then, computed as a weighted sum of these annotations <span class="math inline">\(h_i\)</span>:</p>
 <span class="math display">\[\begin{equation}\begin{split}
 c_i = \prod\limits^{T_x}_{j=1}\alpha_{ij}h_j
 \end{split}\end{equation}\]</span>
