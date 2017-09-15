@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="RNN,DL," />
 
 
 
@@ -95,17 +95,18 @@
 
 
 
-<meta name="description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta name="description" content="Highway Network Highway networks allow unimpeded information flow across several layers on information highways. A plain feedforward neural network typically consists of \(L\) layers where the \(l^{th">
+<meta name="keywords" content="RNN,DL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Start Your Blog Using Hexo and Githubpage">
-<meta property="og:url" content="http://yoursite.com/2017/08/27/2017-08-26Start Your Blog Using Hexo and Githubpage/index.html">
+<meta property="og:title" content="Highway Network &amp; Residual Network &amp; Training RNNs as Fast as CNNs">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/2017-09-15Highway&Risidual&Training RNNs as Fast as CNNs/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta property="og:description" content="Highway Network Highway networks allow unimpeded information flow across several layers on information highways. A plain feedforward neural network typically consists of \(L\) layers where the \(l^{th">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-06T06:58:08.000Z">
+<meta property="og:updated_time" content="2017-09-15T06:22:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Start Your Blog Using Hexo and Githubpage">
-<meta name="twitter:description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta name="twitter:title" content="Highway Network &amp; Residual Network &amp; Training RNNs as Fast as CNNs">
+<meta name="twitter:description" content="Highway Network Highway networks allow unimpeded information flow across several layers on information highways. A plain feedforward neural network typically consists of \(L\) layers where the \(l^{th">
 
 
 
@@ -135,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/27/2017-08-26Start Your Blog Using Hexo and Githubpage/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/15/2017-09-15Highway&Risidual&Training RNNs as Fast as CNNs/"/>
 
 
 
 
 
-  <title>Start Your Blog Using Hexo and Githubpage | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Highway Network & Residual Network & Training RNNs as Fast as CNNs | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -278,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/2017-08-26Start Your Blog Using Hexo and Githubpage/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/2017-09-15Highway&Risidual&Training RNNs as Fast as CNNs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -295,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Start Your Blog Using Hexo and Githubpage</h1>
+          <h1 class="post-title" itemprop="name headline">Highway Network & Residual Network & Training RNNs as Fast as CNNs</h1>
         
 
         <div class="post-meta">
@@ -307,8 +308,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-27T23:24:53+10:00">
-                2017-08-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-15T15:15:33+10:00">
+                2017-09-15
               </time>
             
 
@@ -317,6 +318,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -345,18 +368,44 @@
       
 
       
-        <p>This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. <a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a> 2. <a href="https://git-scm.com" target="_blank" rel="external">Git</a></p>
-<p>If your computer already has these, just install Hexo with npm: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure></p>
-<h1 id="setup">Setup</h1>
-<p>Once Hexo is installed, run the following commands to initialise Hexo in the target <folder>. <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init &lt;folder&gt;</div><div class="line">$ <span class="built_in">cd</span> &lt;folder&gt;</div><div class="line">$ npm install</div></pre></td></tr></table></figure></folder></p>
-<h1 id="deployment">Deployment</h1>
-<p>Before your first deployment, you will have to modify some settings in _config.yml. A valid deployment setting must have a type field. For example: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  repo: http://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure></p>
-<p>Before your first deployment, install <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="external">hexo-deployer-git</a>: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
-<p>Then need to set your git information as follow: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name <span class="string">"yourname"</span></div><div class="line">git config --global user.email <span class="string">"youremail"</span></div></pre></td></tr></table></figure></p>
-<h1 id="write">Write</h1>
-<p>Then you can write your posts and save them in the folder _post under source.</p>
-<h1 id="publish">Publish</h1>
-<p>Just type in the following command to publish your posts: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure></p>
+        <h1 id="highway-network">Highway Network</h1>
+<p>Highway networks allow unimpeded information flow across several layers on information highways.</p>
+<p>A plain feedforward neural network typically consists of <span class="math inline">\(L\)</span> layers where the <span class="math inline">\(l^{th}\)</span> layer <span class="math inline">\((l \in \{ 1,2,...,L \})\)</span> applies a non-linear transform <span class="math inline">\(H\)</span> (parameterized by <span class="math inline">\(\mathbf{W_{H,l}}\)</span>) on its input <span class="math inline">\(\mathbf{x_l}\)</span> to produce its output <span class="math inline">\(\mathbf{y_l}\)</span>. Thus, <span class="math inline">\(\mathbf{x_1}\)</span> is the input to the network and <span class="math inline">\(\mathbf{y_L}\)</span> is the network’s output. Omitting the layer index and biases for clarity,</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\mathbf{y} = H (\mathbf{x}, \mathbf{W_H})
+\end{split}\end{equation}\]</span>
+<p><span class="math inline">\(H\)</span> is usually an affine transform followed by a non-linear activation function, but in general it may take other forms.</p>
+<p>For a highway network, the author defined two non-linear transforms <span class="math inline">\(T (\mathbf{x}, \mathbf{W_T})\)</span> and <span class="math inline">\(C (\mathbf{x}, \mathbf{W_C})\)</span> such that</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\mathbf{y} = H (\mathbf{x}, \mathbf{W_H}) \cdot T (\mathbf{x}, \mathbf{W_T}) + \mathbf{x} \cdot C (\mathbf{x}, \mathbf{W_C})
+\end{split}\end{equation}\]</span>
+<p><span class="math inline">\(T\)</span> as the <em>transform</em> gate and <span class="math inline">\(C\)</span> as the carry gate, since they express how much of the output is produced by transforming the input and carrying it, respectively. For simplicity, in this paper, <span class="math inline">\(C = 1 − T\)</span> , giving</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\mathbf{y} = H (\mathbf{x}, \mathbf{W_H}) \cdot T (\mathbf{x}, \mathbf{W_T}) + \mathbf{x} \cdot (1 - T (\mathbf{x}, \mathbf{W_T}))
+\end{split}\end{equation}\]</span>
+<p>We should notice that the dimensionality of <span class="math inline">\(\mathbf{x}\)</span>, <span class="math inline">\(\mathbf{y}\)</span>, <span class="math inline">\(H (\mathbf{x}, \mathbf{W_H})\)</span> and <span class="math inline">\(T (\mathbf{x}, \mathbf{W_T})\)</span> must be the same for above Equation (3) to be valid. Also note that this re-parametrization of the layer transformation is much more flexible that Equation (1). In particular, observe that</p>
+<span class="math display">\[\begin{equation}
+\mathbf{y} =
+\left\{
+\begin{aligned}
+&amp;\mathbf{x}, &amp;if \space T (\mathbf{x}, \mathbf{W_T}) = \mathbf{0} \\
+&amp;H (\mathbf{x}, \mathbf{W_H}), &amp;if \space T (\mathbf{x}, \mathbf{W_T}) = \mathbf{1}\\
+\end{aligned}
+\right.
+\end{equation}\]</span>
+<p>Thus, depending on the output of the transform gates, a highway layer can smoothly vary its behavior between that of a plain layer and that of a layer which simply passes its inputs through. Just as a plain layer consists of multiple computing units such that the <span class="math inline">\(i^{th}\)</span> unit computes <span class="math inline">\(y_i = H_i (\mathbf{x})\)</span>, a highway network consists of multiple blocks such that the <span class="math inline">\(i^{th}\)</span> block computes a block state <span class="math inline">\(H_i (\mathbf{x})\)</span> and transform gate output <span class="math inline">\(T_i (\mathbf{x})\)</span>. Finally, it produces the block output <span class="math inline">\(y_i =H_i (\mathbf{x}) \ast T_i (\mathbf{x}) + x_i \ast (1−T_i (\mathbf{x}))\)</span>, which is connected to the next layer.</p>
+<p><strong>In other words, Highway network treats every layer from layerwise to blockwise.</strong></p>
+<h1 id="ridiual-network">Ridiual Network</h1>
+<p>In this paper, the author addressed the degradation problem by introducing a deep residual learning framework. Instead of hoping each few stacked layers directly fit a desired underlying mapping, explicitly let these layers fit a residual mapping. Formally, denoting the desired underlying mapping as <span class="math inline">\(H(\mathbf{x})\)</span>, we let the stacked nonlinear layers fit another mapping of <span class="math inline">\(F(\mathbf{x}) := H(\mathbf{x}) − \mathbf{x}\)</span>. The original mapping is recast into <span class="math inline">\(F(\mathbf{x})+\mathbf{x}\)</span>. We hypothesize that it is easier to optimize the residual mapping than to optimize the original, unreferenced mapping. To the extreme, if an identity mapping were optimal, it would be easier to push the residual to zero than to fit an identity mapping by a stack of nonlinear layers.</p>
+<p>Compared to Highway Network, Residual Network is just a special case when <span class="math inline">\(T (\mathbf{x}, \mathbf{W_T}) = \mathbf{0.5}\)</span>.</p>
+<h1 id="training-rnns-as-fast-as-cnns">Training RNNs as Fast as CNNs</h1>
+<p>Recurrent neural networks scale poorly due to the intrinsic difficulty in parallelizing their state computations. For instance, the forward pass computation of <span class="math inline">\(h_t\)</span> is blocked until the entire computation of <span class="math inline">\(h_{t−1}\)</span> finishes, which is a major bottleneck for parallel computing.</p>
+<h1 id="reference">Reference</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://arxiv.org/pdf/1505.00387.pdf" target="_blank" rel="external">Highway Network</a></li>
+<li><a href="https://arxiv.org/pdf/1512.03385.pdf" target="_blank" rel="external">Deep Residual Learning for Image Recognition</a></li>
+<li><a href="https://arxiv.org/pdf/1709.02755.pdf" target="_blank" rel="external">Training RNNs as Fast as CNNs</a></li>
+</ol>
 
       
     </div>
@@ -372,6 +421,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/RNN/" rel="tag"># RNN</a>
+          
+            <a href="/tags/DL/" rel="tag"># DL</a>
+          
+        </div>
+      
 
       
       
@@ -381,15 +438,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/09/15/2017-09-15Seq2seq/" rel="next" title="Sequenc To Sequence Models">
+                <i class="fa fa-chevron-left"></i> Sequenc To Sequence Models
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/29/2017-08-29fastText/" rel="prev" title="Some understanding about how fastText works">
-                Some understanding about how fastText works <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -525,7 +582,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#setup"><span class="nav-number">1.</span> <span class="nav-text">Setup</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deployment"><span class="nav-number">2.</span> <span class="nav-text">Deployment</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#write"><span class="nav-number">3.</span> <span class="nav-text">Write</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#publish"><span class="nav-number">4.</span> <span class="nav-text">Publish</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#highway-network"><span class="nav-number">1.</span> <span class="nav-text">Highway Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ridiual-network"><span class="nav-number">2.</span> <span class="nav-text">Ridiual Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#training-rnns-as-fast-as-cnns"><span class="nav-number">3.</span> <span class="nav-text">Training RNNs as Fast as CNNs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>

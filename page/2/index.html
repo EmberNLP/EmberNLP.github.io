@@ -275,6 +275,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/2017-08-31Batch Normalization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/31/2017-08-31Batch Normalization/" itemprop="url">Batch Normalization</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-31T22:00:34+10:00">
+                2017-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters that work well, and will also enable you to much more easily train even very deep networks. Normalizing the input feature values can turn the contours of the learning problem from something that might be very elongated to something that is more round and easier for an algorithm like gradient descend to optimize. So, can we apply normalization to the intermediate layers? This is where batch normalization inspired from!</p>
+<strong>Batch Normalization Algorithm </strong><br>
+Given some intermediate values in a neural network, <span class="math inline">\({z^{(1)},z^{(2)},...,z^{(m)}}\)</span>
+<span class="math display">\[\begin{equation}\begin{split}
+\mu = \frac{1}{m}\Sigma_i z^{(i)}\\\\
+\sigma^2 = \frac{1}{m}\Sigma_i (z^{(i)} - \mu)^2\\\\
+z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
+\widehat{z}^{(i)} = \gamma z^{(i)}_{norm} + \beta
+\end{split}\end{equation}\]</span>
+<p>With batch normalization, the entire computational process should be: <span class="math display">\[X \stackrel{W^{[1]},b^{[1]}}{\longrightarrow}Z^{[1]}\stackrel{\beta^{[1]},\gamma^{[1]}}{\longrightarrow}\widehat{Z}^{[1]}\rightarrow A^{[1]} \stackrel{W^{[2]},b^{[2]},BN}{\longrightarrow} \widehat{Z}^{[2]} \rightarrow \cdot\cdot\cdot\]</span> The training parameters includes: <span class="math inline">\(w^{[1]}, b^{[1]}, ... ,w^{[l]}, b^{[l]}\)</span> and <span class="math inline">\(\beta^{[1]}, \gamma^{[1]}, ... ,\beta^{[l]}, \gamma^{[l]}\)</span> We should notice that, b can be eliminated due to that BN zeros out the mean.</p>
+<p>The intuition behind is that:<br>
+- Batch Normalization reduces the problem of the input values changing, it really causes these values to become stable, so that the later layers of the neural network has more firm ground to stand on.<br>
+- Due to mini-batch, it adds some noise to each hidden layers’ activations, and produces some light regularization impact.</p>
+<p>At test time, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are estimated by using exponentially weighted average across mini-batch. For a specific layer <span class="math inline">\(l\)</span>, we use EWA to keep track of the values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> of layer <span class="math inline">\(l\)</span> during training which will be used at test time.</p>
+<p>For CNN model, for a mini-batch of size <span class="math inline">\(m\)</span> and feature maps of size <span class="math inline">\(p \times q\)</span>, we use the effecive mini-batch of size <span class="math inline">\(m&#39; = m \cdot pq\)</span>. We learn a pair of parameters <span class="math inline">\(\gamma^{(k)}\)</span> and <span class="math inline">\(\beta^{(k)}\)</span> per feature map, rather than per activation.</p>
+<h1 id="reference">Reference</h1>
+<p>Andrew Ng’s Deep Learning Course</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/2017-08-31Optimization Methods in Deep Learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1109,7 +1267,7 @@ The calculation of derivatives are as follows:
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
