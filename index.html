@@ -275,6 +275,150 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/2017-09-15Attention Is All You Need/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/15/2017-09-15Attention Is All You Need/" itemprop="url">Attention Is All You Need</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-15T20:52:37+10:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. This paper proposes a new simple network architecture, the Transformer, based solely on attention mechnisms, dispensing with recurrence and convolutions entirely.</p>
+<p>Most competitive neural sequence transduction models have an encoder-decoder structure which describes in my previous <a href="https://embernlp.github.io/2017/09/15/2017-09-15Seq2seq/" target="_blank" rel="external">Seq2seq blog</a>. Here, the encoder maps an input sequence of symbol representations <span class="math inline">\((x_1,...,x_n)\)</span> to a sequence of continuous representations <span class="math inline">\(\mathbf{z} = (z_1,...,z_n)\)</span>. Given <span class="math inline">\(\mathbf{z}\)</span>, the decoder then generates an output sequence <span class="math inline">\((y_1,...,y_m)\)</span> of symbols one element at a time. At each step the model is auto-regressive, consuming the previously generated symbols as additional input when generating the next. The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder.</p>
+<p><em><strong>Self-attention</strong></em>, sometimes called intra-attention is an attention mechanism relating different positions of a single sequence in order to compute a representation of the sequence.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/2017-09-15Highway&Residual&Training RNNs as Fast as CNNs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -495,7 +639,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/15/2017-09-15Seq2seq/" itemprop="url">Sequenc To Sequence Models</a></h1>
+                <a class="post-title-link" href="/2017/09/15/2017-09-15Seq2seq/" itemprop="url">Sequence To Sequence Models</a></h1>
         
 
         <div class="post-meta">
@@ -1883,173 +2027,6 @@ h_t &amp;= o_t \ast tanh(C_t)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/01/2017-09-01CNN for NLP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ember">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EmberNLP">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/01/2017-09-01CNN for NLP/" itemprop="url">CNN for NLP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-01T14:45:30+10:00">
-                2017-09-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DL/" itemprop="url" rel="index">
-                    <span itemprop="name">DL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>A convolutional neural network is designed to identify indicative local predictors in a large structure, and to combine them to produce a fixed size vector representation of the structure, capturing the local aspects that are most informative for the prediction task at hand. For instance, the convolutional architecture will identy n-grams that are predictive for the task at hand, without the need to pre-specify an embedding vector for each possible n-gram.<br>
-The convolutional architecture also allows to share predictive behavior between n-grams that share similar components, even if the exact n-gram was never seen at test time.<br>
-It could be expanded into a hierarchy of convolution layers, each one effectively looking at longer range of n-grams in the sentence.</p>
-<center>
-<img src="/images/2017-09-01CNN%20for%20NLP/single%20layer%20cnn.png">
-</center>
-The graph above is an example of only one convolution and max-pooling for sentence classification whose filters have different sizes. Without the pooling layer and scarifice the diverse filter sizes, we can generalize CNN model to hierarchical form.
-<center>
-<img src="/images/2017-09-01CNN%20for%20NLP/hierarchical%20cnn.png">
-</center>
-<h3 id="about-channels">About Channels</h3>
-<p>When applying a convolution to an image in computer vision, it is common to apply a different set of filters to each channel, and then combine the three resulting vectors into a single vector. For text processing, we can still have multiple channels. For example, one channel will be the <em><strong>sequence of words</strong></em>, one channel will be the sequence of the corresponding <em><strong>POS</strong></em> tags and one will be the sequence of the corresponding <em><strong>positions</strong></em>. These three views can then be combined either by summation or by concatenation.</p>
-<h3 id="feature-hashing">Feature Hashing</h3>
-<p>There is no need to pre-compute vocabulary-to-index mapping, instead, allocate an embedding matrix <em><span class="math inline">\(E\)</span></em> with N rows. N should be sufficiently large, but no prohibitive. When a k-gram is seen in training, we assign it to a row in <em><span class="math inline">\(E\)</span></em> by applying hash function that will deterministically map it into a number in the range <span class="math inline">\([1,N]\)</span>. Then use the corresponding row as the embedding vector.</p>
-<h3 id="dilated-convolution-architecture">Dilated Convolution Architecture</h3>
-<p>A recent development (e.g. see paper by Fisher Yu and Vladlen Koltun) is to introduce one more hyperparameter to the CONV layer called the dilation. The normal CONV filters are contiguous. However, it’s possible to have filters that have spaces between each cell, called dilation.</p>
-<p>It’s perhaps useful to first note why vanilla convolutions struggle to integrate global context. Consider a purely convolutional network composed of layers of <span class="math inline">\(k \times k\)</span> convolutions, without pooling. It is easy to see that size of the receptive field of each unit — the block of pixels which can influence its activation — is <span class="math inline">\(l \ast (k-1) + k\)</span>, where l is the layer index. So the effective receptive field of units can only grow linearly with layers. This is very limiting, especially for high-resolution input images.</p>
-<p>As an example, in one dimension a filter w of size 3 would compute over input <span class="math inline">\(x\)</span> the following: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">w[0]*x[0] + w[1]*x[1] + w[2]*x[2]</div></pre></td></tr></table></figure></p>
-<p>This is dilation of 0. For dilation 1 the filter would instead compute: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">w[0]*x[0] + w[1]*x[2] + w[2]*x[4]</div></pre></td></tr></table></figure></p>
-<p>In other words there is a gap of 1 between the applications. This can be very useful in some settings to use in conjunction with 0-dilated filters because it allows you to merge spatial information across the inputs much more agressively with fewer layers. For example, if you stack two 3x3 CONV layers on top of each other then you can convince yourself that the neurons on the 2nd layer are a function of a 5x5 patch of the input (we would say that the effective receptive field of these neurons is 5x5). If we use dilated convolutions then this effective receptive field would grow much quicker.</p>
-<h1 id="reference">Reference</h1>
-<ol style="list-style-type: decimal">
-<li>http://cs231n.github.io/convolutional-networks/</li>
-<li>http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/</li>
-<li>Neural Network Methods in Natural Language Processing Chapter 13</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2102,7 +2079,7 @@ The graph above is an example of only one convolution and max-pooling for senten
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2124,7 +2101,7 @@ The graph above is an example of only one convolution and max-pooling for senten
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

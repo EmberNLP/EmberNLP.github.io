@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters tha">
+<meta name="description" content="Batch Normalization Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of">
 <meta name="keywords" content="DL Basics">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Batch Normalization">
+<meta property="og:title" content="Batch Normalization &amp; Layer Normalization">
 <meta property="og:url" content="http://yoursite.com/2017/08/31/2017-08-31Batch Normalization/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters tha">
+<meta property="og:description" content="Batch Normalization Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-12T22:59:59.000Z">
+<meta property="og:updated_time" content="2017-09-15T12:14:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Batch Normalization">
-<meta name="twitter:description" content="Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters tha">
+<meta name="twitter:title" content="Batch Normalization &amp; Layer Normalization">
+<meta name="twitter:description" content="Batch Normalization Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of">
 
 
 
@@ -142,7 +142,7 @@
 
 
 
-  <title>Batch Normalization | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Batch Normalization & Layer Normalization | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -296,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Batch Normalization</h1>
+          <h1 class="post-title" itemprop="name headline">Batch Normalization & Layer Normalization</h1>
         
 
         <div class="post-meta">
@@ -368,14 +368,15 @@
       
 
       
-        <p>Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters that work well, and will also enable you to much more easily train even very deep networks. Normalizing the input feature values can turn the contours of the learning problem from something that might be very elongated to something that is more round and easier for an algorithm like gradient descend to optimize. So, can we apply normalization to the intermediate layers? This is where batch normalization inspired from!</p>
+        <h1 id="batch-normalization">Batch Normalization</h1>
+<p>Batch normalization makes your hyperparameter search problem much easier, makes the neural network much more robust to the choice of hyperparameters, there’s a much bigger range of hyperparameters that work well, and will also enable you to much more easily train even very deep networks. Normalizing the input feature values can turn the contours of the learning problem from something that might be very elongated to something that is more round and easier for an algorithm like gradient descend to optimize. So, can we apply normalization to the intermediate layers? This is where batch normalization inspired from!</p>
 <strong>Batch Normalization Algorithm </strong><br>
-Given some intermediate values in a neural network, <span class="math inline">\({z^{(1)},z^{(2)},...,z^{(m)}}\)</span>
+Given some intermediate values in a neural network for a specific neuron in a mini-batch, <span class="math inline">\({z^{(1)},z^{(2)},...,z^{(m)}}\)</span>
 <span class="math display">\[\begin{equation}\begin{split}
-\mu = \frac{1}{m}\Sigma_i z^{(i)}\\\\
-\sigma^2 = \frac{1}{m}\Sigma_i (z^{(i)} - \mu)^2\\\\
-z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
-\widehat{z}^{(i)} = \gamma z^{(i)}_{norm} + \beta
+\mu &amp;= \frac{1}{m}\Sigma_i z^{(i)}\\\\
+\sigma^2 &amp;= \frac{1}{m}\Sigma_i (z^{(i)} - \mu)^2\\\\
+z^{(i)}_{norm} &amp;= \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
+\widehat{z}^{(i)} &amp;= \gamma z^{(i)}_{norm} + \beta
 \end{split}\end{equation}\]</span>
 <p>With batch normalization, the entire computational process should be: <span class="math display">\[X \stackrel{W^{[1]},b^{[1]}}{\longrightarrow}Z^{[1]}\stackrel{\beta^{[1]},\gamma^{[1]}}{\longrightarrow}\widehat{Z}^{[1]}\rightarrow A^{[1]} \stackrel{W^{[2]},b^{[2]},BN}{\longrightarrow} \widehat{Z}^{[2]} \rightarrow \cdot\cdot\cdot\]</span> The training parameters includes: <span class="math inline">\(w^{[1]}, b^{[1]}, ... ,w^{[l]}, b^{[l]}\)</span> and <span class="math inline">\(\beta^{[1]}, \gamma^{[1]}, ... ,\beta^{[l]}, \gamma^{[l]}\)</span> We should notice that, b can be eliminated due to that BN zeros out the mean.</p>
 <p>The intuition behind is that:<br>
@@ -383,8 +384,18 @@ z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
 - Due to mini-batch, it adds some noise to each hidden layers’ activations, and produces some light regularization impact.</p>
 <p>At test time, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are estimated by using exponentially weighted average across mini-batch. For a specific layer <span class="math inline">\(l\)</span>, we use EWA to keep track of the values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> of layer <span class="math inline">\(l\)</span> during training which will be used at test time.</p>
 <p>For CNN model, for a mini-batch of size <span class="math inline">\(m\)</span> and feature maps of size <span class="math inline">\(p \times q\)</span>, we use the effecive mini-batch of size <span class="math inline">\(m&#39; = m \cdot pq\)</span>. We learn a pair of parameters <span class="math inline">\(\gamma^{(k)}\)</span> and <span class="math inline">\(\beta^{(k)}\)</span> per feature map, rather than per activation.</p>
+<h1 id="layer-normalization">Layer Normalization</h1>
+<p>In feed-forward networks with fixed depth, it is straightforward to store the statistics separately for each hidden layer. However, the summed inputs to the recurrent neurons in a recurrent neural network (RNN) often vary with the length of the sequence so applying batch normalization to RNNs appears to require different statistics for different time-steps.</p>
+<p>Notice that changes in the output of one layer will tend to cause highly correlated changes in the summed inputs to the next layer, especially with ReLU units whose outputs can change by a lot. This suggests the “covariate shift” problem can be reduced by fixing the mean and the variance of the summed inputs within each layer. Thus, this paper proposes to compute the layer normalization statistics over all the hidden units in the same layer as follows:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\mu^L &amp;= \frac{1}{H} \Sigma\limits^H_{i=1} a^L_i\\\\
+\sigma &amp;= \sqrt{ \frac{1}{H} \Sigma\limits^H_{i=1} (a^l_i - \mu^l)^2 }
+\end{split}\end{equation}\]</span>
 <h1 id="reference">Reference</h1>
-<p>Andrew Ng’s Deep Learning Course</p>
+<ol style="list-style-type: decimal">
+<li>Andrew Ng’s Deep Learning Course</li>
+<li><a href="https://arxiv.org/pdf/1607.06450.pdf" target="_blank" rel="external">Layer Normalization</a></li>
+</ol>
 
       
     </div>
@@ -506,7 +517,7 @@ z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -528,7 +539,7 @@ z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -563,7 +574,7 @@ z^{(i)}_{norm} = \frac{(z^{(i)} - \mu)}{\sqrt{\sigma^2 + \epsilon}}\\\\
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#batch-normalization"><span class="nav-number">1.</span> <span class="nav-text">Batch Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#layer-normalization"><span class="nav-number">2.</span> <span class="nav-text">Layer Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
