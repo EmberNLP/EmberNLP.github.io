@@ -397,6 +397,34 @@ p(y_1,...,y_{T&#39;} | x_1,...,x_T) = \prod\limits^{T&#39;}_{t=1}p(y_t|v,y_1,...
 <li>Different sentences have different lengths. Most sentences are short, but some sentences are long, so a minibatch of 128 randomly chosen training sentences will have many short sentences and few long sentences, and as a result, much of the computation in the minibatch is wasted. The strategy is that make sure all sentences in a minibatch are roughly of the same length.</li>
 </ol>
 <h3 id="neural-machine-translation-by-jointly-learning-to-align-and-translate">Neural Machine Translation by Jointly Learning to Align and Translate</h3>
+<center>
+<img src="/images/2017-09-15Seq2seq/SoftAttentionSeq2seq.png">
+</center>
+<p>Each conditional probability is defined as:</p>
+begin{equation}
+<span class="math display">\[\begin{split}
+p(y_i|y_1,...,y_{i-1},\mathbf{x}) = g(y_{i-1},s_i,c_i)
+\end{split}\]</span>
+<p>\end{equation}</p>
+where <span class="math inline">\(s_i\)</span> is an RNN hidden state for time <span class="math inline">\(i\)</span>, computed by: begin{equation}
+<span class="math display">\[\begin{split}
+s_i = f(s_{i-1},y_{i-1},c_i)
+\end{split}\]</span>
+<p>\end{equation}</p>
+<p>It should be noted that unlike the above general encoder-decoder approach, here the probability is conditioned on a distinct context vector <span class="math inline">\(c_i\)</span> for each target <span class="math inline">\(y_i\)</span>.</p>
+<p>The context vector <span class="math inline">\(c_i\)</span> depends on a sequence of annotations $(h_1,…,h_{T_x}) to which an encoder maps the input sentence. Each annotation <span class="math inline">\(h_i\)</span> contains information about the whole input sequence with a strong focus on the parts surrounding the i-th word of the input sequence. The context vector <span class="math inline">\(c_i\)</span> is, then, computed as a weighted sum of these annotations <span class="math inline">\(h_i\)</span>:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+c_i = \prod\limits^{T_x}_{j=1}\alpha_{ij}h_j
+\end{split}\end{equation}\]</span>
+<p>The weight <span class="math inline">\(\alpha_{ij}\)</span> of each annotation <span class="math inline">\(h_j\)</span> is computed by:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\alpha_{ij} = \frac{exp(e_{ij})}{\Sigma^{T_x}_{k=1} exp(e_{ik})}
+\end{split}\end{equation}\]</span>
+<p>where</p>
+<span class="math display">\[\begin{equation}\begin{split}
+e_ij = a(s_{i-1}, h_j)
+\end{split}\end{equation}\]</span>
+<p>is an alignment model which scores how well the inputs around position <span class="math inline">\(j\)</span> and the output at position <span class="math inline">\(i\)</span> match. The score is based on the RNN hidden state <span class="math inline">\(s_{i−1}\)</span> and the j-th annotation <span class="math inline">\(h_j\)</span> of the input sentence.</p>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf" target="_blank" rel="external">Sequence to Sequence Learning with Neural Networks</a></li>
