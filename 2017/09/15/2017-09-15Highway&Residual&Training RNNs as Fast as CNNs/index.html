@@ -99,11 +99,11 @@
 <meta name="keywords" content="RNN,DL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Highway Network &amp; Residual Network &amp; Training RNNs as Fast as CNNs">
-<meta property="og:url" content="http://yoursite.com/2017/09/15/2017-09-15Highway&Risidual&Training RNNs as Fast as CNNs/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/09/15/2017-09-15Highway&Residual&Training RNNs as Fast as CNNs/index.html">
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Highway Network Highway networks allow unimpeded information flow across several layers on information highways. A plain feedforward neural network typically consists of \(L\) layers where the \(l^{th">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-15T06:22:48.000Z">
+<meta property="og:updated_time" content="2017-09-15T07:02:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Highway Network &amp; Residual Network &amp; Training RNNs as Fast as CNNs">
 <meta name="twitter:description" content="Highway Network Highway networks allow unimpeded information flow across several layers on information highways. A plain feedforward neural network typically consists of \(L\) layers where the \(l^{th">
@@ -136,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/15/2017-09-15Highway&Risidual&Training RNNs as Fast as CNNs/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/15/2017-09-15Highway&Residual&Training RNNs as Fast as CNNs/"/>
 
 
 
@@ -279,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/2017-09-15Highway&Risidual&Training RNNs as Fast as CNNs/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/2017-09-15Highway&Residual&Training RNNs as Fast as CNNs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -379,7 +379,7 @@
 <span class="math display">\[\begin{equation}\begin{split}
 \mathbf{y} = H (\mathbf{x}, \mathbf{W_H}) \cdot T (\mathbf{x}, \mathbf{W_T}) + \mathbf{x} \cdot C (\mathbf{x}, \mathbf{W_C})
 \end{split}\end{equation}\]</span>
-<p><span class="math inline">\(T\)</span> as the <em>transform</em> gate and <span class="math inline">\(C\)</span> as the carry gate, since they express how much of the output is produced by transforming the input and carrying it, respectively. For simplicity, in this paper, <span class="math inline">\(C = 1 − T\)</span> , giving</p>
+<p><span class="math inline">\(T\)</span> is the <em><strong>transform gate</strong></em> and <span class="math inline">\(C\)</span> is the <em><strong>carry gate</strong></em>, since they express how much of the output is produced by transforming the input and carrying it, respectively. For simplicity, in this paper, <span class="math inline">\(C = 1 − T\)</span> , giving</p>
 <span class="math display">\[\begin{equation}\begin{split}
 \mathbf{y} = H (\mathbf{x}, \mathbf{W_H}) \cdot T (\mathbf{x}, \mathbf{W_T}) + \mathbf{x} \cdot (1 - T (\mathbf{x}, \mathbf{W_T}))
 \end{split}\end{equation}\]</span>
@@ -395,11 +395,33 @@
 \end{equation}\]</span>
 <p>Thus, depending on the output of the transform gates, a highway layer can smoothly vary its behavior between that of a plain layer and that of a layer which simply passes its inputs through. Just as a plain layer consists of multiple computing units such that the <span class="math inline">\(i^{th}\)</span> unit computes <span class="math inline">\(y_i = H_i (\mathbf{x})\)</span>, a highway network consists of multiple blocks such that the <span class="math inline">\(i^{th}\)</span> block computes a block state <span class="math inline">\(H_i (\mathbf{x})\)</span> and transform gate output <span class="math inline">\(T_i (\mathbf{x})\)</span>. Finally, it produces the block output <span class="math inline">\(y_i =H_i (\mathbf{x}) \ast T_i (\mathbf{x}) + x_i \ast (1−T_i (\mathbf{x}))\)</span>, which is connected to the next layer.</p>
 <p><strong>In other words, Highway network treats every layer from layerwise to blockwise.</strong></p>
-<h1 id="ridiual-network">Ridiual Network</h1>
+<h1 id="residual-network">Residual Network</h1>
 <p>In this paper, the author addressed the degradation problem by introducing a deep residual learning framework. Instead of hoping each few stacked layers directly fit a desired underlying mapping, explicitly let these layers fit a residual mapping. Formally, denoting the desired underlying mapping as <span class="math inline">\(H(\mathbf{x})\)</span>, we let the stacked nonlinear layers fit another mapping of <span class="math inline">\(F(\mathbf{x}) := H(\mathbf{x}) − \mathbf{x}\)</span>. The original mapping is recast into <span class="math inline">\(F(\mathbf{x})+\mathbf{x}\)</span>. We hypothesize that it is easier to optimize the residual mapping than to optimize the original, unreferenced mapping. To the extreme, if an identity mapping were optimal, it would be easier to push the residual to zero than to fit an identity mapping by a stack of nonlinear layers.</p>
 <p>Compared to Highway Network, Residual Network is just a special case when <span class="math inline">\(T (\mathbf{x}, \mathbf{W_T}) = \mathbf{0.5}\)</span>.</p>
 <h1 id="training-rnns-as-fast-as-cnns">Training RNNs as Fast as CNNs</h1>
 <p>Recurrent neural networks scale poorly due to the intrinsic difficulty in parallelizing their state computations. For instance, the forward pass computation of <span class="math inline">\(h_t\)</span> is blocked until the entire computation of <span class="math inline">\(h_{t−1}\)</span> finishes, which is a major bottleneck for parallel computing.</p>
+<p>This paper introduces a Simple Recurrent Unit (SRU) which operates significantly faster than traditional recurrent implementations. The recurrent unit simplifies state computation and hence exposes the same parallelism as CNNs, attention and feed-forward nets. Specifically, while the update of internal state <span class="math inline">\(c_t\)</span> still makes use of the previous state <span class="math inline">\(c_{t−1}\)</span>, the dependence on <span class="math inline">\(h_{t−1}\)</span> in a recurrence step has been dropped. As a result, all matrix multiplications and element-wise operations in the recurrent unit can be easily parallelized across different dimensions and steps.</p>
+<p>Most top-performing recurrent neural networks such as LSTMs and GRUs make use of neural gates to control the information flow and alleviate the gradient vanishing (or explosion) problem. Consider a typical implementation,</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\mathbf{c}_t &amp;= \mathbf{f_t} \odot \mathbf{c}_{t-1} + \mathbf{i}_t \odot \widetilde{\mathbf{x}}_t\\\\
+&amp;= \mathbf{f_t} \odot \mathbf{c}_{t-1} + (1 - \mathbf{f}_t) \odot \widetilde{\mathbf{x}}_t
+\end{split}\end{equation}\]</span>
+<p>where <span class="math inline">\(\mathbf{f}_t\)</span> and <span class="math inline">\(\mathbf{i}_t\)</span> are sigmoid gates referred as the <em><strong>forget gate</strong></em> and <em><strong>input gate</strong></em>. <span class="math inline">\(\widetilde{\mathbf{x}}_t\)</span> is the transformed input at step <span class="math inline">\(t\)</span>. <span class="math inline">\(\mathbf{i}_t = 1 − \mathbf{f}_t\)</span> here for simplicity. The computation of <span class="math inline">\(\widetilde{\mathbf{x}}_t\)</span> also varies in different RNN instances. The paper uses the simplest version that performs a linear transformation over the input vector <span class="math inline">\(\widetilde{\mathbf{x}}_t = \mathbf{Wx}_t\)</span>. Finally, the internal state <span class="math inline">\(\mathbf{c}_t\)</span> is passed to an activation function <span class="math inline">\(g(·)\)</span> to produce the output state <span class="math inline">\(\mathbf{h}_t = g(\mathbf{c}_t)\)</span>.</p>
+<p>The paper includes two additional features in implementation. First, it adds skip connections between recurrent layers since they are shown quite effective for training deep networks. Specifically, we use highway connections and the output state <span class="math inline">\(\mathbf{h}&#39;_t\)</span> is computed as,</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\mathbf{h}&#39;_t &amp;= \mathbf{r}_t \odot \mathbf{h}_t + (1 - \mathbf{r}_t) \odot \mathbf{x}_t\\\\
+&amp;= \mathbf{r}_t \odot g(\mathbf{c}_t) + (1 - \mathbf{r}_t) \odot \mathbf{x}_t
+\end{split}\end{equation}\]</span>
+<p>where <span class="math inline">\(\mathbf{r}_t\)</span> is the output of a reset gate.</p>
+<p>The associated equations of SRU are given below:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\widetilde{\mathbf{x}}_t &amp;= \mathbf{Wx}_t\\\\
+\mathbf{f}_t &amp;= \sigma(\mathbf{W}_f\mathbf{x}_t + \mathbf{b}_f)\\\\
+\mathbf{r}_t &amp;= \sigma(\mathbf{W}_r\mathbf{x}_t + \mathbf{b}_r)\\\\
+\mathbf{c}_t &amp;= \mathbf{f}_t \odot \mathbf{c}_{t-1} + (1 - \mathbf{f}_t) \odot \widetilde{\mathbf{x}_t}\\\\
+\mathbf{h}_t &amp;= \mathbf{r}_t \odot g(\mathbf{c}_t) + (1 - \mathbf{r}_t) \odot \mathbf{x}_t
+\end{split}\end{equation}\]</span>
+<p>We can see that the first three equations can be computed in parallel. And last two equations can be computed quite easily and fast since all operations are element-wise.</p>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://arxiv.org/pdf/1505.00387.pdf" target="_blank" rel="external">Highway Network</a></li>
@@ -582,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#highway-network"><span class="nav-number">1.</span> <span class="nav-text">Highway Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ridiual-network"><span class="nav-number">2.</span> <span class="nav-text">Ridiual Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#training-rnns-as-fast-as-cnns"><span class="nav-number">3.</span> <span class="nav-text">Training RNNs as Fast as CNNs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#highway-network"><span class="nav-number">1.</span> <span class="nav-text">Highway Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#residual-network"><span class="nav-number">2.</span> <span class="nav-text">Residual Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#training-rnns-as-fast-as-cnns"><span class="nav-number">3.</span> <span class="nav-text">Training RNNs as Fast as CNNs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
