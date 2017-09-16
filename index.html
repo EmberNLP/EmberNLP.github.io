@@ -390,12 +390,23 @@
 <img src="/images/2017-09-15Attention%20Is%20All%20You%20Need/ScaledDotProductAttention.png">
 </center>
 <p>In practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix <span class="math inline">\(Q\)</span>. The keys and values are also packed together into matrices <span class="math inline">\(K\)</span> and <span class="math inline">\(V\)</span> . We compute the matrix of outputs as:</p>
-\begin{equation}
-<span class="math display">\[\begin{split}
+<span class="math display">\[\begin{equation}
 Attention(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d_k}})V
-\end{split}\]</span>
-<p>\end{quation}</p>
-<p><em>According to the graph above, the matrix <span class="math inline">\(Q,K,V\)</span> are all the same. </em></p>
+\end{equation}\]</span>
+<p><code>According to the graph above, the matrix $Q,K,V$ are all the same. Each row represents the embedding or represention(includes postion) of a word. The meaning of $QK^T$ is to compute pair-wise dot-product of word embeddings. After Softmax transformation for each row, we get a mtraix whose rows represent the similarity between the word embedding of this row and all the other word embeddings. Then we mulplied by $V$, results in a matrix whose row is new word presentation calculated by weighted sum of previous word embeddings.</code></p>
+<p>The author suspects that for large values of <span class="math inline">\(d_k\)</span>, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients. To counteract this effect, they scale the dot products by <span class="math inline">\(\frac{1}{\sqrt{d_k}}\)</span>.</p>
+<h3 id="multi-head-attention">3.2 Multi-Head Attention</h3>
+<p>Instead of performing a single attention function with <span class="math inline">\(d_{model}\)</span>-dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values <span class="math inline">\(h\)</span> times with different, learned linear projections to <span class="math inline">\(d_k\)</span>, <span class="math inline">\(d_k\)</span> and <span class="math inline">\(d_v\)</span> dimensions, respectively. On each of these projected versions of queries, keys and values we then perform the attention function in parallel, yielding <span class="math inline">\(d_v\)</span>-dimensional output values. These are concatenated and once again projected, resulting in the final values</p>
+<center>
+<img src="/images/2017-09-15Attention%20Is%20All%20You%20Need/MultiHeadAttention.png">
+</center>
+<p>Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.</p>
+<span class="math display">\[\begin{equation}\begin{split}
+MultiHead(Q,K,V) &amp;= Concat(head_1,...,head_h)W^o\\\\
+where head_i &amp;= Attention(QW^Q_i, KW^K_i,VW^V_i)
+\end{split}\end{equation}\]</span>
+<p>Where the projections are parameter matrices <span class="math inline">\(W^Q_i \in \mathbb{R}^{d_{model} \times d_k}\)</span>, <span class="math inline">\(W^K_i \in \mathbb{R}^{d_{model} \times d_k}\)</span>, <span class="math inline">\(W^V_i \in \mathbb{R}^{d_{model} \times d_v}\)</span> and <span class="math inline">\(W^O_i \in \mathbb{R}^{hd_{v} \times d_{model}}\)</span>.</p>
+<p>In this paper, it employs <span class="math inline">\(h=8\)</span> parallel attention layers, or heads. For each of these we use <span class="math inline">\(d_k = d_v = d_{model} / h =64\)</span>. Due to the reduced dimension of each head, the total computational cost is similar to that of single-head attention with full dimensionality.</p>
 
           
         
