@@ -95,18 +95,21 @@
 
 
 
-<meta name="description" content="The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and">
+<meta name="description" content="1. Introduction The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect">
 <meta name="keywords" content="DL,Attention">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Attention Is All You Need">
 <meta property="og:url" content="http://yoursite.com/2017/09/15/2017-09-15Attention Is All You Need/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and">
+<meta property="og:description" content="1. Introduction The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-15T11:07:27.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-15Attention%20Is%20All%20You%20Need/ModelStructure.png">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-15Attention%20Is%20All%20You%20Need/ScaledDotProductAttention.png">
+<meta property="og:updated_time" content="2017-09-16T00:47:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Attention Is All You Need">
-<meta name="twitter:description" content="The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and">
+<meta name="twitter:description" content="1. Introduction The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect">
+<meta name="twitter:image" content="http://yoursite.com/images/2017-09-15Attention%20Is%20All%20You%20Need/ModelStructure.png">
 
 
 
@@ -368,9 +371,34 @@
       
 
       
-        <p>The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. This paper proposes a new simple network architecture, the Transformer, based solely on attention mechnisms, dispensing with recurrence and convolutions entirely.</p>
+        <h1 id="introduction">1. Introduction</h1>
+<p>The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. This paper proposes a new simple network architecture, the Transformer, based solely on attention mechnisms, dispensing with recurrence and convolutions entirely.</p>
 <p>Most competitive neural sequence transduction models have an encoder-decoder structure which describes in my previous <a href="https://embernlp.github.io/2017/09/15/2017-09-15Seq2seq/" target="_blank" rel="external">Seq2seq blog</a>. Here, the encoder maps an input sequence of symbol representations <span class="math inline">\((x_1,...,x_n)\)</span> to a sequence of continuous representations <span class="math inline">\(\mathbf{z} = (z_1,...,z_n)\)</span>. Given <span class="math inline">\(\mathbf{z}\)</span>, the decoder then generates an output sequence <span class="math inline">\((y_1,...,y_m)\)</span> of symbols one element at a time. At each step the model is auto-regressive, consuming the previously generated symbols as additional input when generating the next. The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder.</p>
 <p><em><strong>Self-attention</strong></em>, sometimes called intra-attention is an attention mechanism relating different positions of a single sequence in order to compute a representation of the sequence.</p>
+<p>The entire model structure is shown below:</p>
+<center>
+<img src="/images/2017-09-15Attention%20Is%20All%20You%20Need/ModelStructure.png">
+</center>
+<p>I’ll follow the paper to describle each block in the Transform model.</p>
+<h1 id="encoder-and-decoder-stacks">2. Encoder and Decoder Stacks</h1>
+<h3 id="encoder">2.1 Encoder</h3>
+<p>The encoder is composed of a stack of <span class="math inline">\(N=6\)</span> identical layers. Each layer has two sub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, positionwise fully connected feed-forward network. It employs a <a href="https://embernlp.github.io/2017/09/15/2017-09-15Highway&amp;Residual&amp;Training%20RNNs%20as%20Fast%20as%20CNNs/" target="_blank" rel="external">residual connection</a> around each of the two sub-layers, followed by <a href="https://embernlp.github.io/2017/08/31/2017-08-31Batch%20Normalization/" target="_blank" rel="external">layer normalization</a>. That is, the output of each sub-layer is <span class="math inline">\(LayerNorm(x+Sublayer(x))\)</span>. To facilitate these residual connections, all sub-layers in the model, as well as the embedding layers, produce outputs of dimension <span class="math inline">\(d_{model} = 512\)</span>.</p>
+<h3 id="decoder">2.2 Decoder</h3>
+<p>The decoder is also composed of a stack of <span class="math inline">\(N=6\)</span> identical layers. In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack. Similar to the encoder, it also employs residual connections around each of the sub-layers, followed by layer normalization. Self-attention sub-layer in the decoder stack is modified to prevent positions from attending to subsequent positions. This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position <span class="math inline">\(i\)</span> can depend only on the known outputs at positions less than <span class="math inline">\(i\)</span>.</p>
+<h1 id="attention">3. Attention</h1>
+<p>An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors. The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.</p>
+<h3 id="scaled-dot-product-attention">3.1 Scaled Dot-Product Attention</h3>
+<p>The input consists of queries and keys of dimension <span class="math inline">\(d_k\)</span> , and values of dimension <span class="math inline">\(d_v\)</span> . And compute the dot products of the query with all keys, divide each by <span class="math inline">\(d_k\)</span>, and apply a softmax function to obtain the weights on the values.</p>
+<center>
+<img src="/images/2017-09-15Attention%20Is%20All%20You%20Need/ScaledDotProductAttention.png">
+</center>
+<p>In practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix <span class="math inline">\(Q\)</span>. The keys and values are also packed together into matrices <span class="math inline">\(K\)</span> and <span class="math inline">\(V\)</span> . We compute the matrix of outputs as:</p>
+\begin{equation}
+<span class="math display">\[\begin{split}
+Attention(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d_k}})V
+\end{split}\]</span>
+<p>\end{quation}</p>
+<p><em>According to the graph above, the matrix <span class="math inline">\(Q,K,V\)</span> are all the same. </em></p>
 
       
     </div>
@@ -463,8 +491,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -528,6 +565,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#encoder-and-decoder-stacks"><span class="nav-number">2.</span> <span class="nav-text">2. Encoder and Decoder Stacks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encoder"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 Encoder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decoder"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.2 Decoder</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#attention"><span class="nav-number">3.</span> <span class="nav-text">3. Attention</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scaled-dot-product-attention"><span class="nav-number">3.0.1.</span> <span class="nav-text">3.1 Scaled Dot-Product Attention</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
