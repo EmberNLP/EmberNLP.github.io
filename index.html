@@ -395,6 +395,7 @@ Attention(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d_k}})V
 \end{equation}\]</span>
 <p><code>According to the graph above, the matrix $Q,K,V$ are all the same. Each row represents the embedding or represention(includes postion) of a word. The meaning of $QK^T$ is to compute pair-wise dot-product of word embeddings. After Softmax transformation for each row, we get a mtraix whose rows represent the similarity between the word embedding of this row and all the other word embeddings. Then we mulplied by $V$, results in a matrix whose row is new word presentation calculated by weighted sum of previous word embeddings.</code></p>
 <p>The author suspects that for large values of <span class="math inline">\(d_k\)</span>, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients. To counteract this effect, they scale the dot products by <span class="math inline">\(\frac{1}{\sqrt{d_k}}\)</span>.</p>
+<p><em>The dimension of inputs are <span class="math inline">\(Q \in \mathbb{R}^{n \times d_k}\)</span>, <span class="math inline">\(K \in \mathbb{R}^{n \times d_k}\)</span> and <span class="math inline">\(V \in \mathbb{R}^{n \times d_v}\)</span>; the dimension of the output is <span class="math inline">\(\mathbb{R}^{n \times d_v}\)</span>. <span class="math inline">\(n\)</span> is the number of words.</em></p>
 <h3 id="multi-head-attention">3.2 Multi-Head Attention</h3>
 <p>Instead of performing a single attention function with <span class="math inline">\(d_{model}\)</span>-dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values <span class="math inline">\(h\)</span> times with different, learned linear projections to <span class="math inline">\(d_k\)</span>, <span class="math inline">\(d_k\)</span> and <span class="math inline">\(d_v\)</span> dimensions, respectively. On each of these projected versions of queries, keys and values we then perform the attention function in parallel, yielding <span class="math inline">\(d_v\)</span>-dimensional output values. These are concatenated and once again projected, resulting in the final values</p>
 <center>
@@ -403,10 +404,20 @@ Attention(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d_k}})V
 <p>Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.</p>
 <span class="math display">\[\begin{equation}\begin{split}
 MultiHead(Q,K,V) &amp;= Concat(head_1,...,head_h)W^o\\\\
-where head_i &amp;= Attention(QW^Q_i, KW^K_i,VW^V_i)
+where \space head_i &amp;= Attention(QW^Q_i, KW^K_i,VW^V_i)
 \end{split}\end{equation}\]</span>
 <p>Where the projections are parameter matrices <span class="math inline">\(W^Q_i \in \mathbb{R}^{d_{model} \times d_k}\)</span>, <span class="math inline">\(W^K_i \in \mathbb{R}^{d_{model} \times d_k}\)</span>, <span class="math inline">\(W^V_i \in \mathbb{R}^{d_{model} \times d_v}\)</span> and <span class="math inline">\(W^O_i \in \mathbb{R}^{hd_{v} \times d_{model}}\)</span>.</p>
 <p>In this paper, it employs <span class="math inline">\(h=8\)</span> parallel attention layers, or heads. For each of these we use <span class="math inline">\(d_k = d_v = d_{model} / h =64\)</span>. Due to the reduced dimension of each head, the total computational cost is similar to that of single-head attention with full dimensionality.</p>
+<p>The dimensions of inputs are <span class="math inline">\(Q \in \mathbb{R}^{n \times d_{model}}\)</span>, <span class="math inline">\(K \in \mathbb{R}^{n \times d_{model}}\)</span>, <span class="math inline">\(V \in \mathbb{R}^{n \times d_{model}}\)</span>; the dimension of output is <span class="math inline">\(\mathbb{R}^{n \times d_{model}}\)</span></p>
+<h3 id="position-wise-feed-forward-networks">3.3 Position-wise Feed-Forward Networks</h3>
+<p>In addition to attention sub-layers, each of the layers in our encoder and decoder contains a fully connected feed-forward network, which is applied to each position separately and identically. <em>Here, position means the representation of each word.</em> This consists of two linear transformations with a ReLU activation in between.</p>
+<span class="math display">\[\begin{equation}
+FFN(x) = max(0,xW_1 + b_1)W_2 + b_2
+\end{equation}\]</span>
+<p>While the linear transformations are the same across different positions, they use different parameters from layer to layer. Another way of describing this is as two convolutions with kernel size <span class="math inline">\(1\)</span>. The dimensionality of input and output is <span class="math inline">\(d_{model} = 512\)</span>, and the inner-layer has dimensionality <span class="math inline">\(d_{ff} =2048\)</span>.</p>
+<p><em>The dimension is changing from <span class="math inline">\(\mathbb{R}^{n \times d_{model}}\)</span> to <span class="math inline">\(\mathbb{R}^{n \times d_{ff}}\)</span> then the output will be transformed back to <span class="math inline">\(\mathbb{R}^{n \times d_{model}}\)</span>.</em></p>
+<h3 id="embedding-and-softmax">3.4 Embedding and Softmax</h3>
+<p>Similarly to other sequence transduction models, it uses learned embeddings to convert the input tokens and output tokens to vectors of dimension dmodel. It also uses the usual learned linear transformation and softmax function to convert the decoder output to predicted next-token probabilities. In the model, weight matrix is shared between the two embedding layers and the pre-softmax linear transformation. In the embedding layers, weights are multiplied by <span class="math inline">\(\sqrt{d_{model}}\)</span>.</p>
 
           
         
