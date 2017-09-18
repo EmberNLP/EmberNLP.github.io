@@ -105,7 +105,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-18Convolutional%20Sequence%20to%20Sequence%20Learning/ModelArchitecture.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-18Convolutional%20Sequence%20to%20Sequence%20Learning/Attention.gif">
-<meta property="og:updated_time" content="2017-09-18T09:33:53.000Z">
+<meta property="og:updated_time" content="2017-09-18T09:35:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Convolutional Sequence to Sequence Learning">
 <meta name="twitter:description" content="1. Introduction The dominant approach of sequence to sequence learning to date encodes the input sequence with a series of bi-directional RNN and generates a variable length output with another set of">
@@ -416,7 +416,7 @@ h^l_i= v(\mathbf{W}^l[h^{l-1}_{i-k/2},...,h^{l-1}_{i+k/2}] + b^l_w) + h^{l-1}_i
 <h4 id="block-output">2.2.4 Block Output</h4>
 <p>For encoder networks, ensure that the output of the convolutional layers matches the input length by padding the input at each layer. However, for decoder networks, we need to take care that no future information is available to the decoder. To achieve this, pad the input by <span class="math inline">\(k-1\)</span> elements on both the left and right side by zero vectors, and then remove <span class="math inline">\(k\)</span> elements from the end of the convolution output.</p>
 <h4 id="linear-mapping">2.2.5 Linear Mapping</h4>
-<p>Linear mapping is applied to <span class="math inline">\(\mathbf{w}\)</span> when feeding embeddings to the encoder network; to the encoder output <span class="math inline">\(z^u_j\)</span>; to the finnal layer of the decoder just before the softmax <span class="math inline">\(\mathbf{h}^L\)</span>; and to all decoder layers <span class="math inline">\(mathbf{h}^l\)</span> before computing attention scores.</p>
+<p>Linear mapping is applied to <span class="math inline">\(\mathbf{w}\)</span> when feeding embeddings to the encoder network; to the encoder output <span class="math inline">\(z^u_j\)</span>; to the finnal layer of the decoder just before the softmax <span class="math inline">\(\mathbf{h}^L\)</span>; and to all decoder layers <span class="math inline">\(\mathbf{h}^l\)</span> before computing attention scores.</p>
 <h4 id="prediction-layer">2.2.6 Prediction Layer</h4>
 <p>To compute a distribution over the T possible next target elements <span class="math inline">\(y_{i+1}\)</span> by transforming the top decoder output <span class="math inline">\(h^L_i\)</span> via a linear layer with weights <span class="math inline">\(W_0\)</span> and bias <span class="math inline">\(b_0\)</span>.</p>
 <span class="math display">\[\begin{equation}
