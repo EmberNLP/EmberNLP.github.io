@@ -435,7 +435,7 @@ a^l_{ij} = \frac{exp(d^l_i \cdot z^u_j)}{\Sigma^m_{t=1}exp(d^l_i \cdot z^u_t)}
 \end{equation}\]</span>
 <p>The conditional input <span class="math inline">\(c^l_i\)</span> to the current decoder layer is a weighted sum of the encoder outputs as well as the input element embeddings <span class="math inline">\(e_j\)</span>:</p>
 <span class="math display">\[\begin{equation}
-a^l_{ij} = \frac{exp(d^l_i \cdot z^u_j)}{\Sigma^m_{t=1}exp(d^l_i \cdot z^u_t)}
+c^l_i = \Sigma^m_{j=1}a^l_{ij}(z^u_j+e_j)
 \end{equation}\]</span>
 <p>where <span class="math inline">\(m\)</span> is the length of encoder output (roughly equal to length of input to the model).</p>
 <p>This is slightly different to recurrent approaches which compute both the attention and the weighted sum over <span class="math inline">\(z^u_j\)</span> only. Adding <span class="math inline">\(e_j\)</span> to be beneficial and it resembles key-value memory networks where the keys are the <span class="math inline">\(z^u_j\)</span> and the values are the <span class="math inline">\(z^u_j + e_j\)</span>. Encoder outputs <span class="math inline">\(z^u_j\)</span> represent <strong>potentially large input contexts</strong> and <span class="math inline">\(e_j\)</span> provides <strong>point information</strong> about a specific input element that is useful when making a prediction. Once <span class="math inline">\(c^l_i\)</span> has been computed, it is simply added to the output of the correspoding decoder layer <span class="math inline">\(h^l_i\)</span>.</p>
