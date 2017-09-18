@@ -275,6 +275,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/2017-09-18Convolutional Sequence to Sequence Learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/18/2017-09-18Convolutional Sequence to Sequence Learning/" itemprop="url">Convolutional Sequence to Sequence Learning</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-18T10:18:02+10:00">
+                2017-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="introduction">1. Introduction</h1>
+<p>The dominant approach of sequence to sequence learning to date encodes the input sequence with a series of bi-directional RNN and generates a variable length output with another set of decoder RNNs both of which interface via a <a href="https://embernlp.github.io/2017/09/15/2017-09-15Seq2seq/" target="_blank" rel="external">soft-attention mechanism</a>.</p>
+<p>Compared to recurrent layers, convolutions create representations for <em>fixed size</em> comtexts, however, the effective context size of the network can easily be made larger by stacking several layers ontop of each other. This allows to precisely control the maximum length of dependencies to be modeled. Multi-layer convolutional neural networks create hierarchical representations over the input sequence in which nearby input elements interact at lower layers while distant elements interact at higher levels.</p>
+<p>This papr proposes an architecture for sequence to sequence modeling that is entirely convolutional. The model is equipped with <a href="https://embernlp.github.io/2017/09/14/2017-09-14Language%20Modeling%20with%20Gated%20Convolutional%20Networks/" target="_blank" rel="external">gated linear unit</a> and <a href="https://embernlp.github.io/2017/09/15/2017-09-15Highway&amp;Residual&amp;Training%20RNNs%20as%20Fast%20as%20CNNs/" target="_blank" rel="external">residual connections</a>. It also uses attention in every decoders layer and demonstrate that each attention layer only adds a negligible amount of overhead. And the combination of these choices enables us to tackle large scale problems.</p>
+<h1 id="model-architecture">2. Model architecture</h1>
+<p>The overall model architecure is shown below:</p>
+<center>
+<img src="/images/2017-09-18Convolutional%20Sequence%20to%20Sequence%20Learning/ModelArchitecture.png">
+</center>
+<h3 id="position-embedding">2.1 Position Embedding</h3>
+<p>Input elements <span class="math inline">\(\mathbf{x} = (x_1,...x_m)\)</span> embedded in distributional space as <span class="math inline">\(\mathbf{w} = (w_1,...w_m)\)</span>, where <span class="math display">\[w_j \in \mathbb{R}^f\]</span> is a column in an embedding matrix <span class="math inline">\(\mathcal{D} \in \mathbb{R}^{V \times f}\)</span>.</p>
+<p>The model is also equipped with a sense of order by embedding the absolute position of input elements <span class="math inline">\(\mathbf{p} = (p_1,...p_m)\)</span>, where <span class="math display">\[p_j \in \mathbb{R}^f\]</span> Just like a one-hot coding.</p>
+Both are combined to obtain input element representations: <span class="math display">\[\mathbf{e} = (w_1+p_1,...,w_m+p_m)\]</span> And matrix <span class="math inline">\(\mathbf{e}\)</span> will result as below (column per word):
+<span class="math display">\[\begin{equation}
+\mathbf{e} = 
+\left(\begin{array}{cc} 
+w_{11} + 1 &amp; w_{21} &amp; \cdots &amp; w_{m1} \\ 
+w_{12} &amp; w_{22} + 1 &amp; \cdots &amp; w_{m2} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+w_{1f} &amp; w_{2f} &amp; \cdots &amp; w_{mf} + 1 \\
+\end{array}\right)
+\end{equation}\]</span>
+<p>The model proceeds similarly for ouput elements that were <em>already generated by the decoder network</em> to yield output element representations that are being fed back into the decoder network, <span class="math inline">\(\mathbf{g} = (g_1,...,g_n)\)</span>.</p>
+<p>Position embeddings are useful in model archtecture since they give the model a senese of which portion of the sequence in the input or output it is currently dealing with.</p>
+<h3 id="convolutional-block-structure">2.2 Convolutional Block Structure</h3>
+<p>Both encoder and decoder networks share a simple block structure that computes intermediate states based on a fixed number of input elements.</p>
+<h1 id="reference">Reference</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://arxiv.org/pdf/1705.03122.pdf" target="_blank" rel="external">Convolutional Sequence to Sequence Learning</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/15/2017-09-15Attention Is All You Need/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1929,151 +2100,6 @@ h_t &amp;= o_t \ast tanh(C_t)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/02/2017-09-02RNN for NLP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ember">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EmberNLP">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/02/2017-09-02RNN for NLP/" itemprop="url">RNN for NLP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-02T17:49:17+10:00">
-                2017-09-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DL/" itemprop="url" rel="index">
-                    <span itemprop="name">DL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one.</p>
-<p>Applying dropout to RNNs can be a bit tricky, that is, the dropout masks are sampled once per sequence, and not once per time step.</p>
-<p>For longer sentences classification, Li et al.[2015] found it useful to use a hierarchical architecture, in which the sentence is split into smaller spans based on punctuation. Then, each span is fed into a forward and a backward RNN. Sequence of resulting vectors (one for each span) are then fed into an RNN acceptor.</p>
-<p>To represent a word, except for general word embedding method like word2vec, we can use two character-level RNNs. For a word <span class="math inline">\(w\)</span>, made of characters <span class="math inline">\(c_1,c_2,...,c_l\)</span>, we will map each character into a corresponding embedding vector <span class="math inline">\(\mathbf{c}_i\)</span>. The word will then be encoded using a forward RNN and a reverse RNN over the characters. These RNNs can then either replace the word embedding vector, or, better yet, be concatenated.</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2126,7 +2152,7 @@ h_t &amp;= o_t \ast tanh(C_t)
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
