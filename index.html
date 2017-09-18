@@ -306,7 +306,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-18T10:18:02+10:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-18T16:49:36+10:00">
                 2017-09-18
               </time>
             
@@ -397,15 +397,14 @@ w_{1f} &amp; w_{2f} &amp; \cdots &amp; w_{mf} + 1 \\
 <p>Denote the output of the <span class="math inline">\(l^{th}\)</span> block as <span class="math inline">\(\mathbf{h} = (h^l_1,...,h^l_n)\)</span> for the decoder network and <span class="math inline">\(\mathbf{z} = (z^l_1,...,z^l_n)\)</span> for the encoder network.</p>
 <h4 id="gated-linear-convolution">2.2.1 Gated Linear Convolution</h4>
 <p>For a decoder network with a single block and kernel width <span class="math inline">\(k\)</span>, each resulting state <span class="math inline">\(h^1_i\)</span> contains information over <span class="math inline">\(k\)</span> input elements. Stacking several blocks on top of each other increases the number of input elements represented in a state. For instance, stacking 6 blocks with <span class="math inline">\(k=5\)</span>, results in an input field of <span class="math inline">\(25 (4 \times 5 + 5)\)</span> elements.</p>
-<p>Each convolution kernel is parameterized as <span class="math inline">\(\mathbf{W} \in \mathbb{R}^{2d \times kd}\)</span>, <span class="math inline">\(b_w \in \mathbf{R}^{2d}\)</span> and takes as input vector <span class="math inline">\(\mathbf{X} \in \mathbb{R}^{kd}\)</span> which is a concatenation (hstack) of <span class="math inline">\(k\)</span> input elements embedded in <span class="math inline">\(d\)</span> dimensions and maps them to a single output element <span class="math inline">\(\mathbf{Y} \in \mathbb{R}^{2d}\)</span>. The final output will be:</p>
+<p>Each convolution kernel is parameterized as <span class="math inline">\(\mathbf{W} \in \mathbb{R}^{2d \times kd}\)</span>, <span class="math inline">\(b_w \in \mathbf{R}^{2d}\)</span> and takes as input vector <span class="math inline">\(\mathbf{X} \in \mathbb{R}^{kd}\)</span> which is a concatenation (hstack) of <span class="math inline">\(k\)</span> input elements embedded in <span class="math inline">\(d\)</span> dimensions and maps them to a single output element <span class="math inline">\(\mathbf{Y} \in \mathbb{R}^{2d}\)</span>.</p>
+<h4 id="non-linearities">2.2.2 Non-linearities</h4>
+<p>Non-linearities allow the networks to exploit the fill input field, or to focus on fewer elements if needed. This paper chooses gated linear units (GLU):</p>
 <span class="math display">\[\begin{equation}\begin{split}
 Y &amp;= [A \space B] \in \mathbb{R}^{2d}\\\\
 v([A \space B]) &amp;= A \otimes \sigma(B)\\\\
 v([A \space B]) &amp;\in \mathbb{R}^d
 \end{split}\end{equation}\]</span>
-<p>It just chooses the gated linear units (GLU).</p>
-<h4 id="non-linearities">2.2.2 Non-linearities</h4>
-<p>Non-linearities allow the networks to exploit the fill input field, or to focus on fewer elements if needed.</p>
 <h4 id="residual-connection">2.2.3 Residual Connection</h4>
 <p>To enable deep convolutional networks, residual connections are added from the input of each convolution to the output of the block:</p>
 <span class="math display">\[\begin{equation}
@@ -414,6 +413,32 @@ h^l_i= v(\mathbf{W}^l[h^{l-1}_{i-k/2},...,h^{l-1}_{i+k/2}] + b^l_w) + h^{l-1}_i
 <h4 id="block-output">2.2.4 Block Output</h4>
 <p>For encoder networks, ensure that the output of the convolutional layers matches the input length by padding the input at each layer. However, for decoder networks, we need to take care that no future information is available to the decoder. To achieve this, pad the input by <span class="math inline">\(k-1\)</span> elements on both the left and right side by zero vectors, and then remove <span class="math inline">\(k\)</span> elements from the end of the convolution output.</p>
 <h4 id="linear-mapping">2.2.5 Linear Mapping</h4>
+<p>Linear mapping is applied to <span class="math inline">\(\mathbf{w}\)</span> when feeding embeddings to the encoder network; to the encoder output <span class="math inline">\(z^u_j\)</span>; to the finnal layer of the decoder just before the softmax <span class="math inline">\(\mathbf{h}^L\)</span>; and to all decoder layers <span class="math inline">\(mathbf{h}^l\)</span> before computing attention scores.</p>
+<h4 id="prediction-layer">2.2.6 Prediction Layer</h4>
+<p>To compute a distribution over the T possible next target elements <span class="math inline">\(y_{i+1}\)</span> by transforming the top decoder output <span class="math inline">\(h^L_i\)</span> via a linear layer with weights <span class="math inline">\(W_0\)</span> and bias <span class="math inline">\(b_0\)</span>.</p>
+<span class="math display">\[\begin{equation}
+p(y_{i+1} | y_1,...,y_i, \mathbf{x}) = softmax(\mathbf{W}_0h^L_i + b_0) \in \mathbb{R}^T
+\end{equation}\]</span>
+<h3 id="multi-step-attention">2.3 Multi-step Attention</h3>
+<p>The paper introduces a seperate attention mechanism for each decoder layer, shown below:</p>
+<center>
+<img src="/images/2017-09-18Convolutional%20Sequence%20to%20Sequence%20Learning/Attention.gif">
+</center>
+<p>To compute the attention, we combine the current docoder state <span class="math inline">\(h^l_i\)</span> with an embedding of the previous target element <span class="math inline">\(g_i\)</span>:</p>
+<span class="math display">\[\begin{equation}
+d^l_i = W^l_dh^l_i + b^l_i + g_i
+\end{equation}\]</span>
+<p>where <span class="math inline">\(h^l_i \in \mathbb{R}^d\)</span> and <span class="math inline">\(W^l_i \in \mathbb{R}^{e \times d}\)</span>， so <span class="math inline">\(d^l_i \in \mathbb{R}^d\)</span>.</p>
+<p>For decoder layer <span class="math inline">\(l\)</span> the attention <span class="math inline">\(a^l_{ij}\)</span> of state <span class="math inline">\(i\)</span> and source element <span class="math inline">\(j\)</span> is computed as a dot_product between the deocder state summary <span class="math inline">\(d^l_i\)</span> and each output <span class="math inline">\(z^u_j\)</span> of the last encoder block <span class="math inline">\(u\)</span>:</p>
+<span class="math display">\[\begin{equation}
+a^l_{ij} = \frac{exp(d^l_i \cdot z^u_j)}{\Sigma^m_{t=1}exp(d^l_i \cdot z^u_t)}
+\end{equation}\]</span>
+<p>The conditional input <span class="math inline">\(c^l_i\)</span> to the current decoder layer is a weighted sum of the encoder outputs as well as the input element embeddings <span class="math inline">\(e_j\)</span>:</p>
+<span class="math display">\[\begin{equation}
+a^l_{ij} = \frac{exp(d^l_i \cdot z^u_j)}{\Sigma^m_{t=1}exp(d^l_i \cdot z^u_t)}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(m\)</span> is the length of encoder output (roughly equal to length of input to the model).</p>
+<p>This is slightly different to recurrent approaches which compute both the attention and the weighted sum over <span class="math inline">\(z^u_j\)</span> only. Adding <span class="math inline">\(e_j\)</span> to be beneficial and it resembles key-value memory networks where the keys are the <span class="math inline">\(z^u_j\)</span> and the values are the <span class="math inline">\(z^u_j + e_j\)</span>. Encoder outputs <span class="math inline">\(z^u_j\)</span> represent <strong>potentially large input contexts</strong> and <span class="math inline">\(e_j\)</span> provides <strong>point information</strong> about a specific input element that is useful when making a prediction. Once <span class="math inline">\(c^l_i\)</span> has been computed, it is simply added to the output of the correspoding decoder layer <span class="math inline">\(h^l_i\)</span>.</p>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://arxiv.org/pdf/1705.03122.pdf" target="_blank" rel="external">Convolutional Sequence to Sequence Learning</a></li>
@@ -561,7 +586,11 @@ h^l_i= v(\mathbf{W}^l[h^{l-1}_{i-k/2},...,h^{l-1}_{i+k/2}] + b^l_w) + h^{l-1}_i
           
             <h1 id="introduction">1. Introduction</h1>
 <p>The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. This paper proposes a new simple network architecture, the Transformer, based solely on attention mechnisms, dispensing with recurrence and convolutions entirely.</p>
-<p>Most competitive neural sequence transduction models have an encoder-decoder structure which describes in my previous <a href="https://embernlp.github.io/2017/09/15/2017-09-15Seq2seq/" target="_blank" rel="external">Seq2seq blog</a>. Here, the encoder maps an input sequence of symbol representations <span class="math inline">\((x_1,...,x_n)\)</span> to a sequence of continuous representations <span class="math inline">\(\mathbf{z} = (z_1,...,z_n)\)</span>. Given <span class="math inline">\(\mathbf{z}\)</span>, the decoder then generates an output sequence <span class="math inline">\((y_1,...,y_m)\)</span> of symbols one element at a time. At each step the model is auto-regressive, consuming the previously generated symbols as additional input when generating the next. The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder.</p>
+<p>Most competitive neural sequence transduction models have an encoder-decoder structure which describes in my previous <a href="https://embernlp.github.io/2017/09/15/2017-09-15Seq2seq/" target="_blank" rel="external">Seq2seq blog</a>. Here, the encoder maps an input sequence of symbol representations <span class="math inline">\((x_1,...,x_n)\)</span> to a sequence of continuous representations <span class="math inline">\(\mathbf{z} = (z_1,...,z_n)\)</span>. Given <span class="math inline">\(\mathbf{z}\)</span>, the decoder then generates an output sequence <span class="math inline">\((y_1,...,y_m)\)</span> of symbols one element at a time. At each step the model is auto-regressive, consuming the previously generated symbols as additional input when generating the next.</p>
+<p>The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder.</p>
+<center>
+<img src="/images/2017-09-15Attention%20Is%20All%20You%20Need/ModelGIF.gif">
+</center>
 <p><em><strong>Self-attention</strong></em>, sometimes called intra-attention is an attention mechanism relating different positions of a single sequence in order to compute a representation of the sequence.</p>
 <p>The entire model structure is shown below:</p>
 <center>
