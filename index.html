@@ -428,7 +428,7 @@ p(y_{i+1} | y_1,...,y_i, \mathbf{x}) = softmax(\mathbf{W}_0h^L_i + b_0) \in \mat
 <span class="math display">\[\begin{equation}
 d^l_i = W^l_dh^l_i + b^l_i + g_i
 \end{equation}\]</span>
-<p>where <span class="math inline">\(h^l_i \in \mathbb{R}^d\)</span> and <span class="math inline">\(W^l_i \in \mathbb{R}^{e \times d}\)</span>， so <span class="math inline">\(d^l_i \in \mathbb{R}^d\)</span>.</p>
+<p>where <span class="math inline">\(h^l_i \in \mathbb{R}^d\)</span> and <span class="math inline">\(W^l_i \in \mathbb{R}^{f \times d}\)</span>， so <span class="math inline">\(d^l_i \in \mathbb{R}^d\)</span>.</p>
 <p>For decoder layer <span class="math inline">\(l\)</span> the attention <span class="math inline">\(a^l_{ij}\)</span> of state <span class="math inline">\(i\)</span> and source element <span class="math inline">\(j\)</span> is computed as a dot_product between the deocder state summary <span class="math inline">\(d^l_i\)</span> and each output <span class="math inline">\(z^u_j\)</span> of the last encoder block <span class="math inline">\(u\)</span>:</p>
 <span class="math display">\[\begin{equation}
 a^l_{ij} = \frac{exp(d^l_i \cdot z^u_j)}{\Sigma^m_{t=1}exp(d^l_i \cdot z^u_t)}
