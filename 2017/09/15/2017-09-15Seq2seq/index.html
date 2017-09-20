@@ -105,7 +105,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-15Seq2seq/GeneralSeq2seq.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-15Seq2seq/SoftAttentionSeq2seq.png">
-<meta property="og:updated_time" content="2017-09-19T05:59:10.000Z">
+<meta property="og:updated_time" content="2017-09-20T06:16:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sequence To Sequence Models">
 <meta name="twitter:description" content="Contents  Sequence to Sequence Learning with Neural Networks Neural Machine Translation by Jointly Learning to Align and Translate The Cost of Attention  Sequence to Sequence Learning with Neural Netw">
@@ -392,7 +392,7 @@ y_t &amp;= W^{yh}h_t
 <span class="math display">\[\begin{equation}\begin{split}
 p(y_1,...,y_{T&#39;} | x_1,...,x_T) = \prod\limits^{T&#39;}_{t=1}p(y_t|v,y_1,...,y_{t-1})
 \end{split}\end{equation}\]</span>
-<p>In this equation, each <span class="math inline">\(p(y_t|v,y_1,...,y_{t-1})\)</span> distribution is represented with a softmax over all the words in the vocabulary. Note that each sentence ends with a special end-of-sentence symbol “<span class="math inline">\(&lt;EOS&gt;\)</span>”, which enables the model to define a distribution over sequences of all possible lengths. The overall scheme is outlined in figure 1, where the shown LSTM computes the representation of “A”, “B”, “C”, “<span class="math inline">\(&lt;EOS&gt;\)</span>” and then uses this representation to compute the probability of “W”, “X”, “Y”, “Z”, “<eos>”.</eos></p>
+<p>In this equation, each <span class="math inline">\(p(y_t|v,y_1,...,y_{t-1})\)</span> distribution is represented with a softmax over all the words in the vocabulary. Note that each sentence ends with a special end-of-sentence symbol “<span class="math inline">\(&lt;EOS&gt;\)</span>”, which enables the model to define a distribution over sequences of all possible lengths. The overall scheme is outlined in figure 1, where the shown LSTM computes the representation of “A”, “B”, “C”, “<span class="math inline">\(&lt;EOS&gt;\)</span>” and then uses this representation to compute the probability of “W”, “X”, “Y”, “Z”, “<span class="math inline">\(&lt;EOS&gt;\)</span>”.</p>
 <p>Three things to note:</p>
 <ol style="list-style-type: decimal">
 <li>Two LSTM are used, one for the encoder and one for the decoder.</li>
@@ -558,7 +558,7 @@ e_{ij} = a(s_{i-1}, h_j)
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

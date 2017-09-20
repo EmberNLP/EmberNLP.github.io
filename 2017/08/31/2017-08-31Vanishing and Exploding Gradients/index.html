@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Intuitively, extra hidden layers ought to make the network able to learn more complex classification functions, and thus do a better job classifying. Certainly, things shouldn’t get worse, since the e">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-07T01:22:50.000Z">
+<meta property="og:updated_time" content="2017-09-20T05:24:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vanishing and Exploding Gradients">
 <meta name="twitter:description" content="Intuitively, extra hidden layers ought to make the network able to learn more complex classification functions, and thus do a better job classifying. Certainly, things shouldn’t get worse, since the e">
@@ -378,8 +378,12 @@
 <p>And for tanh activation function, an effective scheme due to <strong>Glorot and Bengio [2010]</strong>, called <strong>xavier initialization</strong>, suggests initializing a weight matrix <em><span class="math inline">\(W\)</span></em> <span class="math inline">\(\in \mathbb{R}^{d_{in} \times d_{out}}\)</span> as: <span class="math display">\[W \sim U[-\frac{\sqrt{6}}{\sqrt{d_{in}+d_{out}}},+\frac{\sqrt{6}}{\sqrt{d_{in}+d_{out}}}]\]</span></p>
 <p>Another way is to perform <em><strong>Batch Normalization</strong></em>, the simple intuition behind is: for every minibatch, normalizing the inputs to each of the network layers to have zeros mean and unit variance. I’ll talk about this method in another post in detail.</p>
 <p>Besides, dealing with the exploding gradients has a simple but very effective solution: clipping the gradients if their norm exceeds a given threshold. Let <em><span class="math inline">\(g\)</span></em> be the gradients of all parameters in the network, and <em><span class="math inline">\(\|g\|\)</span></em> be their <span class="math inline">\(L_2\)</span> norm. Pascanu et al.[2012] suggest to set: <span class="math inline">\(g \leftarrow \frac{threshlod}{\|g\|}g\)</span> # Reference</p>
-<p>1.<a href="http://neuralnetworksanddeeplearning.com/chap5.html" target="_blank" rel="external">Neural Network and Deep Leanring Chpater 5</a><br>
-2.Andrew Ng’s Deep Learning Course 3.Neural network methods in natural language processing</p>
+<ol style="list-style-type: decimal">
+<li><a href="http://neuralnetworksanddeeplearning.com/chap5.html" target="_blank" rel="external">Neural Network and Deep Leanring Chpater 5</a><br>
+</li>
+<li>Andrew Ng’s Deep Learning Course</li>
+<li>Neural network methods in natural language processing</li>
+</ol>
 
       
     </div>
@@ -492,7 +496,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

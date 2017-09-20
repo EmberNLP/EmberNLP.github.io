@@ -275,6 +275,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of RNN Gradient Vanishing Problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/20/2017-09-20Mathematical Proof of RNN Gradient Vanishing Problem/" itemprop="url">Mathematical Proof of RNN Gradient Vanishing Problem</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-20T10:03:16+10:00">
+                2017-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="vanilla-rnn">Vanilla RNN</h1>
+<p>For a vanilla RNN with only three steps, its mathematical form is shown below:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+z_1 &amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\
+h_1 &amp;= f_h(z_1)\\\\
+z_2 &amp;= W^{(2)}_xx_2 + W^{(2)}_hh_1\\\\
+h_2 &amp;= f_h(z_2)\\\\
+z_3 &amp;= W^{(3)}_xx_3 + W^{(3)}_hh_2\\\\
+h_3 &amp;= f_h(z_3)\\\\
+C &amp;= f_c(h_3)
+\end{split}\end{equation}\]</span>
+<p>If we want to comput the derivative of the cost function with respect to <span class="math inline">\(W_x\)</span>, we have:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+
+\frac{\partial{C}}{\partial{W^{(3)}_x}} &amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot \frac{\partial{z_3}}{\partial{W^{(3)}_x}}\\\\
+&amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot x_3\\\\
+
+\frac{\partial{C}}{\partial{W^{(2)}_x}} &amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot \frac{\partial{z_3}}{\partial{h_2}} \cdot f&#39;_h(z_2) \cdot \frac{\partial{z_2}}{\partial{W^{(2)}_x}}\\\\
+&amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot W^{(3)}_h \cdot f&#39;_h(z_2) \cdot x_2 \\\\
+
+\frac{\partial{C}}{\partial{W^{(1)}_x}} &amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot \frac{\partial{z_3}}{\partial{h_2}} \cdot f&#39;_h(z_2) \cdot \frac{\partial{z_2}}{\partial{h_1}} \cdot f&#39;_h(z_1) \cdot \frac{\partial{z_1}}{\partial{W^{(1)}_x}}\\\\
+&amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot W^{(3)}_h \cdot f&#39;_h(z_2) \cdot W^{(2)}_h \cdot f&#39;_h(z_1) \cdot x_1\\\\
+And \space &amp;finally \space we \space get:\\\\
+\frac{\partial{C}}{\partial{W_x}} &amp;= \frac{\partial{C}}{\partial{w^{(3)}_x}} + \frac{\partial{C}}{\partial{W^{(2)}_x}} + \frac{\partial{C}}{\partial{W^{(1)}_x}}
+\end{split}\end{equation}\]</span>
+<p>To analyze the result, we simple add some brackets to the formula <span class="math inline">\(\frac{\partial{C}}{\partial{W^{(1)}_x}}\)</span>, then we have:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+
+\frac{\partial{C}}{\partial{W^{(1)}_x}} = \frac{\partial{C}}{\partial{h_3}} \cdot \{ f&#39;_h(z_3) \cdot W^{(3)}_h \} \cdot \{ f&#39;_h(z_2) \cdot W^{(2)}_h \} \cdot f&#39;_h(z_1) \cdot x_1
+
+\end{split}\end{equation}\]</span>
+<p>If our RNN has T steps, we can generalize the above formula to:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+
+\frac{\partial{C}}{\partial{W^{(1)}_x}} = \frac{\partial{C}}{\partial{h_T}} \cdot \prod\limits^T_{t=2} \{ f&#39;_h(z_t) \cdot W^{(t)}_h \} \cdot f&#39;_h(z_1) \cdot x_1
+
+\end{split}\end{equation}\]</span>
+<p>Now, it is easy to find out, the value of <span class="math inline">\(\frac{\partial{C}}{\partial{W^{(1)}_x}}\)</span> depends on how many steps (how large is <span class="math inline">\(T\)</span>) the RNN has. If <span class="math inline">\(T\)</span> has a large value, then <span class="math inline">\(\frac{\partial{C}}{\partial{W^{(1)}_x}}\)</span> tends to have an extremely small value because of two reasons:</p>
+<ol style="list-style-type: decimal">
+<li>As <span class="math inline">\(W\)</span> is initialized with small values around zero, the product of many <span class="math inline">\(W\)</span> leads to much smaller values;</li>
+<li>For the term <span class="math inline">\(f&#39;_h(z_t)\)</span>, if <span class="math inline">\(f\)</span> is the <em>sigmoid</em> function, <span class="math inline">\(f&#39;_h(z_t) &lt;= \frac{1}{4}\)</span>; if <span class="math inline">\(f\)</span> is the <em>tanh</em> function, <span class="math inline">\(f&#39;_h(z_t) &lt;= 1\)</span>. <strong>Notice that, if <span class="math inline">\(f\)</span> is the <em>relu</em> function, its gradient can only be 0 or 1, which means for a specific <span class="math inline">\(W\)</span>, relu function can relieve the vanishing problem by updating part of the parameters in one iteration.</strong></li>
+</ol>
+<p>In conclusion: if <span class="math inline">\(T\)</span> is large, no matter what value <span class="math inline">\(\Delta W\)</span> takes, it is hard to affect the final output as <span class="math inline">\(\Delta C = \Delta W \cdot\)</span><em>extremely small value</em>.</p>
+<p>From another perspective, the very first few inputs will have little effect on the final output. The information they carry is <strong>blocked</strong> by the entire network. Because <span class="math inline">\(\frac{\partial{C}}{\partial{x_1}} = \frac{\partial{C}}{\partial{h_T}} \cdot \prod\limits^T_{t=1} \{ f&#39;_h(z_t) \cdot W^{(t)}_h \}\)</span></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/2017-09-18Convolutional Sequence to Sequence Learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1001,7 +1186,7 @@ y_t &amp;= W^{yh}h_t
 <span class="math display">\[\begin{equation}\begin{split}
 p(y_1,...,y_{T&#39;} | x_1,...,x_T) = \prod\limits^{T&#39;}_{t=1}p(y_t|v,y_1,...,y_{t-1})
 \end{split}\end{equation}\]</span>
-<p>In this equation, each <span class="math inline">\(p(y_t|v,y_1,...,y_{t-1})\)</span> distribution is represented with a softmax over all the words in the vocabulary. Note that each sentence ends with a special end-of-sentence symbol “<span class="math inline">\(&lt;EOS&gt;\)</span>”, which enables the model to define a distribution over sequences of all possible lengths. The overall scheme is outlined in figure 1, where the shown LSTM computes the representation of “A”, “B”, “C”, “<span class="math inline">\(&lt;EOS&gt;\)</span>” and then uses this representation to compute the probability of “W”, “X”, “Y”, “Z”, “<eos>”.</eos></p>
+<p>In this equation, each <span class="math inline">\(p(y_t|v,y_1,...,y_{t-1})\)</span> distribution is represented with a softmax over all the words in the vocabulary. Note that each sentence ends with a special end-of-sentence symbol “<span class="math inline">\(&lt;EOS&gt;\)</span>”, which enables the model to define a distribution over sequences of all possible lengths. The overall scheme is outlined in figure 1, where the shown LSTM computes the representation of “A”, “B”, “C”, “<span class="math inline">\(&lt;EOS&gt;\)</span>” and then uses this representation to compute the probability of “W”, “X”, “Y”, “Z”, “<span class="math inline">\(&lt;EOS&gt;\)</span>”.</p>
 <p>Three things to note:</p>
 <ol style="list-style-type: decimal">
 <li>Two LSTM are used, one for the encoder and one for the decoder.</li>
@@ -1955,205 +2140,6 @@ h_t &amp;= o_t \odot tanh(c_t)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/2017-09-04The Intuition Behind LSTM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ember">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EmberNLP">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/04/2017-09-04The Intuition Behind LSTM/" itemprop="url">Intuition Behind LSTM</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-04T10:55:06+10:00">
-                2017-09-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Intuition/" itemprop="url" rel="index">
-                    <span itemprop="name">Intuition</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="content">Content</h1>
-<ul>
-<li>A mathematically Sufficient Condition For Vanishing Sensitivity</li>
-<li>A minimum Weight Initialization to Avoid Vanishing Gradients</li>
-<li>Written memories: the intuition behind LSTMs</li>
-<li>Different Between Tanh and Sigmoid Function</li>
-</ul>
-<h2 id="a-mathematically-sufficient-condition-for-vanishing-sensitivity">A mathematically Sufficient Condition For Vanishing Sensitivity</h2>
-<p>This is a mathematical proof of a sufficient condition for vanishing sensitivity in vanilla RNNs. The proof here also takes advantage of the mean value theorem to go one step further than Pascanu et al. and reach a slightly stronger result, effectively showing vanishing causation rather than vanishing sensitivity. Note that mathematical analyses of vanishing and exploding gradients date back to the early 1990s, in Bengio et al. (1994) and Hochreiter (1991) (original in German, relevant portions summarized in Hochreiter and Schmidhuber (1997)).</p>
-To begin, from the definition of a vanilla RNN cell, we have: <span class="math display">\[s_{t+1} = \phi (z_t), where \space z_t = Ws_t + Ux_{t+1} + b\]</span> Recall the <em><strong>Mean value theorem</strong></em>: If a function <span class="math inline">\(f\)</span> is continuous on the closed interval <span class="math inline">\([a,b]\)</span>, and differentiable on the open interval <span class="math inline">\((a,b)\)</span> , then there exists a point <span class="math inline">\(c\)</span> in <span class="math inline">\((a,b)\)</span> such that: <span class="math display">\[f&#39;(c) = \frac{f(b)-f(a)}{b-a}\]</span> Applying the mean value theorem, we get that there exists <span class="math inline">\(c \in [z_t, z_t + \Delta z_t]\)</span> such that:
-<span class="math display">\[\begin{equation}\begin{split}
-\Delta S_{t+1} &amp;= [\phi&#39;(c)] \Delta z_t\\\\
-&amp;= [\phi&#39;(c)] \Delta (Ws_t)\\\\
-&amp;= [\phi&#39;(c)] W\Delta(s_t)
-\end{split}\end{equation}\]</span>
-<p>Now let <span class="math inline">\(\left \| A \right \|\)</span> represent the matrix 2-norm, <span class="math inline">\(\left | v \right |\)</span>the Euclidean vector norm, and define: <span class="math display">\[\gamma = sup_{c \in \{z_t, z_t + \Delta z_t\}} \left \| [\phi&#39; (c)] \right \|\]</span> Note that for the logistic sigmoid, <span class="math inline">\(\gamma \leq \frac{1}{4}\)</span>, and for tanh, <span class="math inline">\(\gamma \leq 1\)</span>.</p>
-Taking the vector norm of each side, we obtain, where the first inequality comes from the definition of the 2-norm (applied twice), and second from the definition of supremum:
-<span class="math display">\[\begin{equation}\begin{split}
-\left | \Delta s_{t+1} \right | &amp;= \left | [\phi&#39;(c)] W \Delta s_t \right |\\\\
-&amp;\leq \left \| [\phi&#39;(c)] \right \| \left \| W \right \| \left | \Delta s_t \right |\\\\
-&amp;\leq \gamma \left \| W \right \| \left | \Delta s_t \right |\\\\
-&amp;= \left \| \gamma W \right \| \left | \Delta s_t \right |
-\end{split}\end{equation}\]</span>
-<p>By expanding this formula over <span class="math inline">\(k\)</span> time steps we get: <span class="math display">\[\left | \Delta s_{t+k} \right | \leq \left \| \gamma W \right \|^k \left | \Delta s_t \right |\]</span> So that: <span class="math display">\[\frac{\left | \Delta s_{t+k} \right |}{\left | \Delta s_t \right |} = \left \| \gamma W \right \|^k\]</span></p>
-<p>Therefore, if <span class="math inline">\(\left \| \gamma W \right \| &lt; 1\)</span> , we have that <span class="math inline">\(\frac{\left | \Delta s_{t+k} \right |}{\left | \Delta s_t \right |}\)</span> decreases exponentially in time.</p>
-<h2 id="a-minimum-weight-initialization-to-avoid-vanishing-gradients">A minimum Weight Initialization to Avoid Vanishing Gradients</h2>
-<p>It is beneficial to find a weight initialization that will not immediately suffer from this problem. Extending the above analysis to find the initialization of <span class="math inline">\(W\)</span> that gets us as close to equality as possible leads to a nice result. First, let us assume that <span class="math inline">\(\phi = tanh\)</span> and take <span class="math inline">\(\gamma = 1\)</span>. Our goal is to find an initialization of W for which:</p>
-<ol style="list-style-type: decimal">
-<li><span class="math inline">\(\left \| \gamma W \right \| = 1\)</span></li>
-<li>We get as close to equality as possible in above equation.</li>
-</ol>
-<p>From point 1, since we took <span class="math inline">\(\gamma\)</span> to be 1, we have <span class="math inline">\(\left \| W \right \| = 1\)</span>. From point 2, we get that we should try to set all singular values of <span class="math inline">\(W\)</span> to 1, not just the largest. Then, if all singular values of <span class="math inline">\(W\)</span> equal 1, that means that the norm of each column of <span class="math inline">\(W\)</span> is 1 (since each column is <span class="math inline">\(We_i\)</span> for some elementary basis vector <span class="math inline">\(e_i\)</span> and we have <span class="math inline">\(\left |We_i \right | = \left | e_i \right | = 1\)</span>). That means that for column <span class="math inline">\(j\)</span> we have: <span class="math display">\[\Sigma_i w_{ij}^2 = 1\]</span></p>
-<p>There are <span class="math inline">\(n\)</span> entries in column <span class="math inline">\(j\)</span>, and we are choosing each from the same random distribution, so let us find a distribution for a random weight <span class="math inline">\(w\)</span> for which: <span class="math display">\[n\mathbb{E}(w^2) = 1\]</span></p>
-<p>Now let’s suppose we want to initialize <span class="math inline">\(w\)</span> uniformly in the interval <span class="math inline">\([-R,R]\)</span>. Then the mean of <span class="math inline">\(w\)</span> is 0, so that, by definition, <span class="math inline">\(\mathbb{E}(w^2)\)</span> is its variance, <span class="math inline">\(\mathbb{V}(w)\)</span>. The variance of a uniform distribution over the interval <span class="math inline">\([a,b]\)</span> is given by <span class="math inline">\(\frac{(b-a)^2}{12}\)</span>, from which we get <span class="math inline">\(\mathbb{V}(w) = \frac{R^2}{3}\)</span>. Substituting this into our equation we get: <span class="math display">\[n\frac{R^2}{3} = 1\]</span></p>
-<p>So that: <span class="math display">\[R = \frac{\sqrt{3}}{\sqrt{n}}\]</span></p>
-<p>This is a nice result because it is the Xavier-Glorot initialization for a square weight matrix, yet was motivated by a different idea. The Xavier-Glorot initialization, introduced by Glorot and Bengio (2010), has proven to be an effective weight initialization prescription in practice. More generally, the Xavier-Glorot prescription applies to m-by-n weight matrices used in a layer that has an activation function whose derivative is near one at the origin (like tanh), and says that we should initialize our weights according to a uniform distribution of the interval: <span class="math display">\[[-\frac{\sqrt{6}}{\sqrt{m+n}},+\frac{\sqrt{6}}{\sqrt{m+n}}]\]</span></p>
-<p>We saw above that good weight initializations are crucial, but this only impacts the start of training.</p>
-<h2 id="written-memories-the-intuition-behind-lstms">Written memories: the intuition behind LSTMs</h2>
-<p>Very much like the messages passed by children playing a game of broken telephone, information is morphed by RNN cells and the original message is lost. A small change in the original message may not have made any difference in the final message, or it may have resulted in something completely different.</p>
-<p>How can we protect the integrity of messages? This is the fundamental principle of LSTMs: to ensure the integrity of our messages in the real world, we write them down. Writing is <em><strong>a delta to the current state</strong></em>: it is an act of creation (pen on paper) or destruction (carving in stone); the subject itself does not morph when you write on it and the error gradient on the backward-pass is constant.</p>
-<p>This is precisely what was proposed by the landmark paper of Hocreiter and Schmidhuber (1997), which introduced the LSTM. They asked: “how can we achieve constant error flow through a single unit with a single connection to itself [i.e., a single piece of isolated information]?”</p>
-<p>The answer, quite simply, is to avoid information morphing: changes to the state of an LSTM are explicitly written in, by an explicit addition or subtraction, so that each element of the state stays constant without outside interference: “the unit’s activation has to remain constant … this will be ensured by using the identity function”.</p>
-<span class="math display">\[\begin{equation}\begin{split}
-f_t &amp;= \sigma (W_f \cdot [h_{t-1}, x_t] + b_f)\\\\
-i_t &amp;= \sigma (W_i \cdot [h_{t-1}, x_t] + b_i)\\\\
-\tilde{C}_t &amp;= tanh(W_c \cdot [h_{t-1}, x_t] +b_c)\\\\
-C_t &amp;= f_t \ast C_{t-1} + i_t \ast \tilde{C}_t \\\\
-o_t &amp;= \sigma (W_o \cdot [h_{t-1}, x_t] + b_o)\\\\
-h_t &amp;= o_t \ast tanh(C_t)
-\end{split}\end{equation}\]</span>
-<p>Suppose we have calculated the value of <span class="math inline">\(\frac{\partial L}{C_{t+k}}\)</span>, then: <span class="math display">\[\frac{\partial L}{C_t} = \frac{\partial L}{C_{t+k}} \odot f_{t+k-1} \odot f_{t+k-2} ... \odot f_{t}\]</span> Except for the very first term, the vanishing problem still exist.</p>
-<h2 id="different-between-tanh-and-sigmoid-function">Different Between Tanh and Sigmoid Function</h2>
-<ul>
-<li>Sigmoid function have domain of all real numbers, ranging from 0 to 1, campared with Tanh function whose domain ranging from -1 to 1. The problem of Sigmoid is that the activation value is always positive, which give rise to the phenomenon that the derivative of weights are always all positive or all negative.</li>
-<li>When a sigmoidal activation function must be used, the hyperbolic tangent activation function typically performs better than the logistic sigmoid. It <em><strong>resembles the identity function more closely</strong></em>, in the sense that <span class="math inline">\(tanh(0) = 0\)</span> while <span class="math inline">\(\sigma(0) = \frac{1}{2}\)</span>. Because tanh is similar to the identity function near 0, training a deep neural network <span class="math inline">\(\hat{y} = W^T tanh(U^T tanh(V^TX))\)</span> resembles training a linear model <span class="math inline">\(\hat{y} = W^TU^TV^TX\)</span> so long as the activations of the network can be kept small. This makes training the tanh network easier.</li>
-</ul>
-<h1 id="reference">Reference</h1>
-<p><a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms" target="_blank" rel="external">Written memories the intuition behind lstms</a> <a href="http://www.deeplearningbook.org/contents/mlp.html" target="_blank" rel="external">Deep Learning Chap6</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2206,7 +2192,7 @@ h_t &amp;= o_t \ast tanh(C_t)
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

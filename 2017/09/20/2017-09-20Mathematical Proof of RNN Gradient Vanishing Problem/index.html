@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="DL Basics,RNN," />
+  <meta name="keywords" content="RNN,DL," />
 
 
 
@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one. Applying dropout to RNNs can be a bit tricky, that is">
-<meta name="keywords" content="DL Basics,RNN">
+<meta name="description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
+<meta name="keywords" content="RNN,DL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RNN for NLP">
-<meta property="og:url" content="http://yoursite.com/2017/09/02/2017-09-02RNN for NLP/index.html">
+<meta property="og:title" content="Mathematical Proof of RNN Gradient Vanishing Problem">
+<meta property="og:url" content="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of RNN Gradient Vanishing Problem/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one. Applying dropout to RNNs can be a bit tricky, that is">
+<meta property="og:description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-07T00:22:44.000Z">
+<meta property="og:updated_time" content="2017-09-20T07:00:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RNN for NLP">
-<meta name="twitter:description" content="When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one. Applying dropout to RNNs can be a bit tricky, that is">
+<meta name="twitter:title" content="Mathematical Proof of RNN Gradient Vanishing Problem">
+<meta name="twitter:description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
 
 
 
@@ -136,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/02/2017-09-02RNN for NLP/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of RNN Gradient Vanishing Problem/"/>
 
 
 
 
 
-  <title>RNN for NLP | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Mathematical Proof of RNN Gradient Vanishing Problem | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -279,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/02/2017-09-02RNN for NLP/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of RNN Gradient Vanishing Problem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -296,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">RNN for NLP</h1>
+          <h1 class="post-title" itemprop="name headline">Mathematical Proof of RNN Gradient Vanishing Problem</h1>
         
 
         <div class="post-meta">
@@ -308,8 +308,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-02T17:49:17+10:00">
-                2017-09-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-20T10:03:16+10:00">
+                2017-09-20
               </time>
             
 
@@ -331,8 +331,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DL/" itemprop="url" rel="index">
-                    <span itemprop="name">DL</span>
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
                   </a>
                 </span>
 
@@ -368,10 +368,50 @@
       
 
       
-        <p>When training LSTM networks, Jozefowicz et al. [2015] strongly recommend to always initialize the bias term of the forget gate to be close to one.</p>
-<p>Applying dropout to RNNs can be a bit tricky, that is, the dropout masks are sampled once per sequence, and not once per time step.</p>
-<p>For longer sentences classification, Li et al.[2015] found it useful to use a hierarchical architecture, in which the sentence is split into smaller spans based on punctuation. Then, each span is fed into a forward and a backward RNN. Sequence of resulting vectors (one for each span) are then fed into an RNN acceptor.</p>
-<p>To represent a word, except for general word embedding method like word2vec, we can use two character-level RNNs. For a word <span class="math inline">\(w\)</span>, made of characters <span class="math inline">\(c_1,c_2,...,c_l\)</span>, we will map each character into a corresponding embedding vector <span class="math inline">\(\mathbf{c}_i\)</span>. The word will then be encoded using a forward RNN and a reverse RNN over the characters. These RNNs can then either replace the word embedding vector, or, better yet, be concatenated.</p>
+        <h1 id="vanilla-rnn">Vanilla RNN</h1>
+<p>For a vanilla RNN with only three steps, its mathematical form is shown below:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+z_1 &amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\
+h_1 &amp;= f_h(z_1)\\\\
+z_2 &amp;= W^{(2)}_xx_2 + W^{(2)}_hh_1\\\\
+h_2 &amp;= f_h(z_2)\\\\
+z_3 &amp;= W^{(3)}_xx_3 + W^{(3)}_hh_2\\\\
+h_3 &amp;= f_h(z_3)\\\\
+C &amp;= f_c(h_3)
+\end{split}\end{equation}\]</span>
+<p>If we want to comput the derivative of the cost function with respect to <span class="math inline">\(W_x\)</span>, we have:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+
+\frac{\partial{C}}{\partial{W^{(3)}_x}} &amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot \frac{\partial{z_3}}{\partial{W^{(3)}_x}}\\\\
+&amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot x_3\\\\
+
+\frac{\partial{C}}{\partial{W^{(2)}_x}} &amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot \frac{\partial{z_3}}{\partial{h_2}} \cdot f&#39;_h(z_2) \cdot \frac{\partial{z_2}}{\partial{W^{(2)}_x}}\\\\
+&amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot W^{(3)}_h \cdot f&#39;_h(z_2) \cdot x_2 \\\\
+
+\frac{\partial{C}}{\partial{W^{(1)}_x}} &amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot \frac{\partial{z_3}}{\partial{h_2}} \cdot f&#39;_h(z_2) \cdot \frac{\partial{z_2}}{\partial{h_1}} \cdot f&#39;_h(z_1) \cdot \frac{\partial{z_1}}{\partial{W^{(1)}_x}}\\\\
+&amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot W^{(3)}_h \cdot f&#39;_h(z_2) \cdot W^{(2)}_h \cdot f&#39;_h(z_1) \cdot x_1\\\\
+And \space &amp;finally \space we \space get:\\\\
+\frac{\partial{C}}{\partial{W_x}} &amp;= \frac{\partial{C}}{\partial{w^{(3)}_x}} + \frac{\partial{C}}{\partial{W^{(2)}_x}} + \frac{\partial{C}}{\partial{W^{(1)}_x}}
+\end{split}\end{equation}\]</span>
+<p>To analyze the result, we simple add some brackets to the formula <span class="math inline">\(\frac{\partial{C}}{\partial{W^{(1)}_x}}\)</span>, then we have:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+
+\frac{\partial{C}}{\partial{W^{(1)}_x}} = \frac{\partial{C}}{\partial{h_3}} \cdot \{ f&#39;_h(z_3) \cdot W^{(3)}_h \} \cdot \{ f&#39;_h(z_2) \cdot W^{(2)}_h \} \cdot f&#39;_h(z_1) \cdot x_1
+
+\end{split}\end{equation}\]</span>
+<p>If our RNN has T steps, we can generalize the above formula to:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+
+\frac{\partial{C}}{\partial{W^{(1)}_x}} = \frac{\partial{C}}{\partial{h_T}} \cdot \prod\limits^T_{t=2} \{ f&#39;_h(z_t) \cdot W^{(t)}_h \} \cdot f&#39;_h(z_1) \cdot x_1
+
+\end{split}\end{equation}\]</span>
+<p>Now, it is easy to find out, the value of <span class="math inline">\(\frac{\partial{C}}{\partial{W^{(1)}_x}}\)</span> depends on how many steps (how large is <span class="math inline">\(T\)</span>) the RNN has. If <span class="math inline">\(T\)</span> has a large value, then <span class="math inline">\(\frac{\partial{C}}{\partial{W^{(1)}_x}}\)</span> tends to have an extremely small value because of two reasons:</p>
+<ol style="list-style-type: decimal">
+<li>As <span class="math inline">\(W\)</span> is initialized with small values around zero, the product of many <span class="math inline">\(W\)</span> leads to much smaller values;</li>
+<li>For the term <span class="math inline">\(f&#39;_h(z_t)\)</span>, if <span class="math inline">\(f\)</span> is the <em>sigmoid</em> function, <span class="math inline">\(f&#39;_h(z_t) &lt;= \frac{1}{4}\)</span>; if <span class="math inline">\(f\)</span> is the <em>tanh</em> function, <span class="math inline">\(f&#39;_h(z_t) &lt;= 1\)</span>. <strong>Notice that, if <span class="math inline">\(f\)</span> is the <em>relu</em> function, its gradient can only be 0 or 1, which means for a specific <span class="math inline">\(W\)</span>, relu function can relieve the vanishing problem by updating part of the parameters in one iteration.</strong></li>
+</ol>
+<p>In conclusion: if <span class="math inline">\(T\)</span> is large, no matter what value <span class="math inline">\(\Delta W\)</span> takes, it is hard to affect the final output as <span class="math inline">\(\Delta C = \Delta W \cdot\)</span><em>extremely small value</em>.</p>
+<p>From another perspective, the very first few inputs will have little effect on the final output. The information they carry is <strong>blocked</strong> by the entire network. Because <span class="math inline">\(\frac{\partial{C}}{\partial{x_1}} = \frac{\partial{C}}{\partial{h_T}} \cdot \prod\limits^T_{t=1} \{ f&#39;_h(z_t) \cdot W^{(t)}_h \}\)</span></p>
 
       
     </div>
@@ -389,9 +429,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/DL-Basics/" rel="tag"># DL Basics</a>
-          
             <a href="/tags/RNN/" rel="tag"># RNN</a>
+          
+            <a href="/tags/DL/" rel="tag"># DL</a>
           
         </div>
       
@@ -404,8 +444,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/01/2017-09-01CNN for NLP/" rel="next" title="CNN for NLP">
-                <i class="fa fa-chevron-left"></i> CNN for NLP
+              <a href="/2017/09/18/2017-09-18Convolutional Sequence to Sequence Learning/" rel="next" title="Convolutional Sequence to Sequence Learning">
+                <i class="fa fa-chevron-left"></i> Convolutional Sequence to Sequence Learning
               </a>
             
           </div>
@@ -413,10 +453,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/04/2017-09-04The Intuition Behind LSTM/" rel="prev" title="Intuition Behind LSTM">
-                Intuition Behind LSTM <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -468,8 +504,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -533,6 +578,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vanilla-rnn"><span class="nav-number">1.</span> <span class="nav-text">Vanilla RNN</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
