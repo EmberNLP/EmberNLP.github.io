@@ -402,7 +402,7 @@ And \space &amp;finally \space we \space get:\\\\
 <p>If our RNN has T steps, we can generalize the above formula to:</p>
 <span class="math display">\[\begin{equation}\begin{split}
 
-\frac{\partial{C}}{\partial{W^{(1)}_x}} = \frac{\partial{C}}{\partial{h_T}} \cdot \prod\limits^T_{t=2} \{ f&#39;_h(z_t) \cdot W^{(t)}_h \} \cdot f&#39;_h(z_1) \cdot x_1
+\frac{\partial{C}}{\partial{W^{(1)}_x}} = \frac{\partial{C}}{\partial{h_T}} \cdot \{ \prod\limits^T_{t=2} [ f&#39;_h(z_t) \cdot W^{(t)}_h ] \} \cdot f&#39;_h(z_1) \cdot x_1
 
 \end{split}\end{equation}\]</span>
 <p>Now, it is easy to find out, the value of <span class="math inline">\(\frac{\partial{C}}{\partial{W^{(1)}_x}}\)</span> depends on how many steps (how large is <span class="math inline">\(T\)</span>) the RNN has. If <span class="math inline">\(T\)</span> has a large value, then <span class="math inline">\(\frac{\partial{C}}{\partial{W^{(1)}_x}}\)</span> tends to have an extremely small value because of two reasons:</p>
@@ -413,6 +413,36 @@ And \space &amp;finally \space we \space get:\\\\
 <p>In conclusion: if <span class="math inline">\(T\)</span> is large, no matter what value <span class="math inline">\(\Delta W\)</span> takes, it is hard to affect the final output as <span class="math inline">\(\Delta C = \Delta W \cdot\)</span><em>extremely small value</em>.</p>
 <p>From another perspective, the very first few inputs will have little effect on the final output. The information they carry is <strong>blocked</strong> by the entire network. Because <span class="math inline">\(\frac{\partial{C}}{\partial{x_1}} = \frac{\partial{C}}{\partial{h_T}} \cdot \prod\limits^T_{t=1} \{ f&#39;_h(z_t) \cdot W^{(t)}_h \}\)</span></p>
 <h1 id="residual-network">Residual Network</h1>
+<p>For general neural network with three residual blocks is shown below:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+z_1 &amp;= W^{(1)}x\\\\
+a_1 &amp;= f(z_1) + x\\\\
+z_2 &amp;= W^{(2)}a_1\\\\
+a_2 &amp;= f(z_2) + a_1\\\\
+z_3 &amp;= W^{(3)}a_2\\\\
+a_3 &amp;= f(z_3) + a_2\\\\
+C &amp;= f_c(a_3)
+\end{split}\end{equation}\]</span>
+<p>To compute all the derivatives with respect to all <span class="math inline">\(W\)</span>, we have:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+
+\frac{\partial C}{\partial W^{(3)}} &amp;= \frac{\partial C}{\partial a_3} \cdot \frac{\partial a_3}{\partial z_3} \cdot \frac{\partial z_3}{\partial W^{(3)}}\\\\
+&amp;= \frac{\partial C}{\partial a_3} \cdot f&#39;(z_3) \cdot a_2\\\\
+
+\frac{\partial C}{\partial W^{(2)}} &amp;= \frac{\partial C}{\partial a_3} \cdot \frac{\partial a_3}{\partial a_2} \cdot \frac{\partial a_2}{\partial z_2} \cdot \frac{\partial z_2}{\partial W^{(2)}}\\\\
+&amp;= \frac{\partial C}{\partial a_3} \cdot [f&#39;(z_3)W^{(3)} + 1] \cdot f&#39;(z_2) \cdot a_1\\\\
+
+\frac{\partial C}{\partial W^{(1)}} &amp;= \frac{\partial C}{\partial a_3} \cdot \frac{\partial a_3}{\partial a_2} \cdot \frac{\partial a_2}{\partial a_1} \cdot \frac{\partial a_1}{\partial z_1} \cdot \frac{\partial z_1}{\partial W^{(1)}}\\\\
+&amp;= \frac{\partial C}{\partial a_3} \cdot [f&#39;(z_3)W^{(3)} + 1][f&#39;(z_2)W^{(2)}+1] \cdot f&#39;(z_1) \cdot x
+
+\end{split}\end{equation}\]</span>
+<p>To generalize the above equation to n-layers neural network:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+
+\frac{\partial C}{\partial W^{(1)}} = \frac{\partial C}{\partial a_3} \cdot \{ \prod\limits^n_{i=1}[f&#39;(z_i)W^{(i)} + 1] \} \cdot f&#39;(z_1) \cdot x
+
+\end{split}\end{equation}\]</span>
+<p>We can quickly notice that, each term within the product operation is added by 1 compared to vanilla neural network. It’s really helpful for our model to learn from very deep architecture. <strong>Vanishing gradient problem still exists if <span class="math inline">\(f&#39;(z_i)W^{(i)}\)</span> is very close to <span class="math inline">\(-1\)</span>, although it barely happens.</strong></p>
 
           
         
