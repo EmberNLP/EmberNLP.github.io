@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of RNN Gradient Vanishing Problem/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of Gradient Vanishing Problem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/20/2017-09-20Mathematical Proof of RNN Gradient Vanishing Problem/" itemprop="url">Mathematical Proof of RNN Gradient Vanishing Problem</a></h1>
+                <a class="post-title-link" href="/2017/09/20/2017-09-20Mathematical Proof of Gradient Vanishing Problem/" itemprop="url">Mathematical Proof of Gradient Vanishing Problem</a></h1>
         
 
         <div class="post-meta">
@@ -412,6 +412,7 @@ And \space &amp;finally \space we \space get:\\\\
 </ol>
 <p>In conclusion: if <span class="math inline">\(T\)</span> is large, no matter what value <span class="math inline">\(\Delta W\)</span> takes, it is hard to affect the final output as <span class="math inline">\(\Delta C = \Delta W \cdot\)</span><em>extremely small value</em>.</p>
 <p>From another perspective, the very first few inputs will have little effect on the final output. The information they carry is <strong>blocked</strong> by the entire network. Because <span class="math inline">\(\frac{\partial{C}}{\partial{x_1}} = \frac{\partial{C}}{\partial{h_T}} \cdot \prod\limits^T_{t=1} \{ f&#39;_h(z_t) \cdot W^{(t)}_h \}\)</span></p>
+<h1 id="residual-network">Residual Network</h1>
 
           
         

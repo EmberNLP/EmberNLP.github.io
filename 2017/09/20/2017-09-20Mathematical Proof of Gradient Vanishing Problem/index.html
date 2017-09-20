@@ -98,14 +98,14 @@
 <meta name="description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
 <meta name="keywords" content="RNN,DL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mathematical Proof of RNN Gradient Vanishing Problem">
-<meta property="og:url" content="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of RNN Gradient Vanishing Problem/index.html">
+<meta property="og:title" content="Mathematical Proof of Gradient Vanishing Problem">
+<meta property="og:url" content="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of Gradient Vanishing Problem/index.html">
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-20T07:00:45.000Z">
+<meta property="og:updated_time" content="2017-09-20T07:01:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mathematical Proof of RNN Gradient Vanishing Problem">
+<meta name="twitter:title" content="Mathematical Proof of Gradient Vanishing Problem">
 <meta name="twitter:description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
 
 
@@ -136,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of RNN Gradient Vanishing Problem/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of Gradient Vanishing Problem/"/>
 
 
 
 
 
-  <title>Mathematical Proof of RNN Gradient Vanishing Problem | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Mathematical Proof of Gradient Vanishing Problem | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -279,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of RNN Gradient Vanishing Problem/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of Gradient Vanishing Problem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -296,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Mathematical Proof of RNN Gradient Vanishing Problem</h1>
+          <h1 class="post-title" itemprop="name headline">Mathematical Proof of Gradient Vanishing Problem</h1>
         
 
         <div class="post-meta">
@@ -412,6 +412,7 @@ And \space &amp;finally \space we \space get:\\\\
 </ol>
 <p>In conclusion: if <span class="math inline">\(T\)</span> is large, no matter what value <span class="math inline">\(\Delta W\)</span> takes, it is hard to affect the final output as <span class="math inline">\(\Delta C = \Delta W \cdot\)</span><em>extremely small value</em>.</p>
 <p>From another perspective, the very first few inputs will have little effect on the final output. The information they carry is <strong>blocked</strong> by the entire network. Because <span class="math inline">\(\frac{\partial{C}}{\partial{x_1}} = \frac{\partial{C}}{\partial{h_T}} \cdot \prod\limits^T_{t=1} \{ f&#39;_h(z_t) \cdot W^{(t)}_h \}\)</span></p>
+<h1 id="residual-network">Residual Network</h1>
 
       
     </div>
@@ -588,7 +589,7 @@ And \space &amp;finally \space we \space get:\\\\
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vanilla-rnn"><span class="nav-number">1.</span> <span class="nav-text">Vanilla RNN</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vanilla-rnn"><span class="nav-number">1.</span> <span class="nav-text">Vanilla RNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#residual-network"><span class="nav-number">2.</span> <span class="nav-text">Residual Network</span></a></li></ol></div>
             
 
           </div>
