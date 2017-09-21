@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-21T02:44:46.000Z">
+<meta property="og:updated_time" content="2017-09-21T04:10:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mathematical Proof of Gradient Vanishing Problem">
 <meta name="twitter:description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
@@ -444,7 +444,7 @@ h_t &amp;= o_t \odot tanh(C_t)
 
 \frac{\partial L}{\partial W_i} &amp;= \frac{\partial L}{\partial i_t} \cdot i&#39;_t \cdot [h_{t-1},x_t]\\\\
 
-\frac{\partial L}{\partial W_C} &amp;= \frac{\partial L}{\partial \tilde{C}_t} \cdot \tilde{C}&#39;_t \cdot [h_{t-1},x_t]\\\\
+\frac{\partial L}{\partial W_C} &amp;= \frac{\partial L}{\partial \tilde{C}_t} \cdot \tilde{C&#39;}_t \cdot [h_{t-1},x_t]\\\\
 
 \end{split}\end{equation}\]</span>
 <h1 id="residual-network">Residual Network</h1>
