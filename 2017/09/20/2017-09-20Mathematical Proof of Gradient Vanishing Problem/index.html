@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-20T07:42:24.000Z">
+<meta property="og:updated_time" content="2017-09-21T02:44:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mathematical Proof of Gradient Vanishing Problem">
 <meta name="twitter:description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
@@ -412,6 +412,41 @@ And \space &amp;finally \space we \space get:\\\\
 </ol>
 <p>In conclusion: if <span class="math inline">\(T\)</span> is large, no matter what value <span class="math inline">\(\Delta W\)</span> takes, it is hard to affect the final output as <span class="math inline">\(\Delta C = \Delta W \cdot\)</span><em>extremely small value</em>.</p>
 <p>From another perspective, the very first few inputs will have little effect on the final output. The information they carry is <strong>blocked</strong> by the entire network. Because <span class="math inline">\(\frac{\partial{C}}{\partial{x_1}} = \frac{\partial{C}}{\partial{h_T}} \cdot \prod\limits^T_{t=1} \{ f&#39;_h(z_t) \cdot W^{(t)}_h \}\)</span></p>
+<h1 id="lstm">LSTM</h1>
+<p>Suppose our example contains <span class="math inline">\(t+1\)</span> steps, and has only one output at the last step, the LSTM cell is shown below:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+f_t &amp;= \sigma (W_f \cdot [h_{t-1}, x_t] + b_f)\\\\
+i_t &amp;= \sigma (W_i \cdot [h_{t-1}, x_t] + b_i)\\\\
+\tilde{C}_t &amp;= tanh(W_c \cdot [h_{t-1}, x_t] +b_c)\\\\
+C_t &amp;= f_t \odot C_{t-1} + i_t \odot \tilde{C}_t \\\\
+o_t &amp;= \sigma (W_o \cdot [h_{t-1}, x_t] + b_o)\\\\
+h_t &amp;= o_t \odot tanh(C_t)
+\end{split}\end{equation}\]</span>
+<p>Assume we have known the derivative of all parameters at last step:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+
+\frac{\partial L}{\partial h_t} &amp;= \frac{\partial L}{\partial i_{t+1}} \cdot \frac{\partial i_{t+1}}{\partial h_t} + \frac{\partial L}{\partial o_{t+1}} \cdot \frac{\partial o_{t+1}}{\partial h_t} + \frac{\partial L}{\partial f_{t+1}} \cdot \frac{\partial f_{t+1}}{\partial h_t} + \frac{\partial L}{\partial \tilde{C}_{t+1}} \cdot \frac{\partial \tilde{C}_{t+1}}{\partial h_t}\\\\
+
+\frac{\partial L}{\partial C_t} &amp;= \frac{\partial L}{\partial h_t} \cdot \frac{\partial h_t}{\partial C_t} + \frac{\partial L}{\partial C_{t+1}} \cdot \frac{\partial C_{t+1}}{\partial C_t}\\\\
+&amp;= \frac{\partial L}{\partial h_t} \cdot tanh&#39;(C_t) \odot o_t + \frac{\partial L}{\partial C_{t+1}} \odot f_t\\\\
+
+\frac{\partial L}{\partial o_t} &amp;= \frac{\partial L}{\partial h_t} \cdot \frac{\partial h_t}{\partial o_t} = \frac{\partial L}{\partial h_t} \odot tanh(C_t)\\\\
+
+\frac{\partial L}{\partial i_t} &amp;= \frac{\partial L}{\partial C_t} \cdot \frac{\partial C_t}{\partial i_t} = \frac{\partial L}{\partial C_t} \odot \tilde{C}_t\\\\
+
+\frac{\partial L}{\partial f_t} &amp;= \frac{\partial L}{\partial C_t} \cdot \frac{\partial C_t}{\partial f_t} = \frac{\partial L}{\partial C_t} \odot C_{t-1}\\\\
+
+\frac{\partial L}{\partial \tilde{C}_t} &amp;= \frac{\partial L}{\partial C_t} \cdot \frac{\partial C_t}{\partial \tilde{C}_t} = \frac{\partial L}{\partial C_t} \odot i_t\\\\
+
+\frac{\partial L}{\partial W_f} &amp;= \frac{\partial L}{\partial f_t} \cdot f&#39;_t \cdot [h_{t-1},x_t]\\\\
+
+\frac{\partial L}{\partial W_o} &amp;= \frac{\partial L}{\partial o_t} \cdot o&#39;_t \cdot [h_{t-1},x_t]\\\\
+
+\frac{\partial L}{\partial W_i} &amp;= \frac{\partial L}{\partial i_t} \cdot i&#39;_t \cdot [h_{t-1},x_t]\\\\
+
+\frac{\partial L}{\partial W_C} &amp;= \frac{\partial L}{\partial \tilde{C}_t} \cdot \tilde{C}&#39;_t \cdot [h_{t-1},x_t]\\\\
+
+\end{split}\end{equation}\]</span>
 <h1 id="residual-network">Residual Network</h1>
 <p>For general neural network with three residual blocks is shown below:</p>
 <span class="math display">\[\begin{equation}\begin{split}
@@ -619,7 +654,7 @@ C &amp;= f_c(a_3)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vanilla-rnn"><span class="nav-number">1.</span> <span class="nav-text">Vanilla RNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#residual-network"><span class="nav-number">2.</span> <span class="nav-text">Residual Network</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vanilla-rnn"><span class="nav-number">1.</span> <span class="nav-text">Vanilla RNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lstm"><span class="nav-number">2.</span> <span class="nav-text">LSTM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#residual-network"><span class="nav-number">3.</span> <span class="nav-text">Residual Network</span></a></li></ol></div>
             
 
           </div>

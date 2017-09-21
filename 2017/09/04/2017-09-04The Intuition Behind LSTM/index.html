@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Content  A mathematically Sufficient Condition For Vanishing Sensitivity A minimum Weight Initialization to Avoid Vanishing Gradients Written memories: the intuition behind LSTMs Different Between Tan">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-08T09:30:56.000Z">
+<meta property="og:updated_time" content="2017-09-20T08:16:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Intuition Behind LSTM">
 <meta name="twitter:description" content="Content  A mathematically Sufficient Condition For Vanishing Sensitivity A minimum Weight Initialization to Avoid Vanishing Gradients Written memories: the intuition behind LSTMs Different Between Tan">
@@ -425,7 +425,10 @@ h_t &amp;= o_t \ast tanh(C_t)
 <li>When a sigmoidal activation function must be used, the hyperbolic tangent activation function typically performs better than the logistic sigmoid. It <em><strong>resembles the identity function more closely</strong></em>, in the sense that <span class="math inline">\(tanh(0) = 0\)</span> while <span class="math inline">\(\sigma(0) = \frac{1}{2}\)</span>. Because tanh is similar to the identity function near 0, training a deep neural network <span class="math inline">\(\hat{y} = W^T tanh(U^T tanh(V^TX))\)</span> resembles training a linear model <span class="math inline">\(\hat{y} = W^TU^TV^TX\)</span> so long as the activations of the network can be kept small. This makes training the tanh network easier.</li>
 </ul>
 <h1 id="reference">Reference</h1>
-<p><a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms" target="_blank" rel="external">Written memories the intuition behind lstms</a> <a href="http://www.deeplearningbook.org/contents/mlp.html" target="_blank" rel="external">Deep Learning Chap6</a></p>
+<ol style="list-style-type: decimal">
+<li><a href="https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms" target="_blank" rel="external">Written memories the intuition behind lstms</a></li>
+<li><a href="http://www.deeplearningbook.org/contents/mlp.html" target="_blank" rel="external">Deep Learning Chap6</a></li>
+</ol>
 
       
     </div>
