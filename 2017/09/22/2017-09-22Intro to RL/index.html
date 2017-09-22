@@ -95,20 +95,20 @@
 
 
 
-<meta name="description" content="Introduction Deep Reinforcement learning is the combination of deep learning and reinforcement learning. In the scenario of reinforcement leanring, we have three components: agent, environment and sta">
+<meta name="description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Gradient  Introduction De">
 <meta name="keywords" content="DL,RL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Introduction to Reinforcement Learning">
 <meta property="og:url" content="http://yoursite.com/2017/09/22/2017-09-22Intro to RL/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="Introduction Deep Reinforcement learning is the combination of deep learning and reinforcement learning. In the scenario of reinforcement leanring, we have three components: agent, environment and sta">
+<meta property="og:description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Gradient  Introduction De">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/PolicyGradient.png">
-<meta property="og:updated_time" content="2017-09-22T08:49:09.000Z">
+<meta property="og:updated_time" content="2017-09-22T09:18:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Introduction to Reinforcement Learning">
-<meta name="twitter:description" content="Introduction Deep Reinforcement learning is the combination of deep learning and reinforcement learning. In the scenario of reinforcement leanring, we have three components: agent, environment and sta">
+<meta name="twitter:description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Gradient  Introduction De">
 <meta name="twitter:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
 
 
@@ -371,7 +371,19 @@
       
 
       
-        <h1 id="introduction">Introduction</h1>
+        <h1 id="contents">Contents</h1>
+<ul>
+<li>Introduction</li>
+<li>Policy Gradient
+<ul>
+<li>Step 1: Define the Actor</li>
+<li>Step 2: How to Evaluate the Actor</li>
+<li>Step 3: Step 3: How to Improve the Actor</li>
+<li>Policy Gradient in Practice</li>
+</ul></li>
+<li>Value Gradient</li>
+</ul>
+<h1 id="introduction">Introduction</h1>
 <p>Deep Reinforcement learning is the combination of deep learning and reinforcement learning.</p>
 <p>In the scenario of reinforcement leanring, we have three components: agent, environment and state. Agent interacts with environment and “observe” something called state. <strong>State</strong> is not only about observed images, it includes all the information the agent senses. After receiving the observation, the agent takes some actions and these actions will change the environment. Then, environment will give agent a reward.</p>
 <center>
@@ -642,7 +654,7 @@ p(\tau | \theta) &amp;= p(s_1)p(a_1|s_1,\theta)p(r_1,s_2 | s_1, a_1)p(a_2 | s_2,
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#policy-gradient"><span class="nav-number">2.</span> <span class="nav-text">Policy Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step-1-define-the-actor"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">Step 1: Define the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-2-how-to-evaluate-the-actor"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">Step 2: How to Evaluate the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-3-how-to-improve-the-actor"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">Step 3: How to Improve the Actor</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#policy-gradient"><span class="nav-number">3.</span> <span class="nav-text">Policy Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step-1-define-the-actor"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">Step 1: Define the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-2-how-to-evaluate-the-actor"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">Step 2: How to Evaluate the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-3-how-to-improve-the-actor"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">Step 3: How to Improve the Actor</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
