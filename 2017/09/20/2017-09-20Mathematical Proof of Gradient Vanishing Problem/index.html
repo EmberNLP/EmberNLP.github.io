@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Contents - Vanilla RNN - LSTM - Highway Network - Residual Network Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;=">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-22T02:03:05.000Z">
+<meta property="og:updated_time" content="2017-09-22T10:51:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mathematical Proof of Gradient Vanishing Problem">
 <meta name="twitter:description" content="Contents - Vanilla RNN - LSTM - Highway Network - Residual Network Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;=">
@@ -477,7 +477,7 @@ L &amp;= f(a_3)
 \frac{\partial L}{\partial a_2} &amp;= \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial z_3} \cdot \frac{\partial z_3}{\partial a_2} + \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial T_3} \cdot \frac{\partial T_3}{\partial a_2} + \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial a_2}\\\\
 &amp;= \frac{\partial L}{\partial a_3}[\frac{\partial a_3}{\partial z_3} \cdot \frac{\partial z_3}{\partial a_2} + \frac{\partial a_3}{\partial T_3} \cdot \frac{\partial T_3}{\partial a_2} + (1-T_3)]\\\\
 
-\frac{\partial L}{\partial W^{(2)}_H} &amp;= \frac{\partial L}{\partial a_2} \cdot \frac{\partial a_2}{\partial z_2} \codt \frac{\partial z_2}{\partial W^{(2)}_H}
+\frac{\partial L}{\partial W^{(2)}_H} &amp;= \frac{\partial L}{\partial a_2} \cdot \frac{\partial a_2}{\partial z_2} \cdot \frac{\partial z_2}{\partial W^{(2)}_H}
 
 \end{split}\end{equation}\]</span>
 <p>We can quickly notice that, the last term in <span class="math inline">\(\frac{\partial L}{\partial a_i}\)</span> is a product of the gates. And <span class="math inline">\(a_i\)</span>s are the most important intermediate variables to pass gradient information to shaddow layers. As long as <span class="math inline">\(\frac{\partial L}{\partial a_i}\)</span> does not vanish, the network can keep learning.</p>
