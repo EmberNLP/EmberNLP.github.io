@@ -95,20 +95,20 @@
 
 
 
-<meta name="description" content="Contents  Sequence to Sequence Learning with Neural Networks Neural Machine Translation by Jointly Learning to Align and Translate The Cost of Attention  Sequence to Sequence Learning with Neural Netw">
+<meta name="description" content="Contents  Sequence to Sequence Learning with Neural Networks Neural Machine Translation by Jointly Learning to Align and Translate The Cost of Attention Practical Illustration  Sequence to Sequence Le">
 <meta name="keywords" content="RNN,DL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sequence To Sequence Models">
 <meta property="og:url" content="http://yoursite.com/2017/09/15/2017-09-15Seq2seq/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="Contents  Sequence to Sequence Learning with Neural Networks Neural Machine Translation by Jointly Learning to Align and Translate The Cost of Attention  Sequence to Sequence Learning with Neural Netw">
+<meta property="og:description" content="Contents  Sequence to Sequence Learning with Neural Networks Neural Machine Translation by Jointly Learning to Align and Translate The Cost of Attention Practical Illustration  Sequence to Sequence Le">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-15Seq2seq/GeneralSeq2seq.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-15Seq2seq/SoftAttentionSeq2seq.png">
-<meta property="og:updated_time" content="2017-09-20T06:16:26.000Z">
+<meta property="og:updated_time" content="2017-09-22T00:31:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sequence To Sequence Models">
-<meta name="twitter:description" content="Contents  Sequence to Sequence Learning with Neural Networks Neural Machine Translation by Jointly Learning to Align and Translate The Cost of Attention  Sequence to Sequence Learning with Neural Netw">
+<meta name="twitter:description" content="Contents  Sequence to Sequence Learning with Neural Networks Neural Machine Translation by Jointly Learning to Align and Translate The Cost of Attention Practical Illustration  Sequence to Sequence Le">
 <meta name="twitter:image" content="http://yoursite.com/images/2017-09-15Seq2seq/GeneralSeq2seq.png">
 
 
@@ -376,8 +376,9 @@
 <li>Sequence to Sequence Learning with Neural Networks</li>
 <li>Neural Machine Translation by Jointly Learning to Align and Translate</li>
 <li>The Cost of Attention</li>
+<li>Practical Illustration</li>
 </ul>
-<h3 id="sequence-to-sequence-learning-with-neural-networks">Sequence to Sequence Learning with Neural Networks</h3>
+<h2 id="sequence-to-sequence-learning-with-neural-networks">Sequence to Sequence Learning with Neural Networks</h2>
 <center>
 <img src="/images/2017-09-15Seq2seq/GeneralSeq2seq.png">
 </center>
@@ -400,7 +401,7 @@ p(y_1,...,y_{T&#39;} | x_1,...,x_T) = \prod\limits^{T&#39;}_{t=1}p(y_t|v,y_1,...
 <li>It extremely valuable to reverse the order of the words of the input sentence.</li>
 <li>Different sentences have different lengths. Most sentences are short, but some sentences are long, so a minibatch of 128 randomly chosen training sentences will have many short sentences and few long sentences, and as a result, much of the computation in the minibatch is wasted. The strategy is that make sure all sentences in a minibatch are roughly of the same length.</li>
 </ol>
-<h3 id="neural-machine-translation-by-jointly-learning-to-align-and-translate">Neural Machine Translation by Jointly Learning to Align and Translate</h3>
+<h2 id="neural-machine-translation-by-jointly-learning-to-align-and-translate">Neural Machine Translation by Jointly Learning to Align and Translate</h2>
 <center>
 <img src="/images/2017-09-15Seq2seq/SoftAttentionSeq2seq.png">
 </center>
@@ -426,14 +427,32 @@ c_i = \prod\limits^{T_x}_{j=1}\alpha_{ij}h_j
 e_{ij} = a(s_{i-1}, h_j)
 \end{split}\end{equation}\]</span>
 <p>is an alignment model which scores how well the inputs around position <span class="math inline">\(j\)</span> and the output at position <span class="math inline">\(i\)</span> match. The score is based on the RNN hidden state <span class="math inline">\(s_{i−1}\)</span> and the j-th annotation <span class="math inline">\(h_j\)</span> of the input sentence.</p>
-<h3 id="the-cost-of-attention">The Cost of Attention</h3>
+<h2 id="the-cost-of-attention">The Cost of Attention</h2>
 <p>If we look a bit more look closely at the equation for attention we can see that attention comes at a cost. We need to calculate an attention value for each combination of input and output word. If you have a 50-word input sequence and generate a 50-word output sequence that would be 2500 attention values. That’s not too bad, but if you do character-level computations and deal with sequences consisting of hundreds of tokens the above attention mechanisms can become prohibitively expensive.</p>
 <p>Actually, that’s quite counterintuitive. Human attention is something that’s supposed to save computational resources. By focusing on one thing, we can neglect many other things. But that’s not really what we’re doing in the above model. We’re essentially looking at everything in detail before deciding what to focus on. Intuitively that’s equivalent outputting a translated word, and then going back through all of your internal memory of the text in order to decide which word to produce next. That seems like a waste, and not at all what humans are doing. In fact, it’s more akin to memory access, not attention, which in my opinion is somewhat of a misnomer (more on that below). Still, that hasn’t stopped attention mechanisms from becoming quite popular and performing well on many tasks.</p>
+<h2 id="practical-illustration">Practical Illustration</h2>
+<h4 id="padding">Padding</h4>
+<p>Before training, we work on the dataset to convert the variable length sequences into fixed length sequences, by padding. We use a few special symbols to fill in the sequence, and each symbol is also represented by a vector.</p>
+<ol style="list-style-type: decimal">
+<li><em>EOS</em>: End of sentence</li>
+<li><em>PAD</em>: Filler</li>
+<li><em>GO</em>: Start decoding</li>
+<li><em>UNK</em>: Unknown; word not in vocabulary</li>
+</ol>
+<p>Consider the following query-response pair.</p>
+<p>Q: How are you? A: I am fine. Assuming that we would like our sentences (queries and responses) to be of fixed length, 10, this pair will be converted to:</p>
+<p>Q: [ PAD, PAD, PAD, PAD, PAD, PAD, “?”, “you”, “are”, “How” ] and [ “How”, “are”, “you”, “?” PAD, PAD, PAD, PAD, PAD, PAD ] A: [ GO, “I”, “am”, “fine”, “.”, EOS, PAD, PAD, PAD, PAD ]</p>
+<h4 id="bucketing">Bucketing</h4>
+<p>Introduction of padding did solve the problem of variable length sequences, but consider the case of large sentences.If the largest sentence in our dataset is of length 100, we need to encode all our sentences to be of length 100, in order to not lose any words. Now, what happens to “How are you?” ? There will be 97 PAD symbols in the encoded version of the sentence. This will overshadow the actual information in the sentence.</p>
+<p>Bucketing kind of solves this problem, by putting sentences into buckets of different sizes. Consider this list of buckets : <span class="math inline">\([ (5,10), (10,15), (20,25), (40,50) ]\)</span>. If the length of a query is 4 and the length of its response is 4 (as in our previous example), we put this sentence in the bucket (5,10). The query will be padded to length 5 and the response will be padded to length 10. While running the model (training or predicting), we use a different model for each bucket, compatible with the lengths of query and response. All these models, share the same parameters and hence function exactly the same way.</p>
+<p>If we are using the bucket (5,10), our sentences will be encoded to :</p>
+<p>Q : [ PAD, “?”, “you”, “are”, “How” ] and [ “How”, “are”, “you”, “?” PAD ] A : [ GO, “I”, “am”, “fine”, “.”, EOS, PAD, PAD, PAD, PAD ]</p>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf" target="_blank" rel="external">Sequence to Sequence Learning with Neural Networks</a></li>
 <li><a href="https://arxiv.org/pdf/1409.0473.pdf" target="_blank" rel="external">Neural Machine Translation by Jointly Learning to Align and Translate</a></li>
 <li><a href="http://www.wildml.com/2016/01/attention-and-memory-in-deep-learning-and-nlp/" target="_blank" rel="external">Attention and memory in deep learning and nlp</a></li>
+<li><a href="http://suriyadeepan.github.io/2016-12-31-practical-seq2seq/" target="_blank" rel="external">Practical seq2seq</a></li>
 </ol>
 
       
@@ -558,7 +577,7 @@ e_{ij} = a(s_{i-1}, h_j)
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -580,7 +599,7 @@ e_{ij} = a(s_{i-1}, h_j)
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -615,7 +634,7 @@ e_{ij} = a(s_{i-1}, h_j)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sequence-to-sequence-learning-with-neural-networks"><span class="nav-number">1.0.1.</span> <span class="nav-text">Sequence to Sequence Learning with Neural Networks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#neural-machine-translation-by-jointly-learning-to-align-and-translate"><span class="nav-number">1.0.2.</span> <span class="nav-text">Neural Machine Translation by Jointly Learning to Align and Translate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-cost-of-attention"><span class="nav-number">1.0.3.</span> <span class="nav-text">The Cost of Attention</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sequence-to-sequence-learning-with-neural-networks"><span class="nav-number">1.1.</span> <span class="nav-text">Sequence to Sequence Learning with Neural Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#neural-machine-translation-by-jointly-learning-to-align-and-translate"><span class="nav-number">1.2.</span> <span class="nav-text">Neural Machine Translation by Jointly Learning to Align and Translate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-cost-of-attention"><span class="nav-number">1.3.</span> <span class="nav-text">The Cost of Attention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#practical-illustration"><span class="nav-number">1.4.</span> <span class="nav-text">Practical Illustration</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#padding"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">Padding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bucketing"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">Bucketing</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>

@@ -275,6 +275,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/22/2017-09-22Intro to RL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/22/2017-09-22Intro to RL/" itemprop="url">Introduction to Reinforcement Learning</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-22T10:46:01+10:00">
+                2017-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of Gradient Vanishing Problem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -368,7 +510,8 @@
       
         
           
-            <h1 id="vanilla-rnn">Vanilla RNN</h1>
+            <p>Contents - Vanilla RNN - LSTM - Highway Network - Residual Network</p>
+<h1 id="vanilla-rnn">Vanilla RNN</h1>
 <p>For a vanilla RNN with only three steps, its mathematical form is shown below:</p>
 <span class="math display">\[\begin{equation}\begin{split}
 z_1 &amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\
@@ -391,7 +534,7 @@ C &amp;= f_c(h_3)
 \frac{\partial{C}}{\partial{W^{(1)}_x}} &amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot \frac{\partial{z_3}}{\partial{h_2}} \cdot f&#39;_h(z_2) \cdot \frac{\partial{z_2}}{\partial{h_1}} \cdot f&#39;_h(z_1) \cdot \frac{\partial{z_1}}{\partial{W^{(1)}_x}}\\\\
 &amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot W^{(3)}_h \cdot f&#39;_h(z_2) \cdot W^{(2)}_h \cdot f&#39;_h(z_1) \cdot x_1\\\\
 And \space &amp;finally \space we \space get:\\\\
-\frac{\partial{C}}{\partial{W_x}} &amp;= \frac{\partial{C}}{\partial{w^{(3)}_x}} + \frac{\partial{C}}{\partial{W^{(2)}_x}} + \frac{\partial{C}}{\partial{W^{(1)}_x}}
+\frac{\partial{C}}{\partial{W_x}} &amp;= \frac{\partial{C}}{\partial{W^{(3)}_x}} + \frac{\partial{C}}{\partial{W^{(2)}_x}} + \frac{\partial{C}}{\partial{W^{(1)}_x}}
 \end{split}\end{equation}\]</span>
 <p>To analyze the result, we simple add some brackets to the formula <span class="math inline">\(\frac{\partial{C}}{\partial{W^{(1)}_x}}\)</span>, then we have:</p>
 <span class="math display">\[\begin{equation}\begin{split}
@@ -447,6 +590,39 @@ h_t &amp;= o_t \odot tanh(C_t)
 \frac{\partial L}{\partial W_C} &amp;= \frac{\partial L}{\partial \tilde{C}_t} \cdot \tilde{C&#39;}_t \cdot [h_{t-1},x_t]\\\\
 
 \end{split}\end{equation}\]</span>
+<p>We can notice that, the second term of <span class="math inline">\(\frac{\partial L}{\partial C_t}\)</span> does not include the product of weights, instead, the element-wise product of gates—sigmoid values. If we initialize the gate clsoe to 1, and can learn relatively long sequence.</p>
+<h1 id="highway-network">Highway Network</h1>
+<p>We still use a three-layer highway network to illustrate:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+z_1 &amp;= W^{(1)}_H \cdot x\\\\
+T_1 &amp;= \sigma (x, W^{(1)}_T)\\\\
+a_1 &amp;= H(z_1) \cdot T_1 + x \cdot (1 - T_1)\\\\
+
+z_2 &amp;= W^{(2)}_H \cdot a_1\\\\
+T_2 &amp;= \sigma (a_1, W^{(2)}_T)\\\\
+a_2 &amp;= H(z_2) \cdot T_2 + a_1 \cdot (1 - T_2)\\\\
+
+z_3 &amp;= W^{(3)}_H \cdot a_2\\\\
+T_3 &amp;= \sigma (a_2, W^{(3)}_T)\\\\
+a_3 &amp;= H(z_3) \cdot T_3 + a_2 \cdot (1 - T_3)\\\\
+
+L &amp;= f(a_3)
+\end{split}\end{equation}\]</span>
+<p>Calculate derivates of all weights:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\frac{\partial L}{\partial W^{(3)}_H} &amp;= \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial z_3} \cdot \frac{\partial z_3}{\partial W^{(3)}_H}\\\\
+&amp;= \frac{\partial L}{\partial a_3} \cdot T_3 \cdot H&#39;(z_3) \cdot a_2\\\\
+
+\frac{\partial L}{\partial W^{(3)}_T} &amp;= \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial T_3} \cdot \frac{\partial T_3}{\partial W^{(3)}_T}\\\\
+&amp;= \frac{\partial L}{\partial a_3} \cdot [H(z_3) - a_2] \cdot T&#39;_3 \cdot a_2\\\\
+
+\frac{\partial L}{\partial a_2} &amp;= \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial z_3} \cdot \frac{\partial z_3}{\partial a_2} + \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial T_3} \cdot \frac{\partial T_3}{\partial a_2} + \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial a_2}\\\\
+&amp;= \frac{\partial L}{\partial a_3}[\frac{\partial a_3}{\partial z_3} \cdot \frac{\partial z_3}{\partial a_2} + \frac{\partial a_3}{\partial T_3} \cdot \frac{\partial T_3}{\partial a_2} + (1-T_3)]\\\\
+
+\frac{\partial L}{\partial W^{(2)}_H} &amp;= \frac{\partial L}{\partial a_2} \cdot \frac{\partial a_2}{\partial z_2} \codt \frac{\partial z_2}{\partial W^{(2)}_H}
+
+\end{split}\end{equation}\]</span>
+<p>We can quickly notice that, the last term in <span class="math inline">\(\frac{\partial L}{\partial a_i}\)</span> is a product of the gates. And <span class="math inline">\(a_i\)</span>s are the most important intermediate variables to pass gradient information to shaddow layers. As long as <span class="math inline">\(\frac{\partial L}{\partial a_i}\)</span> does not vanish, the network can keep learning.</p>
 <h1 id="residual-network">Residual Network</h1>
 <p>For general neural network with three residual blocks is shown below:</p>
 <span class="math display">\[\begin{equation}\begin{split}
@@ -1236,8 +1412,9 @@ FFN(x) = max(0,xW_1 + b_1)W_2 + b_2
 <li>Sequence to Sequence Learning with Neural Networks</li>
 <li>Neural Machine Translation by Jointly Learning to Align and Translate</li>
 <li>The Cost of Attention</li>
+<li>Practical Illustration</li>
 </ul>
-<h3 id="sequence-to-sequence-learning-with-neural-networks">Sequence to Sequence Learning with Neural Networks</h3>
+<h2 id="sequence-to-sequence-learning-with-neural-networks">Sequence to Sequence Learning with Neural Networks</h2>
 <center>
 <img src="/images/2017-09-15Seq2seq/GeneralSeq2seq.png">
 </center>
@@ -1260,7 +1437,7 @@ p(y_1,...,y_{T&#39;} | x_1,...,x_T) = \prod\limits^{T&#39;}_{t=1}p(y_t|v,y_1,...
 <li>It extremely valuable to reverse the order of the words of the input sentence.</li>
 <li>Different sentences have different lengths. Most sentences are short, but some sentences are long, so a minibatch of 128 randomly chosen training sentences will have many short sentences and few long sentences, and as a result, much of the computation in the minibatch is wasted. The strategy is that make sure all sentences in a minibatch are roughly of the same length.</li>
 </ol>
-<h3 id="neural-machine-translation-by-jointly-learning-to-align-and-translate">Neural Machine Translation by Jointly Learning to Align and Translate</h3>
+<h2 id="neural-machine-translation-by-jointly-learning-to-align-and-translate">Neural Machine Translation by Jointly Learning to Align and Translate</h2>
 <center>
 <img src="/images/2017-09-15Seq2seq/SoftAttentionSeq2seq.png">
 </center>
@@ -1286,14 +1463,32 @@ c_i = \prod\limits^{T_x}_{j=1}\alpha_{ij}h_j
 e_{ij} = a(s_{i-1}, h_j)
 \end{split}\end{equation}\]</span>
 <p>is an alignment model which scores how well the inputs around position <span class="math inline">\(j\)</span> and the output at position <span class="math inline">\(i\)</span> match. The score is based on the RNN hidden state <span class="math inline">\(s_{i−1}\)</span> and the j-th annotation <span class="math inline">\(h_j\)</span> of the input sentence.</p>
-<h3 id="the-cost-of-attention">The Cost of Attention</h3>
+<h2 id="the-cost-of-attention">The Cost of Attention</h2>
 <p>If we look a bit more look closely at the equation for attention we can see that attention comes at a cost. We need to calculate an attention value for each combination of input and output word. If you have a 50-word input sequence and generate a 50-word output sequence that would be 2500 attention values. That’s not too bad, but if you do character-level computations and deal with sequences consisting of hundreds of tokens the above attention mechanisms can become prohibitively expensive.</p>
 <p>Actually, that’s quite counterintuitive. Human attention is something that’s supposed to save computational resources. By focusing on one thing, we can neglect many other things. But that’s not really what we’re doing in the above model. We’re essentially looking at everything in detail before deciding what to focus on. Intuitively that’s equivalent outputting a translated word, and then going back through all of your internal memory of the text in order to decide which word to produce next. That seems like a waste, and not at all what humans are doing. In fact, it’s more akin to memory access, not attention, which in my opinion is somewhat of a misnomer (more on that below). Still, that hasn’t stopped attention mechanisms from becoming quite popular and performing well on many tasks.</p>
+<h2 id="practical-illustration">Practical Illustration</h2>
+<h4 id="padding">Padding</h4>
+<p>Before training, we work on the dataset to convert the variable length sequences into fixed length sequences, by padding. We use a few special symbols to fill in the sequence, and each symbol is also represented by a vector.</p>
+<ol style="list-style-type: decimal">
+<li><em>EOS</em>: End of sentence</li>
+<li><em>PAD</em>: Filler</li>
+<li><em>GO</em>: Start decoding</li>
+<li><em>UNK</em>: Unknown; word not in vocabulary</li>
+</ol>
+<p>Consider the following query-response pair.</p>
+<p>Q: How are you? A: I am fine. Assuming that we would like our sentences (queries and responses) to be of fixed length, 10, this pair will be converted to:</p>
+<p>Q: [ PAD, PAD, PAD, PAD, PAD, PAD, “?”, “you”, “are”, “How” ] and [ “How”, “are”, “you”, “?” PAD, PAD, PAD, PAD, PAD, PAD ] A: [ GO, “I”, “am”, “fine”, “.”, EOS, PAD, PAD, PAD, PAD ]</p>
+<h4 id="bucketing">Bucketing</h4>
+<p>Introduction of padding did solve the problem of variable length sequences, but consider the case of large sentences.If the largest sentence in our dataset is of length 100, we need to encode all our sentences to be of length 100, in order to not lose any words. Now, what happens to “How are you?” ? There will be 97 PAD symbols in the encoded version of the sentence. This will overshadow the actual information in the sentence.</p>
+<p>Bucketing kind of solves this problem, by putting sentences into buckets of different sizes. Consider this list of buckets : <span class="math inline">\([ (5,10), (10,15), (20,25), (40,50) ]\)</span>. If the length of a query is 4 and the length of its response is 4 (as in our previous example), we put this sentence in the bucket (5,10). The query will be padded to length 5 and the response will be padded to length 10. While running the model (training or predicting), we use a different model for each bucket, compatible with the lengths of query and response. All these models, share the same parameters and hence function exactly the same way.</p>
+<p>If we are using the bucket (5,10), our sentences will be encoded to :</p>
+<p>Q : [ PAD, “?”, “you”, “are”, “How” ] and [ “How”, “are”, “you”, “?” PAD ] A : [ GO, “I”, “am”, “fine”, “.”, EOS, PAD, PAD, PAD, PAD ]</p>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf" target="_blank" rel="external">Sequence to Sequence Learning with Neural Networks</a></li>
 <li><a href="https://arxiv.org/pdf/1409.0473.pdf" target="_blank" rel="external">Neural Machine Translation by Jointly Learning to Align and Translate</a></li>
 <li><a href="http://www.wildml.com/2016/01/attention-and-memory-in-deep-learning-and-nlp/" target="_blank" rel="external">Attention and memory in deep learning and nlp</a></li>
+<li><a href="http://suriyadeepan.github.io/2016-12-31-practical-seq2seq/" target="_blank" rel="external">Practical seq2seq</a></li>
 </ol>
 
           
@@ -2011,201 +2206,6 @@ h_t &amp;= o_t \odot tanh(c_t)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/2017-09-05PixelCNN/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ember">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EmberNLP">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/05/2017-09-05PixelCNN/" itemprop="url">PixelCNN</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T14:49:49+10:00">
-                2017-09-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Paper Notes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="content">Content</h1>
-<ul>
-<li>PixelCNN</li>
-<li>Gated Convolutional Layer</li>
-<li>BlindSpot And Solution</li>
-<li>Conditional PixelCNN</li>
-<li>fast PixelCNN ++</li>
-<li>PixelRNN</li>
-</ul>
-<h2 id="pixelcnn">PixelCNN</h2>
-<p>PixelCNNs (and PixelRNNs) model the joint distribution of pixels over an image <span class="math inline">\(x\)</span> as the following product of conditional distributions, where <span class="math inline">\(x_i\)</span> is a single pixel: <span class="math display">\[p(x) = \prod\limits^{n^2}_{i=1}p(x_i|x_1,...,x_{i-1})\]</span> The ordering of the pixel dependencies is in raster scan order: row by row and pixel by pixel within every row. Every pixel therefore depends on all the pixels above and to the left of it, and not on any of other pixels.</p>
-<p>In PixelCNN every conditional distribution is modelled by a convolutional neural network. To make sure the CNN can only use information about pixels above and to the left of the current pixel, the convolution are <em><strong>masked</strong></em> as the figure below.</p>
-<center>
-<img src="/images/2017-09-05PixelCNN/PixelCNN.png">
-</center>
-<p>For image with only one channel (like mnist dataset): <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">filter_mid_h = shape[0]//2</div><div class="line">filter_mid_w = shape[1]//2</div><div class="line">mask_filter =np.ones(shape, dtype= np.float32)</div><div class="line">mask_filter[filter_mid_h,filter_mid_w+1:, :, :] = 0.</div><div class="line">mask_filter[filter_mid_h+1:, :, :, :] = 0.</div><div class="line"><span class="comment"># W *= mask_filter</span></div></pre></td></tr></table></figure></p>
-<p>For a <span class="math inline">\(7 * 7\)</span> filter, the mask tensor should look like this: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">array([[ 1.,  1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 1.,  1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 1.,  1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 1.,  1.,  1.,  0.,  0.,  0.,  0.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.]])</div></pre></td></tr></table></figure></p>
-<p>For colourful images with three channels (R,G,B), in the first layer, each of the RGB channels is connected to previous channels and to the context, but is not connected to itself. In subsequent layers, the channels are also connected to themselves (Shown below).</p>
-<center>
-<img src="/images/2017-09-05PixelCNN/RGB.png">
-</center>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">def bmask(i_in, i_out):</div><div class="line">	cin_idx = np.expand_dims(np.arange(Cin) % 3 == i_in, 1)</div><div class="line">    cout_idx = np.expand_dims(np.arange(Cout) % 3 == i_out, 0)</div><div class="line">    a1, a2 = np.broadcast_arrays(cin_idx, cout_idx)</div><div class="line">    <span class="built_in">return</span> a1 * a2</div><div class="line"></div><div class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(3):</div><div class="line">    mask_filter[filter_mid_h,filter_mid_w][bmask(j,j)] = 0. <span class="keyword">if</span> mask ==<span class="string">"A"</span> <span class="keyword">else</span> 1.</div><div class="line"></div><div class="line">mask_filter[filter_mid_h,filter_mid_w][bmask(1, 0)] = 0.</div><div class="line">mask_filter[filter_mid_h,filter_mid_w][bmask(2, 0)] = 0.</div><div class="line">mask_filter[filter_mid_h,filter_mid_w][bmask(2, 1)] = 0.</div></pre></td></tr></table></figure>
-<p>For example, <span class="math inline">\(i_{in} = 3\)</span>, <span class="math inline">\(i_{out} = 6\)</span>, the last two dimensions should look like this: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Mask A</span></div><div class="line">array([[ 0.,  1.,  1.,  0.,  1.,  1.],</div><div class="line">       [ 0.,  0.,  1.,  0.,  0.,  1.],</div><div class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.]])</div><div class="line"><span class="comment"># Mask B</span></div><div class="line">array([[ 1.,  1.,  1.,  1.,  1.,  1.],</div><div class="line">       [ 0.,  1.,  1.,  0.,  1.,  1.],</div><div class="line">       [ 0.,  0.,  1.,  0.,  0.,  1.]])</div></pre></td></tr></table></figure></p>
-<center>
-<img src="/images/2017-09-05PixelCNN/PixelCNNPred.png">
-</center>
-<p>As shown above, the 256 possible values for each colour channel are then modelled using a softmax.</p>
-<p>PixelCNN typically consists of a stack of masked convolutional layers that takes an <span class="math inline">\((N,N,3)\)</span> image as input and produces <span class="math inline">\((N,N,3,256)\)</span> predictions as output. The use of convolutions allows the predictions for all the pixels to be made in parallel during training.</p>
-<p>During sampling the predictions are sequential: every time a pixel is predicted, it is fed back into the network to predict the next pixel. This sequentiality is essential to generating high quality images, as it allows every pixel to depend in a highly non-linear and multimodal way on the previous pixels.</p>
-<h2 id="gated-convolutional-layer">Gated Convolutional Layer</h2>
-<p>For a gated convolutional layer, relu activation block with more complex combination of sigmoid (as a forget gate) and tanh (as real activation). It suggests that: <span class="math display">\[\mathbf{y} = tanh(W_{k,f} \ast \mathbf{x}) \odot \sigma(W_{k,g} \ast \mathbf{x})\]</span></p>
-<p>Here is the code to illustrate the formula: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">W_f = get_weights(W_shape, <span class="string">"v_W"</span>, mask=mask)</div><div class="line">W_g = get_weights(W_shape, <span class="string">"h_W"</span>, mask=mask)</div><div class="line"></div><div class="line">b_f = tf.get_variable(<span class="string">"v_b"</span> , b_shape, tf.float32, tf.zeros_initializer)</div><div class="line">b_g = tf.get_variable(<span class="string">"h_b"</span> , b_shape, tf.float32, tf.zeros_initializer)</div><div class="line"></div><div class="line">conv_f = tf.nn.conv2d(input_layer, W_f, strides=[1,1,1,1], padding=<span class="string">'SAME'</span>)</div><div class="line">conv_g = tf.nn.conv2d(input_layer, W_g, strides=[1,1,1,1], padding=<span class="string">'SAME'</span>)</div><div class="line">output_layer = tf.mul(tf.tanh(conv_f + b_f), tf.sigmoid(conv_g+ b_g))</div></pre></td></tr></table></figure></p>
-<h2 id="blindspot-and-solution">BlindSpot And Solution</h2>
-<p>Note that a significant portion of the input image is ignored by the masked convolutional architecture. This ‘blind spot’ can cover as much as a quarter of the potential receptive field (e.g., when using 3x3 filters), meaning that none of the content to the right of the current pixel would be taken into account.</p>
-<center>
-<img src="/images/2017-09-05PixelCNN/BlindSpot.png">
-</center>
-<p>To gain some intuition about blind spot, following code may help: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># create 5x5 input</span></div><div class="line"><span class="comment"># chainer requires input to have shape [BATCH, CHANNELS, HEIGHT, WIDTH]</span></div><div class="line">input = np.arange(25).reshape([1,1,5,5]).astype(<span class="string">'f'</span>)</div><div class="line"><span class="comment"># array([[[[    0.,     1.,     2.,     3.,     4.],</span></div><div class="line"><span class="comment">#          [    5.,     6.,     7.,     8.,     9.],</span></div><div class="line"><span class="comment">#          [   10.,    11.,    12.,    13.,    14.],</span></div><div class="line"><span class="comment">#          [   15.,    16.,    17.,    18.,    19.],</span></div><div class="line"><span class="comment">#          [   20.,    21.,    22.,    23.,    24.]]]], dtype=float32)</span></div><div class="line"></div><div class="line"><span class="comment"># create kernel of ones so it just sums all values within</span></div><div class="line"><span class="comment"># use one for simplicity: easy to check</span></div><div class="line">kernel = np.ones([3, 3])</div><div class="line"><span class="comment"># turn to proper type 'A' mask</span></div><div class="line">kernel[2:, :] = 0.0</div><div class="line">kernel[1, 1:] = 0.0</div><div class="line"><span class="comment"># array([[ 1.,  1.,  1.],</span></div><div class="line"><span class="comment">#        [ 1.,  0.,  0.],</span></div><div class="line"><span class="comment">#        [ 0.,  0.,  0.]])</span></div><div class="line"></div><div class="line"><span class="comment"># create two convolution layers with total receptive field size 5x5</span></div><div class="line"><span class="comment"># so out input is exact fit</span></div><div class="line">import chainer.links as L</div><div class="line"></div><div class="line">l1 = L.Convolution2D(1, 1, ksize=3, initialW=kernel)</div><div class="line">l2 = L.Convolution2D(1, 1, ksize=3, initialW=kernel)</div><div class="line"></div><div class="line"><span class="comment"># here is the trick: pixel at [1, 4] position will be inside blind spot</span></div><div class="line"><span class="comment"># if we perform convolution its value won't be included in final sum</span></div><div class="line"><span class="comment"># so let's increase its value so it would be easy to check</span></div><div class="line">input[:, :, 1, 4] = 1000</div><div class="line"><span class="comment"># array([[[[    0.,     1.,     2.,     3.,     4.],</span></div><div class="line"><span class="comment">#          [    5.,     6.,     7.,     8.,  1000.],</span></div><div class="line"><span class="comment">#          [   10.,    11.,    12.,    13.,    14.],</span></div><div class="line"><span class="comment">#          [   15.,    16.,    17.,    18.,    19.],</span></div><div class="line"><span class="comment">#          [   20.,    21.,    22.,    23.,    24.]]]], dtype=float32)</span></div><div class="line"></div><div class="line">output = l2(l1(input)).data</div><div class="line"><span class="comment"># array([[[[ 64.]]]], dtype=float32)</span></div><div class="line"><span class="comment"># Viola! Sum is lesser that 1000 which means pixel at [1, 4] wasn't seen!</span></div><div class="line"></div><div class="line"><span class="comment"># Otherwise, let's return it value back</span></div><div class="line">input[:, :, 1, 4] = 9</div><div class="line"><span class="comment"># array([[[[    0.,     1.,     2.,     3.,     4.],</span></div><div class="line"><span class="comment">#          [    5.,     6.,     7.,     8.,     9.],</span></div><div class="line"><span class="comment">#          [   10.,    11.,    12.,    13.,    14.],</span></div><div class="line"><span class="comment">#          [   15.,    16.,    17.,    18.,    19.],</span></div><div class="line"><span class="comment">#          [   20.,    21.,    22.,    23.,    24.]]]], dtype=float32)</span></div><div class="line"></div><div class="line"><span class="comment"># perform computation again..</span></div><div class="line">output = l2(l1(input)).data</div><div class="line"><span class="comment"># array([[[[ 64.]]]], dtype=float32)</span></div><div class="line"><span class="comment"># Another evidence: no matter what value we assign to it final sum doesn't change</span></div><div class="line"><span class="comment"># That proves it's within blind spot and we can't access information at it.</span></div></pre></td></tr></table></figure></p>
-<p>To remove the blind spot, authors introduce neat idea: they split convolution into two different operations: two separate stacks - vertical and horizontal.</p>
-<center>
-<img src="/images/2017-09-05PixelCNN/PixelCNNStack.png">
-</center>
-<p>Here we have horizontal stack (in purple): convolution operation that conditions on only current row, so it has access to left pixels. Vertical stack (blue) has access to all top pixels. Implementation details would follow. Note that horizontal and vertical stacks are sort of independent: vertical stack should not access any information horizontal stack has: otherwise it will have access to pixels it shouldn’t see. But vertical stack can be connected to vertical as it predicts pixel following those in vertical stack.</p>
-<h2 id="conditional-pixelcnn">Conditional PixelCNN</h2>
-<p>Given a high-level image description represented as a latent vector <span class="math inline">\(\mathbf{h}\)</span>, we seek to model the conditional distribution <em><span class="math inline">\(p(\mathbf{x}|\mathbf{h})\)</span></em> of images suiting this description. Formally the conditional PixelCNN models the following distribution: <span class="math display">\[p(\mathbf{x}|\mathbf{h}) = \prod\limits^{n^2}_{i=1}p(x_i|x_1,x_2,...,x_{i-1},\mathbf{h})\]</span></p>
-<p>To model the conditional distribution by adding terms that depend on <span class="math inline">\(\mathbf{h}\)</span> to the activations before the nonlinearities, which now becomes: <span class="math display">\[\mathbf{y} = tanh(W_{k,f} \ast \mathbf{x} + V^T_{k,f} \mathbf{h}) \odot \sigma(W_{k,g} \ast \mathbf{x} + V^T_{k,g} \mathbf{h})\]</span></p>
-<p>where k is the layer number. If <span class="math inline">\(\mathbf{h}\)</span> is a one-hot encoding that specifies a class this is equivalent to adding a class dependent bias at every layer. Notice that the conditioning does not depend on the location of the pixel in the image; this is appropriate as long as <span class="math inline">\(\mathbf{h}\)</span> only contains information about what should be in the image and not where.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">def conditional_gated_conv(self):</div><div class="line">    W_f = get_weights(self.W_shape, <span class="string">"v_W"</span>, mask=self.mask)</div><div class="line">    W_g = get_weights(self.W_shape, <span class="string">"h_W"</span>, mask=self.mask)</div><div class="line">    <span class="keyword">if</span> self.conditional is not None:</div><div class="line">        h_shape = int(self.conditional.get_shape()[1])</div><div class="line">        V_f = get_weights([h_shape, self.W_shape[3]], <span class="string">"v_V"</span>)</div><div class="line">        b_f = tf.matmul(self.conditional, V_f)</div><div class="line">        V_g = get_weights([h_shape, self.W_shape[3]], <span class="string">"h_V"</span>)</div><div class="line">        b_g = tf.matmul(self.conditional, V_g)</div><div class="line"></div><div class="line">        b_f_shape = tf.shape(b_f)</div><div class="line">        b_f = tf.reshape(b_f, (b_f_shape[0], 1, 1, b_f_shape[1]))</div><div class="line">	    b_g_shape = tf.shape(b_g)</div><div class="line">        b_g = tf.reshape(b_g, (b_g_shape[0], 1, 1, b_g_shape[1]))</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        b_f = get_bias(self.b_shape, <span class="string">"v_b"</span>)</div><div class="line">        b_g = get_bias(self.b_shape, <span class="string">"h_b"</span>)</div><div class="line"></div><div class="line">    conv_f = conv_op(self.fan_in, W_f)</div><div class="line">    conv_g = conv_op(self.fan_in, W_g)</div><div class="line">       </div><div class="line">    self.fan_out = tf.multiply(tf.tanh(conv_f + b_f), tf.sigmoid(conv_g + b_g))</div></pre></td></tr></table></figure>
-<h1 id="reference">Reference</h1>
-<ol style="list-style-type: decimal">
-<li><a href="https://arxiv.org/pdf/1601.06759.pdf" target="_blank" rel="external">Pixel Recurrent Neural Networks</a></li>
-<li><a href="https://arxiv.org/pdf/1606.05328.pdf" target="_blank" rel="external">Conditional Image Generation with PixelCNN Decoders</a></li>
-<li><a href="http://sergeiturukin.com/2017/02/24/gated-pixelcnn.html" target="_blank" rel="external">sergeiturukin’s Post</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2258,7 +2258,7 @@ h_t &amp;= o_t \odot tanh(c_t)
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2280,7 +2280,7 @@ h_t &amp;= o_t \odot tanh(c_t)
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

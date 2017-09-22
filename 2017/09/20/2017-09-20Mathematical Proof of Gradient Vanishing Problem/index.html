@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
+<meta name="description" content="Contents - Vanilla RNN - LSTM - Highway Network - Residual Network Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;=">
 <meta name="keywords" content="RNN,DL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mathematical Proof of Gradient Vanishing Problem">
 <meta property="og:url" content="http://yoursite.com/2017/09/20/2017-09-20Mathematical Proof of Gradient Vanishing Problem/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
+<meta property="og:description" content="Contents - Vanilla RNN - LSTM - Highway Network - Residual Network Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;=">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-21T04:10:08.000Z">
+<meta property="og:updated_time" content="2017-09-22T02:00:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mathematical Proof of Gradient Vanishing Problem">
-<meta name="twitter:description" content="Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\ h_1 &amp;amp;= f_h(z_1)\\\\ z_2 &amp;amp;=">
+<meta name="twitter:description" content="Contents - Vanilla RNN - LSTM - Highway Network - Residual Network Vanilla RNN For a vanilla RNN with only three steps, its mathematical form is shown below: \[\begin{equation}\begin{split} z_1 &amp;amp;=">
 
 
 
@@ -368,7 +368,8 @@
       
 
       
-        <h1 id="vanilla-rnn">Vanilla RNN</h1>
+        <p>Contents - Vanilla RNN - LSTM - Highway Network - Residual Network</p>
+<h1 id="vanilla-rnn">Vanilla RNN</h1>
 <p>For a vanilla RNN with only three steps, its mathematical form is shown below:</p>
 <span class="math display">\[\begin{equation}\begin{split}
 z_1 &amp;= W^{(1)}_xx_1 + W^{(1)}_hh_0\\\\
@@ -391,7 +392,7 @@ C &amp;= f_c(h_3)
 \frac{\partial{C}}{\partial{W^{(1)}_x}} &amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot \frac{\partial{z_3}}{\partial{h_2}} \cdot f&#39;_h(z_2) \cdot \frac{\partial{z_2}}{\partial{h_1}} \cdot f&#39;_h(z_1) \cdot \frac{\partial{z_1}}{\partial{W^{(1)}_x}}\\\\
 &amp;= \frac{\partial{C}}{\partial{h_3}} \cdot f&#39;_h(z_3) \cdot W^{(3)}_h \cdot f&#39;_h(z_2) \cdot W^{(2)}_h \cdot f&#39;_h(z_1) \cdot x_1\\\\
 And \space &amp;finally \space we \space get:\\\\
-\frac{\partial{C}}{\partial{W_x}} &amp;= \frac{\partial{C}}{\partial{w^{(3)}_x}} + \frac{\partial{C}}{\partial{W^{(2)}_x}} + \frac{\partial{C}}{\partial{W^{(1)}_x}}
+\frac{\partial{C}}{\partial{W_x}} &amp;= \frac{\partial{C}}{\partial{W^{(3)}_x}} + \frac{\partial{C}}{\partial{W^{(2)}_x}} + \frac{\partial{C}}{\partial{W^{(1)}_x}}
 \end{split}\end{equation}\]</span>
 <p>To analyze the result, we simple add some brackets to the formula <span class="math inline">\(\frac{\partial{C}}{\partial{W^{(1)}_x}}\)</span>, then we have:</p>
 <span class="math display">\[\begin{equation}\begin{split}
@@ -447,6 +448,39 @@ h_t &amp;= o_t \odot tanh(C_t)
 \frac{\partial L}{\partial W_C} &amp;= \frac{\partial L}{\partial \tilde{C}_t} \cdot \tilde{C&#39;}_t \cdot [h_{t-1},x_t]\\\\
 
 \end{split}\end{equation}\]</span>
+<p>We can notice that, the second term of <span class="math inline">\(\frac{\partial L}{\partial C_t}\)</span> does not include the product of weights, instead, the element-wise product of gates—sigmoid values. If we initialize the gate clsoe to 1, and can learn relatively long sequence.</p>
+<h1 id="highway-network">Highway Network</h1>
+<p>We still use a three-layer highway network to illustrate:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+z_1 &amp;= W^{(1)}_H \cdot x\\\\
+T_1 &amp;= \sigma (x, W^{(1)}_T)\\\\
+a_1 &amp;= H(z_1) \cdot T_1 + x \cdot (1 - T_1)\\\\
+
+z_2 &amp;= W^{(2)}_H \cdot a_1\\\\
+T_2 &amp;= \sigma (a_1, W^{(2)}_T)\\\\
+a_2 &amp;= H(z_2) \cdot T_2 + a_1 \cdot (1 - T_2)\\\\
+
+z_3 &amp;= W^{(3)}_H \cdot a_2\\\\
+T_3 &amp;= \sigma (a_2, W^{(3)}_T)\\\\
+a_3 &amp;= H(z_3) \cdot T_3 + a_2 \cdot (1 - T_3)\\\\
+
+L &amp;= f(a_3)
+\end{split}\end{equation}\]</span>
+<p>Calculate derivates of all weights:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\frac{\partial L}{\partial W^{(3)}_H} &amp;= \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial z_3} \cdot \frac{\partial z_3}{\partial W^{(3)}_H}\\\\
+&amp;= \frac{\partial L}{\partial a_3} \cdot T_3 \cdot H&#39;(z_3) \cdot a_2\\\\
+
+\frac{\partial L}{\partial W^{(3)}_T} &amp;= \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial T_3} \cdot \frac{\partial T_3}{\partial W^{(3)}_T}\\\\
+&amp;= \frac{\partial L}{\partial a_3} \cdot [H(z_3) - a_2] \cdot T&#39;_3 \cdot a_2\\\\
+
+\frac{\partial L}{\partial a_2} &amp;= \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial z_3} \cdot \frac{\partial z_3}{\partial a_2} + \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial T_3} \cdot \frac{\partial T_3}{\partial a_2} + \frac{\partial L}{\partial a_3} \cdot \frac{\partial a_3}{\partial a_2}\\\\
+&amp;= \frac{\partial L}{\partial a_3}[\frac{\partial a_3}{\partial z_3} \cdot \frac{\partial z_3}{\partial a_2} + \frac{\partial a_3}{\partial T_3} \cdot \frac{\partial T_3}{\partial a_2} + (1-T_3)]\\\\
+
+\frac{\partial L}{\partial W^{(2)}_H} &amp;= \frac{\partial L}{\partial a_2} \cdot \frac{\partial a_2}{\partial z_2} \codt \frac{\partial z_2}{\partial W^{(2)}_H}
+
+\end{split}\end{equation}\]</span>
+<p>We can quickly notice that, the last term in <span class="math inline">\(\frac{\partial L}{\partial a_i}\)</span> is a product of the gates. And <span class="math inline">\(a_i\)</span>s are the most important intermediate variables to pass gradient information to shaddow layers. As long as <span class="math inline">\(\frac{\partial L}{\partial a_i}\)</span> does not vanish, the network can keep learning.</p>
 <h1 id="residual-network">Residual Network</h1>
 <p>For general neural network with three residual blocks is shown below:</p>
 <span class="math display">\[\begin{equation}\begin{split}
@@ -519,6 +553,10 @@ C &amp;= f_c(a_3)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/22/2017-09-22Intro to RL/" rel="prev" title="Introduction to Reinforcement Learning">
+                Introduction to Reinforcement Learning <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -597,7 +635,7 @@ C &amp;= f_c(a_3)
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -619,7 +657,7 @@ C &amp;= f_c(a_3)
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -654,7 +692,7 @@ C &amp;= f_c(a_3)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vanilla-rnn"><span class="nav-number">1.</span> <span class="nav-text">Vanilla RNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lstm"><span class="nav-number">2.</span> <span class="nav-text">LSTM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#residual-network"><span class="nav-number">3.</span> <span class="nav-text">Residual Network</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vanilla-rnn"><span class="nav-number">1.</span> <span class="nav-text">Vanilla RNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lstm"><span class="nav-number">2.</span> <span class="nav-text">LSTM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#highway-network"><span class="nav-number">3.</span> <span class="nav-text">Highway Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#residual-network"><span class="nav-number">4.</span> <span class="nav-text">Residual Network</span></a></li></ol></div>
             
 
           </div>
