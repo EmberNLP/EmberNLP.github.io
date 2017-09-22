@@ -105,7 +105,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/PolicyGradient.png">
-<meta property="og:updated_time" content="2017-09-22T07:58:31.000Z">
+<meta property="og:updated_time" content="2017-09-22T08:49:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Introduction to Reinforcement Learning">
 <meta name="twitter:description" content="Introduction Deep Reinforcement learning is the combination of deep learning and reinforcement learning. In the scenario of reinforcement leanring, we have three components: agent, environment and sta">
@@ -441,6 +441,31 @@ p(\tau | \theta) &amp;= p(s_1)p(a_1|s_1,\theta)p(r_1,s_2 | s_1, a_1)p(a_2 | s_2,
 <li><span class="math inline">\(\theta^2 \leftarrow \theta^1 + \eta \mathbf{\nabla} \bar{R}_{\theta^1}\)</span></li>
 <li><span class="math inline">\(\cdots \cdots\)</span></li>
 </ul>
+<p>Recall that: <span class="math inline">\(\bar{R}_{\theta} = \Sigma_{\tau} R(\tau) p(\tau | \theta)\)</span>, then <span class="math inline">\(\nabla \bar{R}_{\theta} = \Sigma_{\tau} R(\tau) \nabla p(\tau | \theta)\)</span>. Now, we can not use MCMC methods to approximate the gradient because we do not have a distribution. However, we can do a trick to get the distribution <span class="math inline">\(p(\tau | \theta)\)</span> back.</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\nabla \bar{R}_{\theta} &amp;= \Sigma_{\tau} R(\tau) \nabla p(\tau | \theta)\\\\
+&amp;= \Sigma_{\tau} R(\tau) p(\tau | \theta) \frac{\nabla p(\tau | \theta)}{p(\tau | \theta)}\\\\
+&amp;= \Sigma_{\tau} R(\tau) p(\tau | \theta) \nabla log p(\tau | \theta)\\\\
+&amp;\approx \frac{1}{N} \Sigma^N_{n=1} R(\tau^n) \nabla log p(\tau^n | \theta) \space (Because \space we \space \space have \space summation \space operation \space and \space a \space distribution)
+\end{split}\end{equation}\]</span>
+<p>Recall again: <span class="math inline">\(p(\tau | \theta) = p(s_1)\prod\limits^T_{t=1}p(a_t | s_t, \theta) p(r_t,s_{t+1} | s_t,a_t)\)</span>, then:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\nabla log p(\tau | \theta) &amp;= \nabla [log p(s_1) + \Sigma^T_{t=1} log p(a_t | s_t, \theta) + log p(r_t,s_{t+1} | s_t,a_t)]\\\\
+&amp;= \Sigma^T_{t=1} \nabla log p(a_t | s_t, \theta) \space (Ignore \space the \space terms \space not \space related \space to \space  \theta)
+\end{split}\end{equation}\]</span>
+<p>And finally, we have the <strong>Policy Gradient Algorithm</strong></p>
+<span class="math display">\[\begin{equation}\begin{split}
+\theta^{new} &amp;\leftarrow \theta^{old} + \eta \nabla \bar{R}_{\theta^{old}}\\\\
+\nabla \bar{R}_{\theta} &amp;\approx \frac{1}{N} \Sigma^N_{n=1} R(\tau^n) \nabla logp(\tau^n | \theta)\\\\
+&amp;= \frac{1}{N} \Sigma^N_{n=1} R(\tau^n) \Sigma^{T_n}_{t=1} \nabla logp(a^n_t | s^n_t, \theta)\\\\
+&amp;= \frac{1}{N} \Sigma^N_{n=1} \Sigma^{T_n}_{t=1} R(\tau^n) \nabla logp(a^n_t | s^n_t, \theta)
+\end{split}\end{equation}\]</span>
+<p>To explain the meaning of the above formula, suppose in <span class="math inline">\(\tau^n\)</span>, the actor takes <span class="math inline">\(a^n_t\)</span> when seeing <span class="math inline">\(s^n_t\)</span>:</p>
+<ul>
+<li>Tuning <span class="math inline">\(\theta\)</span> to increase <span class="math inline">\(p(a^n_t) | s^n_t\)</span>, if <span class="math inline">\(R(\tau^n)\)</span> is positive</li>
+<li>Tuning <span class="math inline">\(\theta\)</span> to decrease <span class="math inline">\(p(a^n_t) | s^n_t\)</span>, if <span class="math inline">\(R(\tau^n)\)</span> is negative</li>
+</ul>
+<p><strong>It is very important to consider the cumulative reward <span class="math inline">\(R(\tau^n)\)</span> of the whole trajectory <span class="math inline">\(\tau^n\)</span> instead of immediate reward <span class="math inline">\(r^n_t\)</span>.</strong></p>
 
       
     </div>
