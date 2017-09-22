@@ -95,15 +95,21 @@
 
 
 
+<meta name="description" content="Introduction Deep Reinforcement learning is the combination of deep learning and reinforcement learning. In the scenario of reinforcement leanring, we have three components: agent, environment and sta">
 <meta name="keywords" content="DL,RL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Introduction to Reinforcement Learning">
 <meta property="og:url" content="http://yoursite.com/2017/09/22/2017-09-22Intro to RL/index.html">
 <meta property="og:site_name" content="EmberNLP">
+<meta property="og:description" content="Introduction Deep Reinforcement learning is the combination of deep learning and reinforcement learning. In the scenario of reinforcement leanring, we have three components: agent, environment and sta">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-22T00:47:16.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/PolicyGradient.png">
+<meta property="og:updated_time" content="2017-09-22T07:58:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Introduction to Reinforcement Learning">
+<meta name="twitter:description" content="Introduction Deep Reinforcement learning is the combination of deep learning and reinforcement learning. In the scenario of reinforcement leanring, we have three components: agent, environment and sta">
+<meta name="twitter:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
 
 
 
@@ -365,7 +371,76 @@
       
 
       
-        
+        <h1 id="introduction">Introduction</h1>
+<p>Deep Reinforcement learning is the combination of deep learning and reinforcement learning.</p>
+<p>In the scenario of reinforcement leanring, we have three components: agent, environment and state. Agent interacts with environment and “observe” something called state. <strong>State</strong> is not only about observed images, it includes all the information the agent senses. After receiving the observation, the agent takes some actions and these actions will change the environment. Then, environment will give agent a reward.</p>
+<center>
+<img src="/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
+</center>
+<p>Like the picture above, the agent observes a cup of water, takes the action to knock it over and spill the water, the environment gives it a negative reward like -1. The agent keeps interacting with the environment, and adjust the parameters according to the rewards to take actions to maximize the expected reward.</p>
+<p><em><strong>Reinforcement leanring is trying to find a best function <span class="math inline">\(\pi(a|s)\)</span> (called actor/policy), which can maximize the expected reward. Compared to supervised leanring approach learning from a teacher, reinforcement leanring learns from experience.</strong></em></p>
+<p>RL has two properties.</p>
+<ul>
+<li>Reward Delay.</li>
+<li>Agent’s actions affects subsequent data it receives.</li>
+</ul>
+<h1 id="policy-gradient">Policy Gradient</h1>
+<h4 id="step-1-define-the-actor">Step 1: Define the Actor</h4>
+<p>In policy gradient, neural network plays the role as actor. The input to the neural network is the observation of the agent represented as a vector or a matrix; each neuron in the output layer corresponds to one action. Neural network is good at generalization than past methods in RL like a lookup table, which means the agent can still take proper actions if the state never appears.</p>
+<center>
+<img src="/images/2017-09-22Intro%20to%20RL/PolicyGradient.png">
+</center>
+<p>The picture above shows an example. Input is a screenshot of the game, nerual network is trying to learn a good function <span class="math inline">\(\pi (a|s)\)</span> and finally outputs the probability distribution over all possible actions.</p>
+<h4 id="step-2-how-to-evaluate-the-actor">Step 2: How to Evaluate the Actor</h4>
+<p>But how to evaluate the actor? Suppose we are given an actor <span class="math inline">\(\pi_{\theta}(a|s)\)</span>, <span class="math inline">\(\theta\)</span> represent all the parameters in the neural network. We use this actor to generate a sequence of actions:</p>
+<ul>
+<li>Start with state <span class="math inline">\(s_1\)</span></li>
+<li>NN decides to take action <span class="math inline">\(a_1\)</span></li>
+<li>NN obtains reward <span class="math inline">\(r_1\)</span></li>
+<li>NN sees observation <span class="math inline">\(s_2\)</span></li>
+<li>NN decides to take action <span class="math inline">\(a_2\)</span></li>
+<li>NN obtains reward <span class="math inline">\(r_2\)</span></li>
+<li>……</li>
+<li>NN decides to take action <span class="math inline">\(a_T\)</span></li>
+<li>NN obtains reward <span class="math inline">\(r_T\)</span> <strong>[End]</strong></li>
+</ul>
+<p>And total reward is: <span class="math inline">\(R_{\theta} = \Sigma^T_{t=1} r_t\)</span></p>
+<p>We should notice that, even with the same actor, <span class="math inline">\(R_{\theta}\)</span> is different each time because of the randomness of the environment and actor (output of the actions is a distribution, action is sampled from the distribution). So what we really interested in is the expected value of <span class="math inline">\(R\)</span> defined as <span class="math inline">\(\bar{R}_{\theta}\)</span>. It’s the expected reward of using the actor <span class="math inline">\(\pi_{\theta}(a|s)\)</span> to generate many sequences. Of course, we can evaluates the goodness of the actor <span class="math inline">\(\pi_{\theta}(a|s)\)</span> using <span class="math inline">\(\bar{R}_{\theta}\)</span>.</p>
+<p>To calculate <span class="math inline">\(\bar{R}_{\theta}\)</span>, first we define a trajectory as <span class="math inline">\(\tau = \{ s_1,a_1,r_1,s_2,a_2,r_2,...,s_T,a_T,r_T \}\)</span>:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+p(\tau | \theta) &amp;= p(s_1)p(a_1|s_1,\theta)p(r_1,s_2 | s_1, a_1)p(a_2 | s_2, \theta) p(r_2,s_3 | s_2,a_2) \cdots\\\\
+&amp;= p(s_1)\prod\limits^T_{t=1}p(a_t | s_t, \theta) p(r_t,s_{t+1} | s_t,a_t)
+\end{split}\end{equation}\]</span>
+<p>The first term and third term do not relate to actor, but the second term is controled by actor <span class="math inline">\(\pi_{\theta}\)</span>.</p>
+<p>Then we can calculate <span class="math inline">\(\bar{R}_{\theta}\)</span> as:</p>
+<span class="math display">\[\begin{equation}
+\bar{R}_{\theta} = \Sigma_{\tau} R(\tau) p(\tau | \theta)
+\end{equation}\]</span>
+<p>However, it’s not possible to compute above equation in real application, so we approximate the value by MCMC method. For example, when using <span class="math inline">\(\pi_{\theta}\)</span> to play a game, we generate <span class="math inline">\(N\)</span> trajectories and obtain {<span class="math inline">\(\tau^1,\tau^2,...,\tau^N\)</span>}, and use the <span class="math inline">\(N\)</span> trajectories to approximate <span class="math inline">\(\bar{R}_{\theta} \approx \frac{1}{N} \Sigma^N_{n=1} R(\tau^n)\)</span>.</p>
+<h4 id="step-3-how-to-improve-the-actor">Step 3: How to Improve the Actor</h4>
+<p>We first define our problem as:</p>
+<span class="math display">\[\begin{equation}
+\theta^* = argmax_{\theta} \space \bar{R}_{\theta}
+\end{equation}\]</span>
+<p>In general neural network, we usually use gradient descent/ascent based methods to obtain the optimal value. In RL situation, if we can compute the derivative of <span class="math inline">\(\bar{R}_{\theta}\)</span> with respect to <span class="math inline">\(\theta\)</span>, then problem solved.</p>
+<p>To describle it in math, we have <span class="math inline">\(\theta = \{w_1,w_2,...,b_1,b_2,...\}\)</span>, then:</p>
+<span class="math display">\[\begin{equation}
+\mathbf{\nabla} \bar{R}_{\theta} = 
+\left(\begin{array}{cc} 
+\partial \bar{R}_{\theta} / \partial w_1 \\ 
+\partial \bar{R}_{\theta} / \partial w_2 \\ 
+\vdots \\
+\partial \bar{R}_{\theta} / \partial b_1 \\
+\partial \bar{R}_{\theta} / \partial b_2 \\
+\vdots \\
+\end{array}\right)
+\end{equation}\]</span>
+<p>Start with <span class="math inline">\(\theta^0\)</span> (gradietn ascent)</p>
+<ul>
+<li><span class="math inline">\(\theta^1 \leftarrow \theta^0 + \eta \mathbf{\nabla} \bar{R}_{\theta^0}\)</span></li>
+<li><span class="math inline">\(\theta^2 \leftarrow \theta^1 + \eta \mathbf{\nabla} \bar{R}_{\theta^1}\)</span></li>
+<li><span class="math inline">\(\cdots \cdots\)</span></li>
+</ul>
 
       
     </div>
@@ -458,8 +533,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -523,6 +607,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#policy-gradient"><span class="nav-number">2.</span> <span class="nav-text">Policy Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step-1-define-the-actor"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">Step 1: Define the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-2-how-to-evaluate-the-actor"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">Step 2: How to Evaluate the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-3-how-to-improve-the-actor"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">Step 3: How to Improve the Actor</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

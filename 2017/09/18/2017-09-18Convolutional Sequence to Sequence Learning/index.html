@@ -105,7 +105,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-18Convolutional%20Sequence%20to%20Sequence%20Learning/ModelArchitecture.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-18Convolutional%20Sequence%20to%20Sequence%20Learning/Attention.gif">
-<meta property="og:updated_time" content="2017-09-18T09:43:50.000Z">
+<meta property="og:updated_time" content="2017-09-22T07:49:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Convolutional Sequence to Sequence Learning">
 <meta name="twitter:description" content="1. Introduction The dominant approach of sequence to sequence learning to date encodes the input sequence with a series of bi-directional RNN and generates a variable length output with another set of">
@@ -383,7 +383,7 @@
 <h3 id="position-embedding">2.1 Position Embedding</h3>
 <p>Input elements <span class="math inline">\(\mathbf{x} = (x_1,...x_m)\)</span> embedded in distributional space as <span class="math inline">\(\mathbf{w} = (w_1,...w_m)\)</span>, where <span class="math display">\[w_j \in \mathbb{R}^f\]</span> is a column in an embedding matrix <span class="math inline">\(\mathcal{D} \in \mathbb{R}^{V \times f}\)</span>.</p>
 <p>The model is also equipped with a sense of order by embedding the absolute position of input elements <span class="math inline">\(\mathbf{p} = (p_1,...p_m)\)</span>, where <span class="math display">\[p_j \in \mathbb{R}^f\]</span> Just like a one-hot coding.</p>
-Both are combined to obtain input element representations: <span class="math display">\[\mathbf{e} = (w_1+p_1,...,w_m+p_m)\]</span> And matrix <span class="math inline">\(\mathbf{e}\)</span> will result as below (column per word):
+<p>Both are combined to obtain input element representations: <span class="math display">\[\mathbf{e} = (w_1+p_1,...,w_m+p_m)\]</span> And matrix <span class="math inline">\(\mathbf{e}\)</span> will result as below (column per word):</p>
 <span class="math display">\[\begin{equation}
 \mathbf{e} = 
 \left(\begin{array}{cc} 
