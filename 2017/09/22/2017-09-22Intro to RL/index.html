@@ -105,7 +105,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/PolicyGradient.png">
-<meta property="og:updated_time" content="2017-09-22T09:18:32.000Z">
+<meta property="og:updated_time" content="2017-09-23T01:07:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Introduction to Reinforcement Learning">
 <meta name="twitter:description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Gradient  Introduction De">
@@ -384,27 +384,28 @@
 <li>Value Gradient</li>
 </ul>
 <h1 id="introduction">Introduction</h1>
-<p>Deep Reinforcement learning is the combination of deep learning and reinforcement learning.</p>
+<p>Deep Reinforcement learning is the combination of <em>deep learning</em> and <em>reinforcement learning</em>.</p>
 <p>In the scenario of reinforcement leanring, we have three components: agent, environment and state. Agent interacts with environment and “observe” something called state. <strong>State</strong> is not only about observed images, it includes all the information the agent senses. After receiving the observation, the agent takes some actions and these actions will change the environment. Then, environment will give agent a reward.</p>
 <center>
 <img src="/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
 </center>
-<p>Like the picture above, the agent observes a cup of water, takes the action to knock it over and spill the water, the environment gives it a negative reward like -1. The agent keeps interacting with the environment, and adjust the parameters according to the rewards to take actions to maximize the expected reward.</p>
+<p>Like the picture above, the agent observes a cup of water, takes the action to knock it over and spill the water, the environment gives it a negative reward like -1. The agent keeps interacting with the environment, and adjust the parameters according to the rewards to take actions to maximize the expected reward. (Expected reward will be explained later)</p>
 <p><em><strong>Reinforcement leanring is trying to find a best function <span class="math inline">\(\pi(a|s)\)</span> (called actor/policy), which can maximize the expected reward. Compared to supervised leanring approach learning from a teacher, reinforcement leanring learns from experience.</strong></em></p>
 <p>RL has two properties.</p>
 <ul>
 <li>Reward Delay.</li>
-<li>Agent’s actions affects subsequent data it receives.</li>
+<li>Agent’s actions affect subsequent data it receives.</li>
 </ul>
 <h1 id="policy-gradient">Policy Gradient</h1>
 <h4 id="step-1-define-the-actor">Step 1: Define the Actor</h4>
-<p>In policy gradient, neural network plays the role as actor. The input to the neural network is the observation of the agent represented as a vector or a matrix; each neuron in the output layer corresponds to one action. Neural network is good at generalization than past methods in RL like a lookup table, which means the agent can still take proper actions if the state never appears.</p>
+<p>In policy gradient, neural network plays the role as actor. The input to the neural network is the observation of the agent represented as a vector or a matrix; each neuron in the output layer corresponds to one action. Neural network is good at generalization than past methods in RL like a lookup table. Generalization means the agent can still take proper actions if the state never appears.</p>
 <center>
 <img src="/images/2017-09-22Intro%20to%20RL/PolicyGradient.png">
 </center>
-<p>The picture above shows an example. Input is a screenshot of the game, nerual network is trying to learn a good function <span class="math inline">\(\pi (a|s)\)</span> and finally outputs the probability distribution over all possible actions.</p>
+<p>The picture above shows an example. Input is a screenshot of the game, the nerual network in the middle is trying to learn a good function <span class="math inline">\(\pi (a|s)\)</span> and finally outputs the probability distribution over all possible actions.</p>
 <h4 id="step-2-how-to-evaluate-the-actor">Step 2: How to Evaluate the Actor</h4>
-<p>But how to evaluate the actor? Suppose we are given an actor <span class="math inline">\(\pi_{\theta}(a|s)\)</span>, <span class="math inline">\(\theta\)</span> represent all the parameters in the neural network. We use this actor to generate a sequence of actions:</p>
+<p>But how to evaluate the actor? What <span class="math inline">\(\pi_{\theta}(a|s)\)</span> is a good function?</p>
+<p>Suppose we are given an arbitraty actor <span class="math inline">\(\pi_{\theta}(a|s)\)</span>, <span class="math inline">\(\theta\)</span> represent all the parameters in the neural network. We use this actor to generate a sequence of actions:</p>
 <ul>
 <li>Start with state <span class="math inline">\(s_1\)</span></li>
 <li>NN decides to take action <span class="math inline">\(a_1\)</span></li>
@@ -417,7 +418,7 @@
 <li>NN obtains reward <span class="math inline">\(r_T\)</span> <strong>[End]</strong></li>
 </ul>
 <p>And total reward is: <span class="math inline">\(R_{\theta} = \Sigma^T_{t=1} r_t\)</span></p>
-<p>We should notice that, even with the same actor, <span class="math inline">\(R_{\theta}\)</span> is different each time because of the randomness of the environment and actor (output of the actions is a distribution, action is sampled from the distribution). So what we really interested in is the expected value of <span class="math inline">\(R\)</span> defined as <span class="math inline">\(\bar{R}_{\theta}\)</span>. It’s the expected reward of using the actor <span class="math inline">\(\pi_{\theta}(a|s)\)</span> to generate many sequences. Of course, we can evaluates the goodness of the actor <span class="math inline">\(\pi_{\theta}(a|s)\)</span> using <span class="math inline">\(\bar{R}_{\theta}\)</span>.</p>
+<p>We should notice that, even with the same actor, <span class="math inline">\(R_{\theta}\)</span> is different each time because of the <strong>randomness of the environment and actor</strong> (output of the actions is a distribution, action is sampled from the distribution). So what we really interested in is the <strong>expected value of <span class="math inline">\(R\)</span> defined as <span class="math inline">\(\bar{R}_{\theta}\)</span></strong>. It’s the expected reward of many sequences which are generated from actor <span class="math inline">\(\pi_{\theta}(a|s)\)</span>. Of course, <span class="math inline">\(\bar{R}_{\theta}\)</span> is the proper way to evaluate the goodness of the actor <span class="math inline">\(\pi_{\theta}(a|s)\)</span>.</p>
 <p>To calculate <span class="math inline">\(\bar{R}_{\theta}\)</span>, first we define a trajectory as <span class="math inline">\(\tau = \{ s_1,a_1,r_1,s_2,a_2,r_2,...,s_T,a_T,r_T \}\)</span>:</p>
 <span class="math display">\[\begin{equation}\begin{split}
 p(\tau | \theta) &amp;= p(s_1)p(a_1|s_1,\theta)p(r_1,s_2 | s_1, a_1)p(a_2 | s_2, \theta) p(r_2,s_3 | s_2,a_2) \cdots\\\\
@@ -474,10 +475,12 @@ p(\tau | \theta) &amp;= p(s_1)p(a_1|s_1,\theta)p(r_1,s_2 | s_1, a_1)p(a_2 | s_2,
 \end{split}\end{equation}\]</span>
 <p>To explain the meaning of the above formula, suppose in <span class="math inline">\(\tau^n\)</span>, the actor takes <span class="math inline">\(a^n_t\)</span> when seeing <span class="math inline">\(s^n_t\)</span>:</p>
 <ul>
-<li>Tuning <span class="math inline">\(\theta\)</span> to increase <span class="math inline">\(p(a^n_t) | s^n_t\)</span>, if <span class="math inline">\(R(\tau^n)\)</span> is positive</li>
-<li>Tuning <span class="math inline">\(\theta\)</span> to decrease <span class="math inline">\(p(a^n_t) | s^n_t\)</span>, if <span class="math inline">\(R(\tau^n)\)</span> is negative</li>
+<li><strong>Tuning <span class="math inline">\(\theta\)</span> to increase <span class="math inline">\(p(a^n_t | s^n_t)\)</span>, if <span class="math inline">\(R(\tau^n)\)</span> is positive</strong></li>
+<li><strong>Tuning <span class="math inline">\(\theta\)</span> to decrease <span class="math inline">\(p(a^n_t | s^n_t)\)</span>, if <span class="math inline">\(R(\tau^n)\)</span> is negative</strong></li>
 </ul>
+<p>Why? If <span class="math inline">\(R(\tau^n)\)</span> is positive, <span class="math inline">\(\bar{R}_{\theta}\)</span> and <span class="math inline">\(logp(a^n_t | s^n_t, \theta)\)</span> will increase or decrease simultaneously. Our goal is to maximize <span class="math inline">\(\bar{R}_{\theta}\)</span>, so <span class="math inline">\(\nabla \bar{R}_{\theta}\)</span> is always positive. Then <span class="math inline">\(\nabla logp(a^n_t | s^n_t, \theta)\)</span> should be positive, which means <span class="math inline">\(logp(a^n_t | s^n_t, \theta)\)</span> will be increased. In another hand, if <span class="math inline">\(R(\tau^n)\)</span> is negative, then <span class="math inline">\(\nabla \bar{R}_{\theta} \times \nabla logp(a^n_t | s^n_t, \theta) &lt;= 0\)</span>, so <span class="math inline">\(logp(a^n_t | s^n_t, \theta)\)</span> will be decreased.</p>
 <p><strong>It is very important to consider the cumulative reward <span class="math inline">\(R(\tau^n)\)</span> of the whole trajectory <span class="math inline">\(\tau^n\)</span> instead of immediate reward <span class="math inline">\(r^n_t\)</span>.</strong></p>
+<h4 id="policy-gradient-in-practice">Policy Gradient in Practice</h4>
 
       
     </div>
@@ -654,7 +657,7 @@ p(\tau | \theta) &amp;= p(s_1)p(a_1|s_1,\theta)p(r_1,s_2 | s_1, a_1)p(a_2 | s_2,
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#policy-gradient"><span class="nav-number">3.</span> <span class="nav-text">Policy Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step-1-define-the-actor"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">Step 1: Define the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-2-how-to-evaluate-the-actor"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">Step 2: How to Evaluate the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-3-how-to-improve-the-actor"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">Step 3: How to Improve the Actor</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#policy-gradient"><span class="nav-number">3.</span> <span class="nav-text">Policy Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step-1-define-the-actor"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">Step 1: Define the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-2-how-to-evaluate-the-actor"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">Step 2: How to Evaluate the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-3-how-to-improve-the-actor"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">Step 3: How to Improve the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#policy-gradient-in-practice"><span class="nav-number">3.0.0.4.</span> <span class="nav-text">Policy Gradient in Practice</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
