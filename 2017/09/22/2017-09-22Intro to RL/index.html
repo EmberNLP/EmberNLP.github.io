@@ -105,7 +105,8 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/PolicyGradient.png">
-<meta property="og:updated_time" content="2017-09-23T02:38:11.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/Baseline.png">
+<meta property="og:updated_time" content="2017-09-23T03:04:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Introduction to Reinforcement Learning">
 <meta name="twitter:description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Gradient  Introduction De">
@@ -499,7 +500,7 @@ p(\tau | \theta) &amp;= p(s_1)p(a_1|s_1,\theta)p(r_1,s_2 | s_1, a_1)p(a_2 | s_2,
 \theta^{new} &amp;\leftarrow \theta^{old} + \eta \nabla \bar{R}_{\theta^{old}}\\\\
 \nabla \bar{R}_{\theta} &amp;\approx \frac{1}{N} \Sigma^N_{n=1} \Sigma^{T_n}_{t=1} R(\tau^n) \nabla logp(a^n_t | s^n_t, \theta)
 \end{split}\end{equation}\]</span>
-<p>We have a new actor now! Use this new actor we can collect a new dataset. Repeat the two steps we can finally obtain our optimal actor!</p>
+<p>I have a new actor now! Use this new actor we can collect a new dataset. Repeat the two steps we can finally obtain our optimal actor!</p>
 <p>Here, i give a more intuitive example.</p>
 <p>Suppose the action space is: {left, right, fire}. If <span class="math inline">\(a^1_1 = left\)</span>, when we put <span class="math inline">\(s^1_1\)</span> into our model, we hope the output will be <span class="math inline">\([1,0,0]\)</span>. And if <span class="math inline">\(a^2_1 = fire\)</span>, when we put <span class="math inline">\(s^2_1\)</span> into our model, we hope the output will be <span class="math inline">\([0,0,1]\)</span>. Translate it into mathematical form, we have:</p>
 <span class="math display">\[\begin{equation}\begin{split}
@@ -520,7 +521,16 @@ s^2_1 \rightarrow &amp;NN \rightarrow [0,0,1] \space (fire)\\\\
 \end{split}\end{equation}\]</span>
 <h5 id="in-another-word-each-training-data-is-weighted-by-rtaun.">In another word, each training data is weighted by <span class="math inline">\(R(\tau^n)\)</span>.</h5>
 <p>This is what policy gradient doing! It do cost much more time to train the actor than normal classification problem because we have to train our actor many times!</p>
-<p>The last thing about policy gradient is the <strong>baseline</strong>.</p>
+<p>The last thing about policy gradient is the <strong>baseline</strong>. In practice, it is possible that <span class="math inline">\(R(\tau^n)\)</span> is always positive.</p>
+<center>
+<img src="/images/2017-09-22Intro%20to%20RL/Baseline.png">
+</center>
+<p>The above graph is an illustration of the problem when all rewards are positive. In ideal case, for a specific state <span class="math inline">\(s\)</span>, <span class="math inline">\(\pi(a|s)\)</span>, <span class="math inline">\(\pi(b|s)\)</span> and <span class="math inline">\(\pi(c|s)\)</span> will increase simultaneously. After softmax function, we get a reasonable probability distribution of <span class="math inline">\(\pi(action | s)\)</span>. However, recall that how we collect our dataset to train our actor, for a specific state, we can not guarantee all the possible actions are sampled. Actually, the samples are very sparse. In the graph, action “a” is not sampled, so its corresponding output probability will decrease which is not reasonable. To solve this problem, we add a baseline <strong><span class="math inline">\(b\)</span></strong> to the reward to ensure that not every reward is positive.</p>
+<span class="math display">\[\begin{equation}
+\nabla \bar{R}_{\theta} \approx \frac{1}{N} \Sigma^N_{n=1} \Sigma^{T_n}_{t=1} (R(\tau^n)-b) \nabla logp(a^n_t | s^n_t, \theta)
+\end{equation}\]</span>
+<p>The value of b depends on your application. A common choice is to use the averaged reward; or you can let the actor to decide its value (treat it as a variable).</p>
+<h1 id="value-gradient">Value Gradient</h1>
 
       
     </div>
@@ -697,7 +707,7 @@ s^2_1 \rightarrow &amp;NN \rightarrow [0,0,1] \space (fire)\\\\
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#policy-gradient"><span class="nav-number">3.</span> <span class="nav-text">Policy Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step-1-define-the-actor"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">Step 1: Define the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-2-how-to-evaluate-the-actor"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">Step 2: How to Evaluate the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-3-how-to-improve-the-actor"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">Step 3: How to Improve the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#policy-gradient-in-practice"><span class="nav-number">3.0.0.4.</span> <span class="nav-text">Policy Gradient in Practice</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#in-another-word-each-training-data-is-weighted-by-rtaun."><span class="nav-number">3.0.0.4.1.</span> <span class="nav-text">In another word, each training data is weighted by \(R(\tau^n)\).</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#policy-gradient"><span class="nav-number">3.</span> <span class="nav-text">Policy Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step-1-define-the-actor"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">Step 1: Define the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-2-how-to-evaluate-the-actor"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">Step 2: How to Evaluate the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-3-how-to-improve-the-actor"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">Step 3: How to Improve the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#policy-gradient-in-practice"><span class="nav-number">3.0.0.4.</span> <span class="nav-text">Policy Gradient in Practice</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#in-another-word-each-training-data-is-weighted-by-rtaun."><span class="nav-number">3.0.0.4.1.</span> <span class="nav-text">In another word, each training data is weighted by \(R(\tau^n)\).</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#value-gradient"><span class="nav-number">4.</span> <span class="nav-text">Value Gradient</span></a></li></ol></div>
             
 
           </div>
