@@ -95,21 +95,21 @@
 
 
 
-<meta name="description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Gradient  Introduction De">
+<meta name="description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Based Approach—Learning a">
 <meta name="keywords" content="DL,RL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Introduction to Reinforcement Learning">
 <meta property="og:url" content="http://yoursite.com/2017/09/22/2017-09-22Intro to RL/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Gradient  Introduction De">
+<meta property="og:description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Based Approach—Learning a">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/PolicyGradient.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/Baseline.png">
-<meta property="og:updated_time" content="2017-09-23T03:04:28.000Z">
+<meta property="og:updated_time" content="2017-09-23T05:34:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Introduction to Reinforcement Learning">
-<meta name="twitter:description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Gradient  Introduction De">
+<meta name="twitter:description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Based Approach—Learning a">
 <meta name="twitter:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
 
 
@@ -382,7 +382,12 @@
 <li>Step 3: Step 3: How to Improve the Actor</li>
 <li>Policy Gradient in Practice</li>
 </ul></li>
-<li>Value Gradient</li>
+<li>Value Based Approach—Learning a Critic
+<ul>
+<li>Monte-Carlo based approach</li>
+<li>Temporal-difference approach</li>
+<li>Q-learning</li>
+</ul></li>
 </ul>
 <h1 id="introduction">Introduction</h1>
 <p>Deep Reinforcement learning is the combination of <em>deep learning</em> and <em>reinforcement learning</em>.</p>
@@ -530,7 +535,32 @@ s^2_1 \rightarrow &amp;NN \rightarrow [0,0,1] \space (fire)\\\\
 \nabla \bar{R}_{\theta} \approx \frac{1}{N} \Sigma^N_{n=1} \Sigma^{T_n}_{t=1} (R(\tau^n)-b) \nabla logp(a^n_t | s^n_t, \theta)
 \end{equation}\]</span>
 <p>The value of b depends on your application. A common choice is to use the averaged reward; or you can let the actor to decide its value (treat it as a variable).</p>
-<h1 id="value-gradient">Value Gradient</h1>
+<h1 id="value-based-approachlearning-a-critic">Value Based Approach—Learning a Critic</h1>
+<p>A critic does not determine the action. Given an actor <span class="math inline">\(\pi\)</span>, it evaluates how good the actor is. But we can find a actor from a critic.</p>
+<p>A critic is a <strong>state value function <span class="math inline">\(V^{\pi}(s)\)</span></strong>. It represents the <strong>cumulated reward</strong> expects to be obtained after seeing observation (state) s using actor <span class="math inline">\(\pi\)</span>. Critic is also a neural network, the input is the state s, and the output is the cumulated expected reward <span class="math inline">\(V^{\pi}(s)\)</span>.</p>
+<p>But how to estimate the value function <span class="math inline">\(V^{\pi}(s)\)</span>? There are two main methods.</p>
+<h4 id="monte-carlo-based-approach">Monte-Carlo based approach</h4>
+<p>Under MC based approach, the critic watches actor <span class="math inline">\(\pi\)</span> generating trajectories. After seeing <span class="math inline">\(s_a\)</span>, until the end of the episode, wo get the cumulated reward <span class="math inline">\(G_a\)</span>; After seeing <span class="math inline">\(s_b\)</span>, until the end of the episode, the cumulated reward is <span class="math inline">\(G_b\)</span>. We then formulate a dataset, inputs are different states (<span class="math inline">\(s_a\)</span>, <span class="math inline">\(s_b\)</span>), outputs are corresponding cumulated reward (<span class="math inline">\(G_a\)</span>, <span class="math inline">\(G_b\)</span>). We turn the problem to a regression task.</p>
+<h4 id="temporal-difference-approach">Temporal-difference approach</h4>
+<p>Some applications have very long episodes, sothat delaying all learning until an episode’s end is too slow. Suppose we can know only part of the trajectory (the trajectory never ends), {<span class="math inline">\(\cdots,s_t,a_t,r_t,s_{t+1},\cdots\)</span>}. Then we have:</p>
+<span class="math display">\[\begin{equation}
+V^{\pi}(s_t) + r_t = V^{\pi}(s_{t+1})
+\end{equation}\]</span>
+<p>Our goal is to optimize the actor to have <span class="math inline">\(V^{\pi}(s_t) - V^{\pi}(s_{t+1})\)</span> close to <span class="math inline">\(r_t\)</span>.</p>
+<h4 id="difference-between-mc-and-td">Difference between MC and TD</h4>
+<p>MC: Larger variance but unbiased (r is random) TD: Small variance but may be biased</p>
+<h4 id="q-learning">Q-learning</h4>
+<p>Suppose we have a state-action value function <span class="math inline">\(Q^{\pi}(s,a)\)</span>, the cumulated reward expects to be obtained after seeing observation s and taking action a when using actor <span class="math inline">\(\pi\)</span>. The input to the actor is state s, the output is the state-action value function, like <span class="math inline">\([Q^{\pi} (s, a = left), Q^{\pi} (s, a = right), Q^{\pi} (s, a = fire)]\)</span>. But it has a limitation, the action space must be discrete.</p>
+<p>The big picutre of Q-learning is to iterate the following three steps:</p>
+<ol style="list-style-type: decimal">
+<li>Using current actor <span class="math inline">\(\pi\)</span> to interact with the environment;</li>
+<li>Using TD or MC to learning state-value function <span class="math inline">\(Q^{\pi}(s,a)\)</span>;</li>
+<li>Find a new actor <span class="math inline">\(\pi&#39;\)</span> which is better than <span class="math inline">\(\pi\)</span></li>
+</ol>
+<p>Here, “better” means, for all state s:</p>
+<span class="math display">\[\begin{equation}
+\pi&#39;(s) = argmax_a Q^{\pi}(s,a)
+\end{equation}\]</span>
 
       
     </div>
@@ -707,7 +737,7 @@ s^2_1 \rightarrow &amp;NN \rightarrow [0,0,1] \space (fire)\\\\
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#policy-gradient"><span class="nav-number">3.</span> <span class="nav-text">Policy Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step-1-define-the-actor"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">Step 1: Define the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-2-how-to-evaluate-the-actor"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">Step 2: How to Evaluate the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-3-how-to-improve-the-actor"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">Step 3: How to Improve the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#policy-gradient-in-practice"><span class="nav-number">3.0.0.4.</span> <span class="nav-text">Policy Gradient in Practice</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#in-another-word-each-training-data-is-weighted-by-rtaun."><span class="nav-number">3.0.0.4.1.</span> <span class="nav-text">In another word, each training data is weighted by \(R(\tau^n)\).</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#value-gradient"><span class="nav-number">4.</span> <span class="nav-text">Value Gradient</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#policy-gradient"><span class="nav-number">3.</span> <span class="nav-text">Policy Gradient</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step-1-define-the-actor"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">Step 1: Define the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-2-how-to-evaluate-the-actor"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">Step 2: How to Evaluate the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-3-how-to-improve-the-actor"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">Step 3: How to Improve the Actor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#policy-gradient-in-practice"><span class="nav-number">3.0.0.4.</span> <span class="nav-text">Policy Gradient in Practice</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#in-another-word-each-training-data-is-weighted-by-rtaun."><span class="nav-number">3.0.0.4.1.</span> <span class="nav-text">In another word, each training data is weighted by \(R(\tau^n)\).</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#value-based-approachlearning-a-critic"><span class="nav-number">4.</span> <span class="nav-text">Value Based Approach—Learning a Critic</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#monte-carlo-based-approach"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">Monte-Carlo based approach</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#temporal-difference-approach"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">Temporal-difference approach</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#difference-between-mc-and-td"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">Difference between MC and TD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#q-learning"><span class="nav-number">4.0.0.4.</span> <span class="nav-text">Q-learning</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
