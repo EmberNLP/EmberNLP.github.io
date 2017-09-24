@@ -104,7 +104,7 @@
 <meta property="og:description" content="This paper introduces a new neural language model that replaces the recurrent connections typically used in recurrent networks with gated temporal convolutions. Neural language models (Bengio et al.,">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-14Language%20Modeling%20with%20Gated%20Convolutional%20Networks/ComputationGraph.png">
-<meta property="og:updated_time" content="2017-09-14T12:10:24.000Z">
+<meta property="og:updated_time" content="2017-09-24T07:39:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Language Modeling with Gated Convolutional Networks">
 <meta name="twitter:description" content="This paper introduces a new neural language model that replaces the recurrent connections typically used in recurrent networks with gated temporal convolutions. Neural language models (Bengio et al.,">
@@ -371,6 +371,12 @@
 
       
         <p>This paper introduces a new neural language model that replaces the recurrent connections typically used in recurrent networks with gated temporal convolutions. Neural language models (Bengio et al., 2003) produce a representation <span class="math inline">\(\mathbf{H} = [\mathbf{h}_0,...,\mathbf{h}_N]\)</span> of the context for each word <span class="math inline">\(w_0,...,w_N\)</span> to predict the next word <span class="math inline">\(P(w_i|\mathbf{h}_i)\)</span>. Recurrent neural networks <span class="math inline">\(f\)</span> computes <span class="math inline">\(\mathbf{H}\)</span> through a recurrent function <span class="math inline">\(\mathbf{h}_i =f(\mathbf{h}_{i−1},w_{i−1})\)</span> which is an inherently sequential process that cannot be parallelized over <span class="math inline">\(i\)</span>.</p>
+<p>CNN has three properties:</p>
+<ol style="list-style-type: decimal">
+<li>some patterns are much smaller than the whole input</li>
+<li>The same patterns appear in different regions</li>
+<li>Subsampling the pixels will not change the object</li>
+</ol>
 <p>The proposed approach convolves the inputs with a function <span class="math inline">\(f\)</span> to obtain <span class="math inline">\(\mathbf{H} = f \ast w\)</span> and therefore has no temporal dependencies, so it is easier to parallelize over the individual words of a sentence.This process will compute each context as a function of a number of preceding words.</p>
 <center>
 <img src="/images/2017-09-14Language%20Modeling%20with%20Gated%20Convolutional%20Networks/ComputationGraph.png">
