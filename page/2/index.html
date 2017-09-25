@@ -275,6 +275,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/06/2017-09-06Siamese Network/" itemprop="url">Siamese Network</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-06T16:56:51+10:00">
+                2017-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosine Similarity) to compare the extent of similarity. During training, the goal is to minimize the value of cost functon of the pairs of samples from same category, in the meantime, maximize the value of cost function of the pairs from different categories. For a given neural network (CNN, RNN), the goal is to optimize its parameters <span class="math inline">\(\mathbf{W}\)</span> to make:</p>
+<p><span class="math inline">\(E_w = \left \| G_w(X_1) - G_w(X_2) \right \|\)</span>, small if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are in the same category</p>
+<p><span class="math inline">\(E_w = \left \| G_w(X_1) - G_w(X_2) \right \|\)</span>, large if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are in the different categories</p>
+<p>The only assumption about W is differentiable.</p>
+<p>And the cost function is defined as below: <span class="math display">\[\mathcal{L}(W) = \Sigma^n_{i=1} (1-Y)L_G(E_w(x_1,x_2)^i) + YL_I(E_w(X_1,X_2)^i)\]</span></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/2017-09-05PixelCNN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1992,7 +2138,7 @@ The calculation of derivatives are as follows:
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

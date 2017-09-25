@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="DL Basics," />
+  <meta name="keywords" content="DL," />
 
 
 
@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosin">
-<meta name="keywords" content="DL Basics">
+<meta name="description" content="The key idea about why deep network works better is: Modularization. We treat each neuron in the first layer as most basic classifier. Then the second layer use first layer as module to build classifi">
+<meta name="keywords" content="DL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Siamese Network">
-<meta property="og:url" content="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/index.html">
+<meta property="og:title" content="Why deep?">
+<meta property="og:url" content="http://yoursite.com/2017/09/24/2017-09-24Why deep">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosin">
+<meta property="og:description" content="The key idea about why deep network works better is: Modularization. We treat each neuron in the first layer as most basic classifier. Then the second layer use first layer as module to build classifi">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-06T08:29:57.000Z">
+<meta property="og:updated_time" content="2017-09-25T00:12:17.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Siamese Network">
-<meta name="twitter:description" content="The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosin">
+<meta name="twitter:title" content="Why deep?">
+<meta name="twitter:description" content="The key idea about why deep network works better is: Modularization. We treat each neuron in the first layer as most basic classifier. Then the second layer use first layer as module to build classifi">
 
 
 
@@ -136,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/24/2017-09-24Why deep"/>
 
 
 
 
 
-  <title>Siamese Network | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Why deep? | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -279,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/06/2017-09-06Siamese Network/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/2017-09-24Why deep?/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -296,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Siamese Network</h1>
+          <h1 class="post-title" itemprop="name headline">Why deep?</h1>
         
 
         <div class="post-meta">
@@ -308,8 +308,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-06T16:56:51+10:00">
-                2017-09-06
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-24T19:41:26+10:00">
+                2017-09-24
               </time>
             
 
@@ -331,8 +331,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Paper Notes</span>
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
                   </a>
                 </span>
 
@@ -368,11 +368,12 @@
       
 
       
-        <p>The main idea of Siamese Network is to map the inputs to a new space by a function which can be learned by neural network. Then it is able to use similarity measurement like (Euclidean Metric or Cosine Similarity) to compare the extent of similarity. During training, the goal is to minimize the value of cost functon of the pairs of samples from same category, in the meantime, maximize the value of cost function of the pairs from different categories. For a given neural network (CNN, RNN), the goal is to optimize its parameters <span class="math inline">\(\mathbf{W}\)</span> to make:</p>
-<p><span class="math inline">\(E_w = \left \| G_w(X_1) - G_w(X_2) \right \|\)</span>, small if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are in the same category</p>
-<p><span class="math inline">\(E_w = \left \| G_w(X_1) - G_w(X_2) \right \|\)</span>, large if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are in the different categories</p>
-<p>The only assumption about W is differentiable.</p>
-<p>And the cost function is defined as below: <span class="math display">\[\mathcal{L}(W) = \Sigma^n_{i=1} (1-Y)L_G(E_w(x_1,x_2)^i) + YL_I(E_w(X_1,X_2)^i)\]</span></p>
+        <p>The key idea about why deep network works better is: <strong>Modularization</strong>.</p>
+<p>We treat each neuron in the first layer as most basic classifier. Then the second layer use first layer as module to build classifiers, and so on. The modularization is automatically learned from data. The benefit is that we simplified our learning task, we need less training data to train our deep models.</p>
+<p><strong>Universality Theorem</strong>: Any continuous function f <span class="math display">\[f: R^N \rightarrow R^M\]</span> Can be realized by a network with one hidden layer.</p>
+<p>Yes, shallow network can represent any function given <strong>enough hidden neurons</strong>. However, using deep structure is more effective.</p>
+<p>For complex task, very similar inputs have different outputs but very different inputs have similar output.</p>
+<p>To learn more… <a href="http://research.microsoft.com/apps/video/default.aspx?id=%20232373&amp;r=1" target="_blank" rel="external">Do deep nets really need to be deep? (by Rich Caruana)</a></p>
 
       
     </div>
@@ -390,7 +391,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/DL-Basics/" rel="tag"># DL Basics</a>
+            <a href="/tags/DL/" rel="tag"># DL</a>
           
         </div>
       
@@ -403,8 +404,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/05/2017-09-05PixelCNN/" rel="next" title="PixelCNN">
-                <i class="fa fa-chevron-left"></i> PixelCNN
+              <a href="/2017/09/22/2017-09-22Intro to RL/" rel="next" title="Introduction to Reinforcement Learning">
+                <i class="fa fa-chevron-left"></i> Introduction to Reinforcement Learning
               </a>
             
           </div>
@@ -412,10 +413,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/13/2017-09-13Show attend and tell/" rel="prev" title="Show Attend and Tell">
-                Show Attend and Tell <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
