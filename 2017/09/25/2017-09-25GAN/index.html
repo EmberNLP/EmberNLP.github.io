@@ -103,10 +103,12 @@
 <meta property="og:site_name" content="EmberNLP">
 <meta property="og:description" content="Maximum Likelihood Estimation Suppose given a data distribution \(P_{data}(x)\) (e.g. it represents the images we have, but it’s hard to sample a new one from it). We have another distribution \(P_G(x">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-25T09:57:32.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-25GAN/GANIssue.png">
+<meta property="og:updated_time" content="2017-09-25T11:02:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Generative Adversarial Network">
 <meta name="twitter:description" content="Maximum Likelihood Estimation Suppose given a data distribution \(P_{data}(x)\) (e.g. it represents the images we have, but it’s hard to sample a new one from it). We have another distribution \(P_G(x">
+<meta name="twitter:image" content="http://yoursite.com/images/2017-09-25GAN/GANIssue.png">
 
 
 
@@ -440,6 +442,9 @@ max_D(G,D) &amp;= V(G,D^{\ast})\\\\
 <li><span class="math inline">\(\theta_G \leftarrow \theta_G - \eta \partial V(G_1,D^{\ast}_1) / \partial \theta_G\)</span> to obtain <span class="math inline">\(G_2\)</span></li>
 <li><span class="math inline">\(\cdots \cdots\)</span></li>
 </ul>
+<center>
+<img src="/images/2017-09-25GAN/GANIssue.png">
+</center>
 <p>But in real implementation, when we start training, D(x) is very small, the gradient of <span class="math inline">\(log(1-D(x))\)</span> is also very small, so the training of function G is very slow at beginning. A trick here is that use <span class="math inline">\(V = E_{x \sim P_G} [-log (D(x))]\)</span> instead of <span class="math inline">\(V = E_{x \sim P_G} [-log (1-D(x))]\)</span> when training G.</p>
 
       

@@ -440,6 +440,9 @@ max_D(G,D) &amp;= V(G,D^{\ast})\\\\
 <li><span class="math inline">\(\theta_G \leftarrow \theta_G - \eta \partial V(G_1,D^{\ast}_1) / \partial \theta_G\)</span> to obtain <span class="math inline">\(G_2\)</span></li>
 <li><span class="math inline">\(\cdots \cdots\)</span></li>
 </ul>
+<center>
+<img src="/images/2017-09-25GAN/GANIssue.png">
+</center>
 <p>But in real implementation, when we start training, D(x) is very small, the gradient of <span class="math inline">\(log(1-D(x))\)</span> is also very small, so the training of function G is very slow at beginning. A trick here is that use <span class="math inline">\(V = E_{x \sim P_G} [-log (D(x))]\)</span> instead of <span class="math inline">\(V = E_{x \sim P_G} [-log (1-D(x))]\)</span> when training G.</p>
 
           
