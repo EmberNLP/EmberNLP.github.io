@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="DL," />
 
 
 
@@ -95,17 +95,18 @@
 
 
 
-<meta name="description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta name="description" content="Maximum Likelihood Estimation Suppose given a data distribution \(P_{data}(x)\) (e.g. it represents the images we have, but it’s hard to sample a new one from it). We have another distribution \(P_G(x">
+<meta name="keywords" content="DL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Start Your Blog Using Hexo and Githubpage">
-<meta property="og:url" content="http://yoursite.com/2017/08/27/2017-08-26Start Your Blog Using Hexo and Githubpage/index.html">
+<meta property="og:title" content="Generative Adversarial Network">
+<meta property="og:url" content="http://yoursite.com/2017/09/25/2017-09-25GAN/index.html">
 <meta property="og:site_name" content="EmberNLP">
-<meta property="og:description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta property="og:description" content="Maximum Likelihood Estimation Suppose given a data distribution \(P_{data}(x)\) (e.g. it represents the images we have, but it’s hard to sample a new one from it). We have another distribution \(P_G(x">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-06T06:58:08.000Z">
+<meta property="og:updated_time" content="2017-09-25T09:57:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Start Your Blog Using Hexo and Githubpage">
-<meta name="twitter:description" content="This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. Node.js 2. Git If your computer already has these, just install Hexo with npm: 1$ np">
+<meta name="twitter:title" content="Generative Adversarial Network">
+<meta name="twitter:description" content="Maximum Likelihood Estimation Suppose given a data distribution \(P_{data}(x)\) (e.g. it represents the images we have, but it’s hard to sample a new one from it). We have another distribution \(P_G(x">
 
 
 
@@ -135,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/27/2017-08-26Start Your Blog Using Hexo and Githubpage/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/25/2017-09-25GAN/"/>
 
 
 
 
 
-  <title>Start Your Blog Using Hexo and Githubpage | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Generative Adversarial Network | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -278,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/2017-08-26Start Your Blog Using Hexo and Githubpage/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/25/2017-09-25GAN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ember">
@@ -295,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Start Your Blog Using Hexo and Githubpage</h1>
+          <h1 class="post-title" itemprop="name headline">Generative Adversarial Network</h1>
         
 
         <div class="post-meta">
@@ -307,8 +308,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-27T23:24:53+10:00">
-                2017-08-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-25T11:13:50+10:00">
+                2017-09-25
               </time>
             
 
@@ -317,6 +318,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Intuition/" itemprop="url" rel="index">
+                    <span itemprop="name">Intuition</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -345,18 +368,79 @@
       
 
       
-        <p>This post will decrible how to setup your Blog using GithubPage and Hexo briefly. # Installation ### Requirement 1. <a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a> 2. <a href="https://git-scm.com" target="_blank" rel="external">Git</a></p>
-<p>If your computer already has these, just install Hexo with npm: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure></p>
-<h1 id="setup">Setup</h1>
-<p>Once Hexo is installed, run the following commands to initialise Hexo in the target <folder>. <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init &lt;folder&gt;</div><div class="line">$ <span class="built_in">cd</span> &lt;folder&gt;</div><div class="line">$ npm install</div></pre></td></tr></table></figure></folder></p>
-<h1 id="deployment">Deployment</h1>
-<p>Before your first deployment, you will have to modify some settings in _config.yml. A valid deployment setting must have a type field. For example: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  repo: http://github.com/&lt;username&gt;/&lt;username&gt;.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure></p>
-<p>Before your first deployment, install <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="external">hexo-deployer-git</a>: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
-<p>Then need to set your git information as follow: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name <span class="string">"yourname"</span></div><div class="line">git config --global user.email <span class="string">"youremail"</span></div></pre></td></tr></table></figure></p>
-<h1 id="write">Write</h1>
-<p>Then you can write your posts and save them in the folder _post under source.</p>
-<h1 id="publish">Publish</h1>
-<p>Just type in the following command to publish your posts: <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure></p>
+        <h4 id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h4>
+<p>Suppose given a data distribution <span class="math inline">\(P_{data}(x)\)</span> (e.g. it represents the images we have, but it’s hard to sample a new one from it). We have another distribution <span class="math inline">\(P_G(x;\theta)\)</span> parameterized by <span class="math inline">\(\theta\)</span>. Our goal is to find <span class="math inline">\(\theta\)</span> such that <span class="math inline">\(P_G(x;\theta)\)</span> is close to <span class="math inline">\(P_{data}(x)\)</span>.</p>
+<p>If we have m samples {<span class="math inline">\(x^1,x^2,...,x^m\)</span>} from <span class="math inline">\(P_{data}(x)\)</span>, we can compute <span class="math inline">\(P_G(x^i;\theta)\)</span>. The likelihood of generating the samples from distribution <span class="math inline">\(P_G(x;\theta)\)</span> is:</p>
+<span class="math display">\[\begin{equation}
+L = \prod\limits^m_{i=1} P_G(x^i;\theta)
+\end{equation}\]</span>
+<p>Then we can find <span class="math inline">\(\theta^{\ast}\)</span> by maximizing the above likelihood.</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\theta^{\ast} &amp;= argmax_{\theta} \space \prod\limits^m_{i=1} P_G(x^i;\theta)\\\\
+&amp;= argmax_{\theta} \space log \prod\limits^m_{i=1} P_G(x^i;\theta)\\\\
+&amp;= argmax_{\theta} \space \Sigma^m_{i=1} logP_G(x^i;\theta)\\\\
+&amp;\approx argmax_{\theta} \space E_{x \sim P_{data}} [logP_G(x;\theta)]\\\\
+&amp;= argmax_{\theta} \space \int_x P_{data}(x)logP_G(x;\theta)dx - \int_xP_{data}(x)logP_{data}(x)dx\\\\
+&amp;= argmin_{\theta} \space KL(P_{data}(x) || P_G(x;\theta))
+\end{split}\end{equation}\]</span>
+<p>But how to have a very general <span class="math inline">\(P_G(x;\theta)\)</span>? Neural network! In GAN, we sample <span class="math inline">\(z\)</span> from unit gaussian then feed it into neural network to get <span class="math inline">\(G(z)=x\)</span>.</p>
+<p><strong>Generator G</strong></p>
+<p>G is a function, input <span class="math inline">\(z\)</span>, output <span class="math inline">\(x\)</span>. Given a prior distribution <span class="math inline">\(P_{prior}(z)\)</span>, a probability distribution <span class="math inline">\(P_G(x)\)</span> is defined by function G.</p>
+<p><strong>Discriminator D</strong></p>
+<p>D is a function, input <span class="math inline">\(x\)</span>, output scalar. It evaluates the “difference” between <span class="math inline">\(P_G(x)\)</span> and <span class="math inline">\(P_{data}(x)\)</span></p>
+<p><strong><span class="math inline">\(V(G,D)\)</span></strong></p>
+<p><span class="math inline">\(V(G,D)\)</span> is a function, we can obtain an optimal <span class="math inline">\(G^{\ast}\)</span> by:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+G^{\ast} &amp;= arg min_G max_D \space V(G,D)\\\\
+&amp;= arg min_G max_D E_{x \sim P_{data} (x)} [log D(x)] + E_{z \sim} p(z)[log(1-D(G(z)))]
+\end{split}\end{equation}\]</span>
+<p>The first look at the above equation may feel confused. What is it?</p>
+<p>Let’s first look at the maximization term <span class="math inline">\(max_D V(G,D)\)</span>.</p>
+<p>Given G what is the optimal <span class="math inline">\(D^{\ast}\)</span> maximizing:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+V &amp;= E_{x \sim P_{data} (x)} [log D(x)] + E_{z \sim} p(z)[log(1-D(G(z)))]\\\\
+&amp;= \int_x P_{data}(x) log D(x) dx + \int_x P_G(x) log(1-D(x))dx\\\\
+&amp;= \int_x [P_{data}(x) log D(x) + P_G(x) log(1-D(x))]dx
+\end{split}\end{equation}\]</span>
+<p>Given x, the optimal <span class="math inline">\(D^{\ast}\)</span> maximizing</p>
+<span class="math display">\[\begin{equation}
+P_{data}(x) log D(x) + P_G(x) log(1-D(x))
+\end{equation}\]</span>
+<p>Take derivative of above equation with respect to D and set to zero, we get:</p>
+<span class="math display">\[\begin{equation}
+D^{\ast}(x) = \frac{P_{data}(x)}{P_{data}(x) + P_G(x)}
+\end{equation}\]</span>
+<p>We put <span class="math inline">\(D^{\ast}(x)\)</span> back to the function V(G,D):</p>
+<span class="math display">\[\begin{equation}\begin{split}
+max_D(G,D) &amp;= V(G,D^{\ast})\\\\
+&amp;= E_{x \sim P_{data}} [log \frac{P_{data}(x)}{P_{data}(x) + P_G(x)}] + E_{x \sim P_G}[log \frac{P_{G}(x)}{P_{data}(x) + P_G(x)}]\\\\
+&amp;= \int_x P_{data}(x) log \frac{P_{data}(x)}{P_{data}(x) + P_G(x)} dx + \int_x P_G(x)log \frac{P_{G}(x)}{P_{data}(x) + P_G(x)} dx\\\\
+&amp;= \int_x P_{data}(x) log \frac{P_{data}(x)/2}{ (P_{data}(x) + P_G(x))/2 } dx + \int_x P_G(x)log \frac{P_{G}(x)/2}{ (P_{data}(x) + P_G(x))/2 } dx\\\\
+&amp;= -2log2 + \int_x P_{data}(x) log \frac{P_{data}(x)}{ (P_{data}(x) + P_G(x))/2 } dx + \int_x P_G(x)log \frac{P_{G}(x)}{ (P_{data}(x) + P_G(x))/2 } dx\\\\
+&amp;= -2log2 + KL(P_{data}(x) || \frac{P_{data}(x) + P_G(x)}{2}) + KL(P_{G}(x) || \frac{P_{data}(x) + P_G(x)}{2})\\\\
+&amp;= -2log2 + 2JSD(P_{data}(x) || P_G(x)) \qquad (Jensen-Shannon Divergence)
+\end{split}\end{equation}\]</span>
+<p>Great! <span class="math inline">\(max_D(G,D)\)</span> is the distance of the distribution <span class="math inline">\(P_{data}(x)\)</span> and <span class="math inline">\(P_G(x)\)</span>.</p>
+<p>To find the best G minimizing the loss function <span class="math inline">\(L(G) = max_D V(G,D)\)</span>:</p>
+<span class="math display">\[\begin{equation}
+\theta_G \leftarrow \theta_G - \eta \partial L(G) / \partial \theta_G \qquad (\theta_G \space defines \space G)
+\end{equation}\]</span>
+<p>According to the previous analysis, we can describe the training process as:</p>
+<ul>
+<li>Given <span class="math inline">\(G_0\)</span></li>
+<li>Find <span class="math inline">\(D^{\ast}_0\)</span> maximizing <span class="math inline">\(V(G_0,D)\)</span>
+<ul>
+<li><span class="math inline">\(V(G_0,D^{\ast}_0)\)</span> is the JS divergence between <span class="math inline">\(P_{data}(x)\)</span> and <span class="math inline">\(P_{G_0}(x)\)</span></li>
+</ul></li>
+<li><span class="math inline">\(\theta_G \leftarrow \theta_G - \eta \partial V(G_0,D^{\ast}_0) / \partial \theta_G\)</span> to obtain <span class="math inline">\(G_1\)</span></li>
+<li>Find <span class="math inline">\(D^{\ast}_1\)</span> maximizing <span class="math inline">\(V(G_1,D)\)</span>
+<ul>
+<li><span class="math inline">\(V(G_1,D^{\ast}_1)\)</span> is the JS divergence between <span class="math inline">\(P_{data}(x)\)</span> and <span class="math inline">\(P_{G_1}(x)\)</span></li>
+</ul></li>
+<li><span class="math inline">\(\theta_G \leftarrow \theta_G - \eta \partial V(G_1,D^{\ast}_1) / \partial \theta_G\)</span> to obtain <span class="math inline">\(G_2\)</span></li>
+<li><span class="math inline">\(\cdots \cdots\)</span></li>
+</ul>
+<p>But in real implementation, when we start training, D(x) is very small, the gradient of <span class="math inline">\(log(1-D(x))\)</span> is also very small, so the training of function G is very slow at beginning. A trick here is that use <span class="math inline">\(V = E_{x \sim P_G} [-log (D(x))]\)</span> instead of <span class="math inline">\(V = E_{x \sim P_G} [-log (1-D(x))]\)</span> when training G.</p>
 
       
     </div>
@@ -372,6 +456,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/DL/" rel="tag"># DL</a>
+          
+        </div>
+      
 
       
       
@@ -381,15 +471,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/09/24/2017-09-24Why deep?/" rel="next" title="Why deep?">
+                <i class="fa fa-chevron-left"></i> Why deep?
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/29/2017-08-29fastText/" rel="prev" title="Some understanding about how fastText works">
-                Some understanding about how fastText works <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -525,7 +615,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#setup"><span class="nav-number">1.</span> <span class="nav-text">Setup</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deployment"><span class="nav-number">2.</span> <span class="nav-text">Deployment</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#write"><span class="nav-number">3.</span> <span class="nav-text">Write</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#publish"><span class="nav-number">4.</span> <span class="nav-text">Publish</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#maximum-likelihood-estimation"><span class="nav-number">1.</span> <span class="nav-text">Maximum Likelihood Estimation</span></a></li></ol></div>
             
 
           </div>
