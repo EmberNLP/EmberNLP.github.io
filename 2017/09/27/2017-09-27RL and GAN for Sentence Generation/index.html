@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://yoursite.com/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/HierarchicalEncoder.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/Seq2seqRL.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/SeqGANRandomness.png">
-<meta property="og:updated_time" content="2017-09-27T07:59:15.000Z">
+<meta property="og:updated_time" content="2017-09-27T07:59:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RL and GAN for Sentence Generation">
 <meta name="twitter:description" content="Contents  Review RL for Sentence Generation GAN for Sentence Generation  Review The details of traditional sequence to sequence models can be found in my previous blog. A little new things here. If we">
@@ -515,7 +515,8 @@ x^C &amp;= &quot;I \space don&#39;t \space know&quot; &amp;D(h^i,x^C) = 0.1\\\\
 x^D &amp;= &quot;I \space am \space superman&quot; &amp;D(h^i,x^D) = 0.8\\\\
 \end{split}\end{equation}\]</span>
 <p><span class="math display">\[Q(h^i, &quot;I&quot;) = \frac{1.0+0.1+0.1+0.8}{4} = 0.5\]</span></p>
-<p><strong>Rewarding Partially Decoded Sequences</strong> Training a discriminator D that is able to assign rewards to both fully and partially decoded sequences. We can simply break generated sequences into partial sequences.</p>
+<p><strong>Rewarding Partially Decoded Sequences</strong></p>
+<p>Training a discriminator D that is able to assign rewards to both fully and partially decoded sequences. We can simply break generated sequences into partial sequences.</p>
 <p>A little trick here. When we train G at the begining, it’s hard for G to learn. So we sample some real data to teach G what is the good answer.</p>
 <h3 id="reference">Reference</h3>
 <ol style="list-style-type: decimal">

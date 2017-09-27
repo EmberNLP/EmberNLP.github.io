@@ -511,7 +511,8 @@ x^C &amp;= &quot;I \space don&#39;t \space know&quot; &amp;D(h^i,x^C) = 0.1\\\\
 x^D &amp;= &quot;I \space am \space superman&quot; &amp;D(h^i,x^D) = 0.8\\\\
 \end{split}\end{equation}\]</span>
 <p><span class="math display">\[Q(h^i, &quot;I&quot;) = \frac{1.0+0.1+0.1+0.8}{4} = 0.5\]</span></p>
-<p><strong>Rewarding Partially Decoded Sequences</strong> Training a discriminator D that is able to assign rewards to both fully and partially decoded sequences. We can simply break generated sequences into partial sequences.</p>
+<p><strong>Rewarding Partially Decoded Sequences</strong></p>
+<p>Training a discriminator D that is able to assign rewards to both fully and partially decoded sequences. We can simply break generated sequences into partial sequences.</p>
 <p>A little trick here. When we train G at the begining, it’s hard for G to learn. So we sample some real data to teach G what is the good answer.</p>
 <h3 id="reference">Reference</h3>
 <ol style="list-style-type: decimal">
