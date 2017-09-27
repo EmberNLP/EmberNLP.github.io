@@ -371,31 +371,97 @@
             <h1 id="contents">Contents</h1>
 <ul>
 <li>Review</li>
-<li></li>
+<li>RL for Sentence Generation</li>
 </ul>
 <h3 id="review">Review</h3>
 <p>The details of traditional sequence to sequence models can be found in my previous <a href="https://embernlp.github.io/2017/09/15/2017-09-15Seq2seq/" target="_blank" rel="external">blog</a>.</p>
-<p>A little new things here. If we use sequecen to sequence model to train a chatbot, we need to take prvious dialogue into consideration when we generate next dialogue utterance. Here introduce the hierarchical encoder structure, it is shown below:</p>
+<p>A little new things here. If we use sequecen to sequence model to train a cwidehatbot, we need to take prvious dialogue into consideration when we generate next dialogue utterance. Here introduce the hierarchical encoder structure, it is shown below:</p>
 <center>
 <img src="/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/HierarchicalEncoder.png">
 </center>
 <p>Let’s define</p>
 <ul>
 <li><span class="math inline">\(h\)</span>: input sentence and history/context</li>
-<li><span class="math inline">\(\hat{x}\)</span>: correct reponse (word sequence)</li>
-<li><span class="math inline">\((h,\hat{x})\)</span>: training data</li>
-<li><span class="math inline">\(\hat{x}_t\)</span>: t-th word</li>
-<li><span class="math inline">\(\hat{x}_{1:t}\)</span>: first t words of <span class="math inline">\(\hat{x}\)</span></li>
+<li><span class="math inline">\(\widehat{x}\)</span>: correct reponse (word sequence)</li>
+<li><span class="math inline">\((h,\widehat{x})\)</span>: training data</li>
+<li><span class="math inline">\(\widehat{x}_t\)</span>: t-th word</li>
+<li><span class="math inline">\(\widehat{x}_{1:t}\)</span>: first t words of <span class="math inline">\(\widehat{x}\)</span></li>
 </ul>
-<p>Then we have our cost function as:</p>
+<p>We have our cost function as:</p>
 <span class="math display">\[\begin{equation}\begin{split}
-C_t &amp;= -logP_{\theta}(\hat{x}_t | \hat{x}_{1:t-1}, h)\\\\
-C &amp;= \Sigma_t log P(\hat{x}_t | \hat{x}_{1:t-1}, h)\\\\
-&amp;= -log P(\hat{x}_1 | h) P(\hat{x}_2 | \hat{x}_1, h) \cdots P(\hat{x}_t | \hat{x}_{1:t-1}, h) \cdots P(\hat{x}_T | \hat{x}_{1:T-1}, h)
+C_t &amp;= -logP_{\theta}(\widehat{x}_t | \widehat{x}_{1:t-1}, h)\\\\
+C &amp;= -\Sigma_t log P(\widehat{x}_t | \widehat{x}_{1:t-1}, h)\\\\
+&amp;= -log P(\widehat{x}_1 | h) P(\widehat{x}_2 | \widehat{x}_1, h) \cdots P(\widehat{x}_t | \widehat{x}_{1:t-1}, h) \cdots P(\widehat{x}_T | \widehat{x}_{1:T-1}, h)\\\\
+&amp;= -logP(\widehat{x} | h)
 \end{split}\end{equation}\]</span>
-<p>&amp;= -logP( | h)</p>
-<p>We maximize the likelihood of generating <span class="math inline">\(\hat{x}\)</span> given <span class="math inline">\(h\)</span>.</p>
-<h1 id="reference">Reference</h1>
+<p>Then maximize the likelihood of generating <span class="math inline">\(\widehat{x}\)</span> given <span class="math inline">\(h\)</span>.</p>
+<h3 id="rl-for-sentence-generation">RL for Sentence Generation</h3>
+<p>Different from seq2seq structure above, RL is introduced and the model learns to maximize the <em>expected reward</em> instead MLE. Rewards are designed by model developer.</p>
+<p>The structure is shown below.</p>
+<center>
+<img src="/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/Seq2seqRL.png">
+</center>
+<p>Our goal is: <span class="math inline">\(\theta^{\ast} = argmax_{theta} \bar{R}_{\theta}\)</span></p>
+<p>The expected reward is:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\bar{R}_{\theta} &amp;= \Sigma_h P(h) \Sigma_x R(h,x) P_{\theta} (x|h)\\\\
+&amp;= E_{h \sim P(h)} [E_{x \sim P_{\theta} (x|h)} [R(h,x)]]\\\\
+&amp;= E_{h \sim P(h), x \sim P_{\theta} (x|h)} [R(h,x)]\\\\
+&amp;\approx \frac{1}{N} \Sigma^N_{i=1} R(h^i,x^i) \qquad (sample: \{h^1,x^1\},\{h^2,x^2\},...,\{h^N,x^N\})
+\end{split}\end{equation}\]</span>
+<p>To update parameters <span class="math inline">\(\theta\)</span>:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\nabla \bar{R}_{\theta} &amp;= \Sigma_h P(h) \Sigma_x R(h,x) \nabla P_{\theta} (x|h)\\\\
+&amp;= \Sigma_h P(h) \Sigma_x R(h,x) P_{\theta} (x|h) \frac{\nabla P_{\theta} (x|h)}{P_{\theta} (x|h)}\\\\
+&amp;= \Sigma_h P(h) \Sigma_x R(h,x) P_{\theta} (x|h) \nabla log P_{\theta} (x|h)\\\\
+&amp;= E_{h \sim P(h), x \sim P_{\theta} (x|h)} [R(h,x)\nabla log P_{\theta} (x|h)]\\\\
+&amp;\approx \frac{1}{N} \Sigma^N_{i=1} R(h^i,x^i)\nabla log P_{\theta} (x^i|h^i)\\\\
+\qquad\\\\
+\theta^{new} &amp;\leftarrow \theta_{old} + \eta \nabla \bar{R}_{\theta^{old}}
+\end{split}\end{equation}\]</span>
+<ul>
+<li>If <span class="math inline">\(R(h^i,x^i)\)</span> is positive
+<ul>
+<li>After updating <span class="math inline">\(\theta\)</span>, <span class="math inline">\(P_{\theta} (x^i|h^i)\)</span> will increase</li>
+</ul></li>
+<li>If <span class="math inline">\(R(h^i,x^i)\)</span> is negative
+<ul>
+<li>After updating <span class="math inline">\(\theta\)</span>, <span class="math inline">\(P_{\theta} (x^i|h^i)\)</span> will decrease</li>
+</ul></li>
+</ul>
+<p>We have a summary here, to compare traditional seq2seq model and RL seq2seq model:</p>
+<table style="width:72%;">
+<colgroup>
+<col width="15%">
+<col width="27%">
+<col width="29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>MLE</th>
+<th>RL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Objective Function</td>
+<td><span class="math inline">\(\frac{1}{N} \Sigma^N_{i=1} log P_{\theta} (\widehat{x}^i \mid h^i)\)</span></td>
+<td><span class="math inline">\(\frac{1}{N} \Sigma^N_{i=1} R(h^i,x^i)logP_{\theta}(x^i,h^i)\)</span></td>
+</tr>
+<tr class="even">
+<td>Gradient</td>
+<td><span class="math inline">\(\frac{1}{N} \Sigma^N_{i=1} \nabla log P_{\theta} (\widehat{x}^i \mid h^i)\)</span></td>
+<td><span class="math inline">\(\frac{1}{N} \Sigma^N_{i=1} R(h^i,x^i) \nabla logP_{\theta}(x^i,h^i)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Training Data</td>
+<td>{<span class="math inline">\((h^1,\widehat{x}^1),...,(h^N,\widehat{x}^N)\)</span>} <span class="math inline">\(R(h^i, \widehat{x}^i)=1\)</span></td>
+<td>{<span class="math inline">\((h^1,x^1),...,(h^N,x^N)\)</span>} Sampling as training data weighted by <span class="math inline">\(R(h^i, x^i)\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="reference">Reference</h3>
 <ol style="list-style-type: decimal">
 <li>Deep Reinforcement Learning for Dialogue Generation</li>
 </ol>
