@@ -372,6 +372,7 @@
 <ul>
 <li>Review</li>
 <li>RL for Sentence Generation</li>
+<li>GAN for Sentence Generation</li>
 </ul>
 <h3 id="review">Review</h3>
 <p>The details of traditional sequence to sequence models can be found in my previous <a href="https://embernlp.github.io/2017/09/15/2017-09-15Seq2seq/" target="_blank" rel="external">blog</a>.</p>
@@ -466,6 +467,23 @@ C &amp;= -\Sigma_t log P(\widehat{x}_t | \widehat{x}_{1:t-1}, h)\\\\
 <li>Model is trained using supervised seq2seq structure first , results will be later used for initialization.</li>
 <li>Add a baseline <span class="math inline">\(\frac{1}{N} \Sigma^N_{i=1} (R(h^i,x^i)-b) \nabla logP_{\theta}(x^i,h^i)\)</span></li>
 </ol>
+<h3 id="gan-for-sentence-generation">GAN for Sentence Generation</h3>
+<p>Using GAN to generate sentence is quite straightforward.</p>
+<p>First, we initialize generator G and discriminator D Then, in each iteration:</p>
+<ul>
+<li>Sample real sentences <span class="math inline">\(x\)</span> from database</li>
+<li>Generate sentences <span class="math inline">\(\widetilde{x}\)</span> by G</li>
+<li><p>Update D to increase <span class="math inline">\(D(x)\)</span> and decrease <span class="math inline">\(D(\widetilde{x})\)</span></p></li>
+<li><p>Update G such that <span class="math inline">\(\widetilde{x}\)</span> will have higher score from D.</p></li>
+</ul>
+<p>Another application which is much similar to sentence generation is chat-bot, using GAN to train a chat-bot is also quite similar:</p>
+<p>First, initilize generator G(Encoder-Decoder structure) and discriminator D Then in each iteration:</p>
+<ul>
+<li>Sample real history <span class="math inline">\(h\)</span> and sentence <span class="math inline">\(x\)</span> from database</li>
+<li>Sample real history <span class="math inline">\(h&#39;\)</span> from database, and generate sentences <span class="math inline">\(\widetilde{x}\)</span> by <span class="math inline">\(G(h&#39;)\)</span>.</li>
+<li><p>Update <span class="math inline">\(D\)</span> to increase <span class="math inline">\(D(h,x)\)</span> and decrease <span class="math inline">\(D(h&#39;,\widetilde{x})\)</span>.</p></li>
+<li><p>update G such that <span class="math inline">\(G(h&#39;)\)</span> will have higher score from D.</p></li>
+</ul>
 <h3 id="reference">Reference</h3>
 <ol style="list-style-type: decimal">
 <li>Deep Reinforcement Learning for Dialogue Generation</li>
