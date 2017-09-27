@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="RNN,DL,RL," />
 
 
 
@@ -95,14 +95,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+<meta name="description" content="Contents  Review   Review The details of traditional sequence to sequence models can be found in my previous blog. A little new things here. If we use sequecen to sequence model to train a chatbot, we">
+<meta name="keywords" content="RNN,DL,RL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RL and GAN for Sentence Generation">
+<meta property="og:url" content="http://yoursite.com/2017/09/27/2017-09-27RL and GAN for Sentence Generation/index.html">
 <meta property="og:site_name" content="EmberNLP">
+<meta property="og:description" content="Contents  Review   Review The details of traditional sequence to sequence models can be found in my previous blog. A little new things here. If we use sequecen to sequence model to train a chatbot, we">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-08-31T01:40:21.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/HierarchicalEncoder.png">
+<meta property="og:updated_time" content="2017-09-27T01:20:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
+<meta name="twitter:title" content="RL and GAN for Sentence Generation">
+<meta name="twitter:description" content="Contents  Review   Review The details of traditional sequence to sequence models can be found in my previous blog. A little new things here. If we use sequecen to sequence model to train a chatbot, we">
+<meta name="twitter:image" content="http://yoursite.com/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/HierarchicalEncoder.png">
 
 
 
@@ -132,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/27/2017-09-27RL and GAN for Sentence Generation/"/>
 
 
 
 
 
-  <title>categories | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>RL and GAN for Sentence Generation | EmberNLP</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -263,40 +269,200 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/27/2017-09-27RL and GAN for Sentence Generation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">categories</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                3 categories in total
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DL/">DL</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Intuition/">Intuition</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Paper-Notes/">Paper Notes</a><span class="category-list-count">11</span></li></ul>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">RL and GAN for Sentence Generation</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-27T11:01:30+10:00">
+                2017-09-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="contents">Contents</h1>
+<ul>
+<li>Review</li>
+<li></li>
+</ul>
+<h3 id="review">Review</h3>
+<p>The details of traditional sequence to sequence models can be found in my previous <a href="https://embernlp.github.io/2017/09/15/2017-09-15Seq2seq/" target="_blank" rel="external">blog</a>.</p>
+<p>A little new things here. If we use sequecen to sequence model to train a chatbot, we need to take prvious dialogue into consideration when we generate next dialogue utterance. Here introduce the hierarchical encoder structure, it is shown below:</p>
+<center>
+<img src="/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/HierarchicalEncoder.png">
+</center>
+<p>Let’s define</p>
+<ul>
+<li><span class="math inline">\(h\)</span>: input sentence and history/context</li>
+<li><span class="math inline">\(\hat{x}\)</span>: correct reponse (word sequence)</li>
+<li><span class="math inline">\((h,\hat{x})\)</span>: training data</li>
+<li><span class="math inline">\(\hat{x}_t\)</span>: t-th word</li>
+<li><span class="math inline">\(\hat{x}_{1:t}\)</span>: first t words of <span class="math inline">\(\hat{x}\)</span></li>
+</ul>
+<p>Then we have our cost function as:</p>
+<span class="math display">\[\begin{equation}\begin{split}
+C_t &amp;= -logP_{\theta}(\hat{x}_t | \hat{x}_{1:t-1}, h)\\\\
+C &amp;= \Sigma_t log P(\hat{x}_t | \hat{x}_{1:t-1}, h)\\\\
+&amp;= -log P(\hat{x}_1 | h) P(\hat{x}_2 | \hat{x}_1, h) \cdots P(\hat{x}_t | \hat{x}_{1:t-1}, h) \cdots P(\hat{x}_T | \hat{x}_{1:T-1}, h)
+\end{split}\end{equation}\]</span>
+<p>&amp;= -logP( | h)</p>
+<p>We maximize the likelihood of generating <span class="math inline">\(\hat{x}\)</span> given <span class="math inline">\(h\)</span>.</p>
+<h1 id="reference">Reference</h1>
+<ol style="list-style-type: decimal">
+<li>Deep Reinforcement Learning for Dialogue Generation</li>
+</ol>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RNN/" rel="tag"># RNN</a>
+          
+            <a href="/tags/DL/" rel="tag"># DL</a>
+          
+            <a href="/tags/RL/" rel="tag"># RL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/25/2017-09-25GAN/" rel="next" title="Generative Adversarial Network">
+                <i class="fa fa-chevron-left"></i> Generative Adversarial Network
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -329,8 +495,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -394,6 +569,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#contents"><span class="nav-number">1.</span> <span class="nav-text">Contents</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#review"><span class="nav-number">1.0.1.</span> <span class="nav-text">Review</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -514,6 +705,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 

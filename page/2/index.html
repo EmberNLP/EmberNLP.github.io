@@ -275,6 +275,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/14/2017-09-14Supervised Learning of Universal Sentence Representations from Natural Language Inference Data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ember">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EmberNLP">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/14/2017-09-14Supervised Learning of Universal Sentence Representations from Natural Language Inference Data/" itemprop="url">Supervised Learning of Universal Sentence Representations from Natural Language Inference Data</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-14T15:52:30+10:00">
+                2017-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Paper Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="contents">Contents</h1>
+<ul>
+<li>Introduction</li>
+<li>The Natural Language Inference Task</li>
+<li>Encoder Models
+<ul>
+<li>LSTM and GRU</li>
+<li>BiLSTM With Mean/Max Pooling</li>
+<li>Self-attentive Network</li>
+<li>Hierarchical ConvNet</li>
+</ul></li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>This paper studies the task of learning universal representations of sentences, i.e., a sentence encoder model that is trained on a large corpus and subsequently transferred to other tasks.</p>
+<p>Unlike in computer vision, where convolutional neural networks are predominant, there are multiple ways to encode a sentence using neural networks. The experiments of this paper show that an encoder based on a bi-directional LSTM architecture with max pooling, trained the Stanford Natural Language Inference dataset, yields state-of-the-art sentence embeddings compared to all existing alternative unsupervised approaches like SkipThought or FastSent, while being much faster to train.</p>
+<p>The difficulty for this task is that neural networks are very good at capturing the biases of the task on which they are trained, but can easily forget the overall information or semantics of the input data by specializing too much on these biases.</p>
+<h1 id="the-natural-language-inference-task">The Natural Language Inference Task</h1>
+<p>The SNLI dataset consists of 570k human-generated English sentence pairs, manually labeled with one of three categories: entailment, contradiction and neutral. It captures natural language inference, also known in previous incarnations as Recognizing Textual Entailment (RTE), and constitutes one of the largest high-quality labeled resources explicitly constructed in order to require understanding sentence semantics.</p>
+<center>
+<img src="/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/GenericNLITrainingScheme.png">
+</center>
+<h1 id="encoder-models">Encoder Models</h1>
+<h3 id="lstm-and-gru">LSTM and GRU</h3>
+<p>Encoders apply recurrent neural networks using either LSTM or GRU modules, as in sequence to sequence encoders. For a sequence of T words <span class="math inline">\((w_1,...,w_T)\)</span>, the network computes a set of <span class="math inline">\(T\)</span> hidden representations <span class="math inline">\(h_1,h_2,...,h_T\)</span>, with <span class="math inline">\(h_t = \overrightarrow{LSTM}(w_1,...,w_T)\)</span> (or GRU units instead). A sentence is represented by the last hidden vector, <span class="math inline">\(h_T\)</span>.</p>
+<h3 id="bilstm-with-meanmax-pooling">BiLSTM With Mean/Max Pooling</h3>
+<center>
+<img src="/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/BiLSTMMaxPoolingNetwork.png">
+</center>
+<span class="math display">\[\begin{equation}\begin{split}
+\overrightarrow{h_t} &amp;= \overrightarrow{LSTM}_t(w_1,...,w_T)\\\\
+\overleftarrow{h_t} &amp;= \overleftarrow{LSTM}_t(w_1,...,w_T)\\\\
+h_t &amp;= [\overrightarrow{h_t}, \overleftarrow{h_t}]
+\end{split}\end{equation}\]</span>
+<h3 id="self-attentive-network">Self-attentive Network</h3>
+<center>
+<img src="/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/InnerAttentionNetworkArchitecture.png">
+</center>
+<span class="math display">\[\begin{equation}\begin{split}
+\overline{h}_i &amp;= tanh(Wh_i + b_w)\\\\
+\alpha_i &amp;= \frac{e^{\overline{h}^T_i u_w}}{\Sigma_i e^{\overline{h}^T_i u_w}}\\\\
+u &amp;= \Sigma_i \alpha_i h_i
+\end{split}\end{equation}\]</span>
+<p>Where {<span class="math inline">\(h_1,...,h_T\)</span>} are the output vectors of a BiLSTM. These are fed to an affine transformation (<span class="math inline">\(W, b_w\)</span>) whcih outputs a set of keys (<span class="math inline">\(\overline{h}_1,...,\overline{h}_T\)</span>). The {<span class="math inline">\(\alpha_i\)</span>} represent the score of similarity between the keys and a learned context query vector <span class="math inline">\(u_w\)</span>. These weights are used to produce the final representation <span class="math inline">\(u\)</span>, which is a weighted linear combination of the hidden vectors.</p>
+<h3 id="hierarchical-convnet">Hierarchical ConvNet</h3>
+<center>
+<img src="/images/2017-09-14Supervised%20Learning%20of%20Universal%20Sentence%20Representations%20from%20Natural%20Language%20Inference%20Data/HierarchicalConvNetArchitecture.png">
+</center>
+<p>One of the currently best performing models on classification tasks is a convolutional architecture. It concatenates different representations of the sentences at different level of abstractions. The paper introduces a faster version consisting of 4 convolutional layers. At every layer, a representation <span class="math inline">\(u_i\)</span> is computed by a max-pooling operation over the feature maps. The final representation <span class="math inline">\(u = [u_1,u_2,u_3,u_4]\)</span> concatenates representations at different levels of the input sentence. The model thus captures hierarchical abstractions of an input sentence in a fixed-size representation.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/13/2017-09-13Show attend and tell/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1842,311 +2031,6 @@ v_t &amp;= \beta v_{t-1} + (1-\beta)\theta_t\\\\
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/29/2017-08-29fastText/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Ember">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EmberNLP">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/29/2017-08-29fastText/" itemprop="url">Some understanding about how fastText works</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-29T16:31:06+10:00">
-                2017-08-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Paper-Notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Paper Notes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="table-of-contents">Table of contents</h1>
-<ul>
-<li>Introduction</li>
-<li>Word Embedding
-<ul>
-<li>The Skip-gram Model</li>
-<li>CBOW Model</li>
-<li>fastText Model</li>
-</ul></li>
-<li>Hierarchical Softmax
-<ul>
-<li>Huffman Tree</li>
-<li>Huffman Coding</li>
-<li>Derivatives of Hierarchical Softmax</li>
-</ul></li>
-<li>Conclusion</li>
-</ul>
-<h1 id="introduction">1. Introduction</h1>
-<p>FastText is a library created by the Facebook Research Team for efficient learning of <strong>word representations</strong> and <strong>sentence classification</strong>. There are two main refernece papers:</p>
-<ul>
-<li>P. Bojanowski<em>, E. Grave</em>, A. Joulin, T. Mikolov, <a href="https://arxiv.org/abs/1607.04606" target="_blank" rel="external">Enriching Word Vectors with Subword Information</a></li>
-<li>A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, <a href="https://arxiv.org/abs/1607.01759" target="_blank" rel="external">Bag of Tricks for Efficient Text Classification</a></li>
-</ul>
-<h1 id="word-embedding">2. Word Embedding</h1>
-<p>Representing words in vectors (espicially word2vec) is widely used in Natural Language Processing applications because it’s fast and easy to use. However, there are several drawbacks of word2vec.</p>
-<ol style="list-style-type: decimal">
-<li>You can not build sentence representations easily. People take like average vector of a sentence and use it, but actually it not works well.</li>
-<li>The other thing is that it doesn’t exploit morphology. Which means words with same radicals do not share parameters. For example: <strong>disastrous</strong> is different from <strong>disaster</strong>.</li>
-</ol>
-<h2 id="the-skip-gram-model">2.1 The Skip-gram Model</h2>
-<p>Given a word in the middle, we can sucessively predict all the words in its context.</p>
-<center>
-<img src="/images/2017-08-29fastText/skipgram.png">
-</center>
-<p>For instance: <em>The mighty <strong>knight</strong> Lancelot fought bravely</em>, we use <strong>knight</strong> to predict <em>the</em>, <em>mighty</em>, <em>lancelot</em>, <em>fought</em> and <em>bravely</em>.</p>
-<p>Our goal is to model probability of a <strong>context word</strong> given a word:</p>
-<ul>
-<li>feature for word w: <span class="math inline">\(\space x_{w}\)</span></li>
-<li>classifier for context word c: <span class="math inline">\(\space v_{c}\)</span></li>
-</ul>
-<p><span class="math display">\[p(w|c) = \frac{exp(x^T_wv_c)}{\Sigma_{k=1}^Kexp(x_w^Tv_k)}\]</span></p>
-<p>And Word Vectors <span class="math inline">\(x_w\in\mathbb{R}^d\)</span>, are used for some downstream tasks.</p>
-<p>To train this model, we need to minimize a <em><strong>negative log likelihood</strong></em>:</p>
-<p><span class="math display">\[min_{x,v} \space-\Sigma^T_{t=1}\Sigma_{c{\in}C_t}log\frac{e^{x^T_{w_t}v_c}}{\Sigma^K_{k=1}e^{x^T_{w_t}v_k}}\]</span></p>
-<p>However, the denominator of the softmax is very computationally intensive. There are two main approximations.</p>
-<ul>
-<li>Replace the multiclass loss by a set of binary logistic losses</li>
-<li><em><strong>Negative sampling</strong></em> (you have the positive word in the context and then just sample some random ones in the dictionary)</li>
-</ul>
-<p><span class="math display">\[log(1+e^{-x^T_{w_t}v_c}) + \Sigma_{n{\in}\mathcal{N}_c}log(1+e^{x^T_{w_t}v_n})\]</span></p>
-<ul>
-<li><em><strong>Hierarchical softmax</strong></em>: represent every word as a set of codes <span class="math inline">\(y_{ck}\)</span>. These codes are obtained by computing the Huffman tree. In the end, very frequent words are going to have short codes and very unfrequent words are going to have longer codes, so it’s very fast to evaluate and just sum over the codes for every example. I’ll explain this method in detail in the next section.</li>
-</ul>
-<p><span class="math display">\[\Sigma_{k{\in}\mathcal{K}_c}log(1 + e^{y_{ck}x^T_{w_t}v_k})\]</span></p>
-<h2 id="cbow-model">2.2 CBOW Model</h2>
-<p>Given a context and sum the vectors to predict the word in the middle.</p>
-<center>
-<img src="/images/2017-08-29fastText/CBOW.png">
-</center>
-<p>For instance: <em>The mighty <strong>knight</strong> Lancelot fought bravely</em>, we use <em>the</em>, <em>mighty</em>, <em>lancelot</em>, <em>fought</em> and <em>bravely</em> to predict <em>knight</em>.</p>
-<p>Our goal is to model the probability of a word given a context:</p>
-<ul>
-<li>feature for context <span class="math inline">\(\mathcal{C}: h_{\mathcal{C}}\)</span></li>
-<li>classifier for word <span class="math inline">\(w: v_w\)</span></li>
-</ul>
-<p><span class="math display">\[p(w|\mathcal{C}) = \frac{e^{h^T_{\mathcal{C}}v_w}}{\Sigma^K_{k=1}e^{h^T_{\mathcal{C}}v_k}}\]</span></p>
-<p>And <span class="math inline">\(h_{\mathcal{C}}\)</span> is just the sum of the words in the context and that’s why it is called the <em><strong>continuous bag of words</strong></em>:</p>
-<p><span class="math display">\[h_{\mathcal{C}} = \Sigma_{c{\in}\mathcal{C}}x_c\]</span></p>
-<h2 id="fasttext-model">2.3 fastText Model</h2>
-<p>The goal is to model the probability of a <em>label</em> given a <em>paragraph</em> so you have:</p>
-<ul>
-<li>feature for paragraph <span class="math inline">\(\mathcal{P}: h_{\mathcal{p}}\)</span></li>
-<li>classifier for label <span class="math inline">\(l: v_l\)</span></li>
-</ul>
-<p><span class="math display">\[p(l|\mathcal{P}) = \frac{e^{h^T_{\mathcal{P}}v_l}}{\Sigma^K_{k=1}e^{h^T_{\mathcal{P}}v_k}}\]</span></p>
-<ul>
-<li>Paragraph feather:</li>
-</ul>
-<p><span class="math display">\[h_{\mathcal{p}} = \Sigma_{w{\in}\mathcal{p}}x_w\]</span></p>
-<h4 id="exploiting-sub-word-information">Exploiting sub-word information</h4>
-<ul>
-<li>Represent words as the sum of its <em><strong>character n-grams</strong></em>.
-<ul>
-<li>Add special positional characters: ^knight$</li>
-<li>All ending n-grams have special meaning</li>
-</ul></li>
-<li>Grammatical variations have roughtly the same mixture of n-grams</li>
-<li>As in skip-gram: model probability of a <em><em>context word</em></em> given a word
-<ul>
-<li>classifer for word <span class="math inline">\(c: v_c\)</span></li>
-<li>feature for word <span class="math inline">\(w: h_w\)</span></li>
-</ul></li>
-</ul>
-<p><span class="math display">\[p(c|w) = \frac{e^{h^T_w}v_c}{\Sigma^K_{k=1}e^{h^T_wv_k}}\]</span></p>
-<ul>
-<li>Feature of a word is computed using n-grams, it takes all the character n-grams and the word itself, using hashing to store them. This makes it possible to build vectors for unseen words.</li>
-</ul>
-<p><span class="math display">\[h_w = \Sigma_{g{\in}w}x_g\]</span></p>
-<h1 id="hierarchical-softmax">3. Hierarchical Softmax</h1>
-<h2 id="hoffman-tree">3.1 Hoffman Tree</h2>
-<p><em><strong>Algorithm of constucting a Huffman Tree</strong></em></p>
-<ol style="list-style-type: decimal">
-<li>Create a leaf node for each symbol and add it to the priority queue.</li>
-<li>While there is more than one node in the queue:
-<ul>
-<li>Remove the two nodes of highest priority (lowest probability) from the queue</li>
-<li>Create a new internal node with these two nodes as children and with probability equal to the sum of the two nodes’ probabilities.</li>
-<li>Add the new node to the queue.</li>
-</ul></li>
-<li>The remaining node is the root node and the tree is complete.</li>
-</ol>
-<p>The following graph is an example:</p>
-<center>
-<img src="/images/2017-08-29fastText/HuffmanTree.png">
-</center>
-<p>To use Hoffman tree in our language models, symbols here can represents words (for both Skip-gram model and CBOW model) or paragraph labels (fastText Model). And also, from the algorithm, we can easily know that symbols with higher frequency are closer to the root of the Huffman tree.</p>
-<h2 id="hoffman-coding">3.2 Hoffman Coding</h2>
-To code a Huffman tree, just simply code all left nodes as 1 and right nodes as 0. Then we can represent each leaf based on the path from root. Also, nodes closer to the root will have shorter path.
-<center>
-<img src="/images/2017-08-29fastText/HuffmanCoding.png">
-</center>
-<p>For exampl, the Huffman coding of node (3) is <em>0111</em>.</p>
-<h2 id="derivatives-of-hierarchical-softmax">3.3 Derivatives of Hierarchical Softmax</h2>
-Let us use the following graph as an example to illustrate how to calculate the derivatives of hierarchical softmax.
-<center>
-<img src="/images/2017-08-29fastText/Derivative_of_Softmax.png">
-</center>
-<p>First, let’s define some notations here:</p>
-<ul>
-<li><span class="math inline">\(x_w\)</span> denote the input feature to the hierarchical softmax;</li>
-<li><span class="math inline">\(p^w\)</span>: path from root to leaf <span class="math inline">\(w\)</span>;</li>
-<li><span class="math inline">\(l^w\)</span>: number of nodes in the path <span class="math inline">\(p^w\)</span>;</li>
-<li><span class="math inline">\(p^w_1,p^w_2,...,p^w_{l^w}\)</span>: denote the nodes in the path <span class="math inline">\(p^w\)</span>;</li>
-<li><span class="math inline">\(d^w_2,d^w_3,...,d^w_{l^w}\)</span>: the Huffman code of word w, it consists <span class="math inline">\(l^w-1\)</span> digits (0 or 1);</li>
-<li><span class="math inline">\(\theta^w_1,\theta^w_2,...,\theta^w_{l^w-1}\)</span>: the weights of nodes in the path <span class="math inline">\(p^w\)</span> except for the leaf;</li>
-<li>And just follow Google’s usage, 1 stands for negative samples and 0 stands for positive samples.</li>
-</ul>
-<p>Now, take the node “Sport” as an example. It takes four binary classification to travel from root to node “Sport”:</p>
-<ul>
-<li>First: <span class="math inline">\(\space p(d^w_2|x_w,\theta^w_1) = \sigma(x^T_w\theta^w_1)\)</span></li>
-<li>Second: <span class="math inline">\(\space p(d^w_3|x_w,\theta^w_2) = 1 - \sigma(x^T_w\theta^w_2)\)</span></li>
-<li>Third: <span class="math inline">\(\space p(d^w_4|x_w,\theta^w_3) = 1 - \sigma(x^T_w\theta^w_3)\)</span></li>
-<li>Fourth: <span class="math inline">\(\space p(d^w_5|x_w,\theta^w_4) = 1 - \sigma(x^T_w\theta^w_4)\)</span></li>
-</ul>
-<p>And we have: <span class="math display">\[p(Sport|input) = \prod^5_{j=2}p(d^w_j|x_w,\theta^w_1)\]</span></p>
-In general, we have: <span class="math display">\[p(w|input) = \prod^{l^w}_{j=2}p(d^w_j|x_w,\theta^w_{j-1})\]</span> <span class="math display">\[p(d^w_j|x_w,\theta^w_{j-1}) = [\sigma(x^T_w\theta^w_{j-1})]^{1-d^w_j}[1 - \sigma(x^T_w\theta^w_{j-1})]^{d^w_j}\]</span> The log-likelihood function is:
-<span class="math display">\[\begin{equation}\begin{split}
-\mathcal{L} &amp;= log \prod^{l^w}_{j=2}{[\sigma(x^T_w\theta^w_{j-1})]^{1-d^w_j}[1 - \sigma(x^T_w\theta^w_{j-1})]^{d^w_j}}\\\\
-&amp;= \Sigma^{l^w}_{j=2}{(1-d^w_j)log[\sigma(x^T_w\theta^w_{j-1})]+d^w_jlog[1-\sigma(x^T_w\theta^w_{j-1})]}
-\end{split}\end{equation}\]</span>
-The calculation of derivatives are as follows:
-<span class="math display">\[\begin{equation}\begin{split}
-\frac{\partial \mathcal{L}(w,j)}{\partial \theta^w_{j-1}} &amp;= \frac{\partial}{\partial\theta^w_{j-1}}\{(1-d^w_j)log[\sigma(x^T_w\theta^w_{j-1})] + d^w_jlog[1-\sigma(x^T_w\theta^w_{j-1})]\}\\\\
-&amp;= (1-d^w_j)[1-\sigma(x^T_w\theta^w_{j-1})]x_w-d^w_j\sigma(x^T_w\theta^w_{j-1})x_w\\\\
-&amp;=\{(1-d^w_j)[1-\sigma(x^T_w\theta^w_{j-1})]-d^w_j\sigma(x^T_w\theta^w_{j-1})\}x_w\\\\
-&amp;= [1-d^w_j-\sigma(x^T_w\theta^w_{j-1})]x_w
-\end{split}\end{equation}\]</span>
-<p>And similarly, for <span class="math inline">\(x_w\)</span>: <span class="math display">\[\frac{\partial\mathcal{L}(w,j)}{\partial x_w} = [1-d^w_j-\sigma(x^T_w\theta^w_{j-1})]\theta^w_{j-1}\]</span></p>
-<h1 id="conclusion">Conclusion</h1>
-<h1 id="reference">Reference</h1>
-<ol style="list-style-type: decimal">
-<li><a href="https://www.analyticsvidhya.com/blog/2017/07/word-representations-text-classification-using-fasttext-nlp-facebook/" target="_blank" rel="external">Text Classification &amp; Word Representations using FastText (An NLP library by Facebook)</a></li>
-<li><a href="http://www.cnblogs.com/peghoty/p/3857839.html" class="uri" target="_blank" rel="external">http://www.cnblogs.com/peghoty/p/3857839.html</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2199,7 +2083,7 @@ The calculation of derivatives are as follows:
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
