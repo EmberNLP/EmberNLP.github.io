@@ -105,7 +105,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/HierarchicalEncoder.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/Seq2seqRL.png">
-<meta property="og:updated_time" content="2017-09-27T02:54:20.000Z">
+<meta property="og:updated_time" content="2017-09-27T02:59:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RL and GAN for Sentence Generation">
 <meta name="twitter:description" content="Contents  Review RL for Sentence Generation  Review The details of traditional sequence to sequence models can be found in my previous blog. A little new things here. If we use sequecen to sequence mo">
@@ -464,6 +464,11 @@ C &amp;= -\Sigma_t log P(\widehat{x}_t | \widehat{x}_{1:t-1}, h)\\\\
 </tr>
 </tbody>
 </table>
+<p>Two things to notice here:</p>
+<ol style="list-style-type: decimal">
+<li>Model is trained using supervised seq2seq structure first , results will be later used for initialization.</li>
+<li>Add a baseline <span class="math inline">\(\frac{1}{N} \Sigma^N_{i=1} (R(h^i,x^i)-b) \nabla logP_{\theta}(x^i,h^i)\)</span></li>
+</ol>
 <h3 id="reference">Reference</h3>
 <ol style="list-style-type: decimal">
 <li>Deep Reinforcement Learning for Dialogue Generation</li>
