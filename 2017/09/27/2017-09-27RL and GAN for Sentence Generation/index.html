@@ -105,7 +105,8 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/HierarchicalEncoder.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/Seq2seqRL.png">
-<meta property="og:updated_time" content="2017-09-27T05:49:05.000Z">
+<meta property="og:image" content="http://yoursite.com/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/SeqGANRandomness.png">
+<meta property="og:updated_time" content="2017-09-27T07:59:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RL and GAN for Sentence Generation">
 <meta name="twitter:description" content="Contents  Review RL for Sentence Generation GAN for Sentence Generation  Review The details of traditional sequence to sequence models can be found in my previous blog. A little new things here. If we">
@@ -480,16 +481,47 @@ C &amp;= -\Sigma_t log P(\widehat{x}_t | \widehat{x}_{1:t-1}, h)\\\\
 <li><p>Update G such that <span class="math inline">\(\widetilde{x}\)</span> will have higher score from D.</p></li>
 </ul>
 <p>Another application which is much similar to sentence generation is chat-bot, using GAN to train a chat-bot is also quite similar:</p>
-<p>First, initilize generator G(Encoder-Decoder structure) and discriminator D Then in each iteration:</p>
+<p>First, initilize generator G(Encoder-Decoder structure) and discriminator D (rnn based structure) Then in each iteration:</p>
 <ul>
 <li>Sample real history <span class="math inline">\(h\)</span> and sentence <span class="math inline">\(x\)</span> from database</li>
 <li>Sample real history <span class="math inline">\(h&#39;\)</span> from database, and generate sentences <span class="math inline">\(\widetilde{x}\)</span> by <span class="math inline">\(G(h&#39;)\)</span>.</li>
 <li><p>Update <span class="math inline">\(D\)</span> to increase <span class="math inline">\(D(h,x)\)</span> and decrease <span class="math inline">\(D(h&#39;,\widetilde{x})\)</span>.</p></li>
 <li><p>update G such that <span class="math inline">\(G(h&#39;)\)</span> will have higher score from D.</p></li>
 </ul>
+<p>One important thing to notice! When we generate sentences from G, every word is sampled from a predicted distribution. So there exists randomness between G and D, and backpropogation does not work! This is illustrated below:</p>
+<center>
+<img src="/images/2017-09-27RL%20and%20GAN%20for%20Sentence%20Generation/SeqGANRandomness.png">
+</center>
+<p>The blue dash line shows the randomness. It implies that a small change of the parameters in the G will not affect its output. So, RL shows up.</p>
+<p>Consider the output of D as reward, we update G to increase D so as to get maximum reward.</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\nabla \bar{R}_{\theta} &amp;\approx \frac{1}{N} \Sigma^N_{i=1} (R(h^i,x^i)-b) \nabla log P_{\theta} (x^i \mid h^i)\\\\
+&amp;= \frac{1}{N} \Sigma^N_{i=1} (D(h^i,x^i)-b) \nabla log P_{\theta} (x^i \mid h^i)
+\end{split}\end{equation}\]</span>
+<p>Different from typical RL, D will update.</p>
+<p>Another important issue about the above algorithm is that we use the same reward for the entire output sentence, which means the probability of every word will increase or decrease simultaneously. This is not we want it to do and we can improve it! Let’s change the gradient a little bit.</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\nabla \bar{R}_{\theta} &amp;= \frac{1}{N} \Sigma^N_{i=1} (D(h^i,x^i)-b) \nabla log P_{\theta} (x^i \mid h^i)\\\\
+&amp;\approx \frac{1}{N} \Sigma^N_{i=1} \Sigma^T_{t=1} (Q(h^i,x^i_{1:t})-b) \nabla log P_{\theta} (x^i_t \mid h^i, x^i_{1:t-1})
+\end{split}\end{equation}\]</span>
+<p>It raises another question, how to get the value of <span class="math inline">\(Q(h^i,x^i_{1:t})\)</span>?</p>
+<p><strong>MC Search</strong></p>
+<p>Here is an example. Out target is Q(“What is your name?”, “I”)</p>
+<p>We put “What is your name?” into generator G, and force it to generate “I” as the first word and then let it continue generating other words. Due to the randomness we mentioned abvoe, then we can get many different sentences. Finally, we put all the generated sentences into the discriminator D to obtain the scores, and average them to get the reward for a specific word.</p>
+<span class="math display">\[\begin{equation}\begin{split}
+x^A &amp;= &quot;I \space am \space John&quot; &amp;D(h^i,x^A) = 1.0\\\\
+x^B &amp;= &quot;I \space am \space happy&quot; &amp;D(h^i,x^B) = 0.1\\\\
+x^C &amp;= &quot;I \space don&#39;t \space know&quot; &amp;D(h^i,x^C) = 0.1\\\\
+x^D &amp;= &quot;I \space am \space superman&quot; &amp;D(h^i,x^D) = 0.8\\\\
+\end{split}\end{equation}\]</span>
+<p><span class="math display">\[Q(h^i, &quot;I&quot;) = \frac{1.0+0.1+0.1+0.8}{4} = 0.5\]</span></p>
+<p><strong>Rewarding Partially Decoded Sequences</strong> Training a discriminator D that is able to assign rewards to both fully and partially decoded sequences. We can simply break generated sequences into partial sequences.</p>
+<p>A little trick here. When we train G at the begining, it’s hard for G to learn. So we sample some real data to teach G what is the good answer.</p>
 <h3 id="reference">Reference</h3>
 <ol style="list-style-type: decimal">
 <li>Deep Reinforcement Learning for Dialogue Generation</li>
+<li>SeqGAN: Sequence Generative Adversarial Nets wirh Policy Gradient</li>
+<li>Adversarial Learning for Neural Dialogue Generation</li>
 </ol>
 
       
