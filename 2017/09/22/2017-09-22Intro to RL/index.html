@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/GlobalPicture.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/PolicyGradient.png">
 <meta property="og:image" content="http://yoursite.com/images/2017-09-22Intro%20to%20RL/Baseline.png">
-<meta property="og:updated_time" content="2017-09-28T02:02:58.000Z">
+<meta property="og:updated_time" content="2017-09-28T02:13:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Introduction to Reinforcement Learning">
 <meta name="twitter:description" content="Contents  Introduction Policy Gradient  Step 1: Define the Actor Step 2: How to Evaluate the Actor Step 3: Step 3: How to Improve the Actor Policy Gradient in Practice  Value Based Approach—Learning a">
@@ -563,9 +563,9 @@ V^{\pi}(s_t) + r_t = V^{\pi}(s_{t+1})
 <p>The basic idea of Actor-Critic is the to combine policy gradient and value function. To modify the cost derivative function in Policy Gradient a little bit, we have</p>
 <span class="math display">\[\begin{equation}\begin{split}
 \nabla \bar{R}_{\theta^{\pi}} &amp;= \frac{1}{N} \Sigma^N_{n=1} \Sigma^{T_n}_{t=1} R(\tau^n) \nabla logp(a^n_t | s^n_t, \theta^{\pi})\\\\
-&amp;\approx \frac{1}{N} \Sigma^N_{n=1} \Sigma^{T_n}_{t=1} (r^_t - (V^{\pi}(s^n_t) - V^{\pi}(s^n_{t+1}))) \nabla logp(a^n_t | s^n_t, \theta^{\pi})
+&amp;\approx \frac{1}{N} \Sigma^N_{n=1} \Sigma^{T_n}_{t=1} (r^n_t - (V^{\pi}(s^n_t) - V^{\pi}(s^n_{t+1}))) \nabla logp(a^n_t | s^n_t, \theta^{\pi})
 \end{split}\end{equation}\]</span>
-<p><span class="math inline">\(r^_t - (V^{\pi}(s^n_t) - V^{\pi}(s^n_{t+1}))\)</span> is a scalar value defined as advantage function and tells us what’s the advantage of taking this action. <span class="math inline">\(r^t\)</span> is the reward we truly obtain when taking action <span class="math inline">\(a^n_t\)</span>. <span class="math inline">\(V^{\pi}(s^n_t) - V^{\pi}(s^n_{t+1})\)</span> is the <strong>expected reward</strong> we obtain if we use actor <span class="math inline">\(\pi\)</span>.</p>
+<p><span class="math inline">\(r^n_t - (V^{\pi}(s^n_t) - V^{\pi}(s^n_{t+1}))\)</span> is a scalar value defined as advantage function and tells us what’s the advantage of taking this action. <span class="math inline">\(r^t\)</span> is the reward we truly obtain when taking action <span class="math inline">\(a^n_t\)</span>. <span class="math inline">\(V^{\pi}(s^n_t) - V^{\pi}(s^n_{t+1})\)</span> is the <strong>expected reward</strong> we obtain if we use actor <span class="math inline">\(\pi\)</span>.</p>
 <p>So, if advantage function is positive, then the probability of taking action <span class="math inline">\(a^n_t\)</span> at state <span class="math inline">\(s^n_t\)</span> will increase; if advantage functino is negative, the probability of taking action <span class="math inline">\(a^n_t\)</span> at state <span class="math inline">\(s^n_t\)</span> will decrease.</p>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
