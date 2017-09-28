@@ -1041,6 +1041,7 @@ max_D(G,D) &amp;= V(G,D^{\ast})\\\\
 <li>Temporal-difference approach</li>
 <li>Q-learning</li>
 </ul></li>
+<li>Actor-Critic</li>
 </ul>
 <h1 id="introduction">Introduction</h1>
 <p>Deep Reinforcement learning is the combination of <em>deep learning</em> and <em>reinforcement learning</em>.</p>
@@ -1211,9 +1212,18 @@ V^{\pi}(s_t) + r_t = V^{\pi}(s_{t+1})
 <p>By now we have an idea how to estimate the future reward in each state using Q-learning and approximate the Q-function using a convolutional neural network. But it turns out that approximation of Q-values using non-linear functions is not very stable.</p>
 <p>The most important trick is experience replay. During gameplay all the experiences &lt; s, a, r, s’ &gt; are stored in a replay memory. When training the network, random minibatches from the replay memory are used instead of the most recent transition. This breaks the similarity of subsequent training samples, which otherwise might drive the network into a local minimum. Also experience replay makes the training task more similar to usual supervised learning, which simplifies debugging and testing the algorithm. One could actually collect all those experiences from human gameplay and then train network on these.</p>
 <p>Deep Q-learning Algorithm <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">initialize replay memory D</div><div class="line">initialize action-value <span class="keyword">function</span> Q with random weights</div><div class="line">observe initial state s</div><div class="line">Repeat</div><div class="line">    select an action a</div><div class="line">        with probability epsilon select a random action</div><div class="line">        otherwise select a = argmax (a<span class="string">') Q(s,a'</span>)</div><div class="line">    carry out action a</div><div class="line">    observe reward r and new state s<span class="string">'</span></div><div class="line"><span class="string">    store experience &lt; s,a,r,s'</span> &gt; <span class="keyword">in</span> replay memory D</div><div class="line"></div><div class="line">    sample random transitions &lt;ss,aa,rr,ss<span class="string">'&gt; from replay memory D</span></div><div class="line"><span class="string">    calculate target for each minibatch transition</span></div><div class="line"><span class="string">        if ss'</span> is terminal state <span class="keyword">then</span> tt = rr</div><div class="line">        otherwise tt = rr + gamma max(a<span class="string">') Q(ss'</span>,aa<span class="string">')</span></div><div class="line"><span class="string">    train the Q network using (tt-Q(ss,aa))**2 as loss</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">    s = s'</span></div><div class="line">until terminated</div></pre></td></tr></table></figure></p>
+<h1 id="actor-critic">Actor-Critic</h1>
+<p>The basic idea of Actor-Critic is the to combine policy gradient and value function. To modify the cost derivative function in Policy Gradient a little bit, we have</p>
+<span class="math display">\[\begin{equation}\begin{split}
+\nabla \bar{R}_{\theta^{\pi}} &amp;= \frac{1}{N} \Sigma^N_{n=1} \Sigma^{T_n}_{t=1} R(\tau^n) \nabla logp(a^n_t | s^n_t, \theta^{\pi})\\\\
+&amp;\approx \frac{1}{N} \Sigma^N_{n=1} \Sigma^{T_n}_{t=1} (r^_t - (V^{\pi}(s^n_t) - V^{\pi}(s^n_{t+1}))) \nabla logp(a^n_t | s^n_t, \theta^{\pi})
+\end{split}\end{equation}\]</span>
+<p><span class="math inline">\(r^_t - (V^{\pi}(s^n_t) - V^{\pi}(s^n_{t+1}))\)</span> is a scalar value defined as advantage function and tells us what’s the advantage of taking this action. <span class="math inline">\(r^t\)</span> is the reward we truly obtain when taking action <span class="math inline">\(a^n_t\)</span>. <span class="math inline">\(V^{\pi}(s^n_t) - V^{\pi}(s^n_{t+1})\)</span> is the <strong>expected reward</strong> we obtain if we use actor <span class="math inline">\(\pi\)</span>.</p>
+<p>So, if advantage function is positive, then the probability of taking action <span class="math inline">\(a^n_t\)</span> at state <span class="math inline">\(s^n_t\)</span> will increase; if advantage functino is negative, the probability of taking action <span class="math inline">\(a^n_t\)</span> at state <span class="math inline">\(s^n_t\)</span> will decrease.</p>
 <h1 id="reference">Reference</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://www.intelnervana.com/demystifying-deep-reinforcement-learning/" target="_blank" rel="external">Demystify deep reinforcement learning</a></li>
+<li><a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/MLDS_2017/Lecture/RL%20(v5).pdf" target="_blank" rel="external">A3C by Hung-yi Lee</a></li>
 </ol>
 
           
